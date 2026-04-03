@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>ConectaObra Pro - Plataforma de Serviços</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #080808;
+            color: #F2EDE6;
+            font-family: 'Syne', sans-serif;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --primary: #FF5C00;
+            --primary-dark: #E04E00;
+            --secondary: #FFD000;
+            --success: #00C46A;
+            --danger: #FF3B3B;
+            --warning: #FFD000;
+            --info: #4DB8FF;
+            --dark: #0F0F0F;
+            --card: #141414;
+            --border: #2A2A2A;
+            --text: #F2EDE6;
+            --text-dim: #888070;
+            --text-muted: #555555;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 92, 0, 0.5); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 92, 0, 0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(8, 8, 8, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo span { color: var(--primary); }
+        .logo-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--primary);
+            background: rgba(255, 92, 0, 0.1);
+            border: 1px solid rgba(255, 92, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+
+        .user-info { display: flex; align-items: center; gap: 16px; }
+        .user-name { font-size: 14px; color: var(--text); }
+        .btn-logout {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .btn-logout:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-primary { background: var(--primary); color: #080808; }
+        .btn-primary:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 92, 0, 0.3); }
+        .btn-secondary { background: var(--card); border: 1px solid var(--border); color: var(--text); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-success { background: var(--success); color: #080808; }
+        .btn-success:hover { background: #00E07A; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-outline { background: none; border: 1px solid var(--border); color: var(--text-dim); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Cards */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .card-header {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Forms */
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--primary); }
+        .error-message { color: var(--danger); font-size: 12px; margin-top: 4px; }
+
+        /* Grids */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        /* KPI Cards */
+        .kpi-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+        }
+        .kpi-card.success::before { background: var(--success); }
+        .kpi-card.warning::before { background: var(--warning); }
+        .kpi-card.danger::before { background: var(--danger); }
+        .kpi-card.info::before { background: var(--info); }
+        .kpi-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .kpi-label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+        .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .tab-content { display: none; animation: fadeUp 0.3s ease; }
+        .tab-content.active { display: block; }
+
+        /* Rating Stars */
+        .rating {
+            display: flex;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .rating-star {
+            font-size: 24px;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+        .rating-star.active { color: var(--warning); }
+
+        /* Service Grid */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        @media (max-width: 768px) {
+            .service-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .service-card {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .service-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .service-card.selected { border-color: var(--primary); background: rgba(255, 92, 0, 0.1); }
+        .service-icon { font-size: 32px; margin-bottom: 8px; }
+        .service-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .service-desc { font-size: 11px; color: var(--text-dim); }
+
+        /* Order Card */
+        .order-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .order-service { display: flex; align-items: center; gap: 12px; }
+        .order-service-icon { font-size: 28px; }
+        .order-service-name { font-weight: 700; font-size: 16px; }
+        .order-service-region { font-size: 12px; color: var(--text-dim); }
+        .order-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            color: var(--primary);
+        }
+        .order-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-pending { background: rgba(255, 208, 0, 0.1); color: var(--warning); border: 1px solid rgba(255, 208, 0, 0.3); }
+        .status-accepted { background: rgba(255, 92, 0, 0.1); color: var(--primary); border: 1px solid rgba(255, 92, 0, 0.3); }
+        .status-completed { background: rgba(0, 196, 106, 0.1); color: var(--success); border: 1px solid rgba(0, 196, 106, 0.3); }
+        .status-cancelled { background: rgba(255, 59, 59, 0.1); color: var(--danger); border: 1px solid rgba(255, 59, 59, 0.3); }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeUp 0.3s ease;
+        }
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .modal-body { padding: 20px; }
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: #080808;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            z-index: 3000;
+            animation: fadeUp 0.3s ease;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+        }
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            line-height: 0.9;
+            margin-bottom: 24px;
+        }
+        .hero h1 span { color: var(--primary); }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+        }
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Section */
+        .section { padding: 80px 0; }
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .section-title span { color: var(--primary); }
+        .section-subtitle {
+            color: var(--text-dim);
+            font-size: 16px;
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .step {
+            background: var(--card);
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .step-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: rgba(255, 92, 0, 0.2);
+            margin-bottom: 12px;
+        }
+        .step-icon { font-size: 40px; margin-bottom: 16px; }
+        .step-title { font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+        .step-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+        @media (max-width: 768px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+
+        /* Footer */
+        .footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .footer-copyright { font-size: 12px; color: var(--text-muted); }
+
+        /* Empty State */
+        .empty-state { text-align: center; padding: 48px; color: var(--text-dim); }
+        .empty-icon { font-size: 64px; margin-bottom: 16px; }
+        .empty-title { font-size: 20px; margin-bottom: 8px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .hero h1 { font-size: 48px; }
+            .section-title { font-size: 36px; }
+            .navbar .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar" style="display: none;">
+    <div class="container">
+        <a href="#" class="logo" onclick="showHome(); return false;">Conecta<span>Obra</span><span class="logo-tag">PRO</span></a>
+        <div class="nav-links">
+            <a href="#" onclick="showHome(); return false;">Início</a>
+            <a href="#" onclick="showDashboard(); return false;">Dashboard</a>
+            <div class="user-info" id="userInfo">
+                <span class="user-name" id="userName"></span>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Auth Section -->
+<div id="authSection" class="hero" style="min-height: 100vh; display: flex;">
+    <div class="container">
+        <div style="max-width: 500px; margin: 0 auto;">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                PLATAFORMA COMPLETA
+            </div>
+            <h1>Sua obra.<br><span>Resolvida.</span><br>Agora.</h1>
+            <p>Conectamos clientes a profissionais verificados com orçamento justo, pagamento seguro e garantia de 90 dias.</p>
+            
+            <div class="card" style="margin-top: 32px;">
+                <div style="display: flex; gap: 8px; margin-bottom: 24px;">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="setAuthType('client')" id="authTypeClientBtn">👤 Sou Cliente</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="setAuthType('professional')" id="authTypeProBtn">🔨 Sou Profissional</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="setAuthType('admin')" id="authTypeAdminBtn">📊 Administrador</button>
+                </div>
+                <div id="authForm"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Dashboard -->
+<div id="mainSection" style="display: none;">
+    <!-- Client Dashboard -->
+    <div id="clientDashboard" style="display: none;">
+        <div class="navbar" style="position: relative;">
+            <div class="container">
+                <a href="#" class="logo" onclick="showHome(); return false;">Conecta<span>Obra</span><span class="logo-tag">PRO</span></a>
+                <div class="nav-links">
+                    <a href="#" onclick="showClientDashboard(); return false;">Meus Pedidos</a>
+                    <a href="#" onclick="showNewOrder(); return false;">Novo Serviço</a>
+                    <div class="user-info">
+                        <span class="user-name" id="clientUserName"></span>
+                        <button class="btn-logout" onclick="logout()">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="padding-top: 32px;"><div id="clientContent"></div></div>
+    </div>
+
+    <!-- Professional Dashboard -->
+    <div id="professionalDashboard" style="display: none;">
+        <div class="navbar" style="position: relative;">
+            <div class="container">
+                <a href="#" class="logo" onclick="showHome(); return false;">Conecta<span>Obra</span><span class="logo-tag">PRO</span></a>
+                <div class="nav-links">
+                    <a href="#" onclick="showProfessionalDashboard(); return false;">Chamados</a>
+                    <a href="#" onclick="showProfessionalOrders(); return false;">Meus Serviços</a>
+                    <div class="user-info">
+                        <span class="user-name" id="professionalUserName"></span>
+                        <button class="btn-logout" onclick="logout()">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="padding-top: 32px;"><div id="professionalContent"></div></div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" style="display: none;">
+        <div class="navbar" style="position: relative;">
+            <div class="container">
+                <a href="#" class="logo" onclick="showHome(); return false;">Conecta<span>Obra</span><span class="logo-tag">ADMIN</span></a>
+                <div class="nav-links">
+                    <a href="#" onclick="showAdminDashboard('dashboard'); return false;">Dashboard</a>
+                    <a href="#" onclick="showAdminDashboard('users'); return false;">Usuários</a>
+                    <a href="#" onclick="showAdminDashboard('orders'); return false;">Pedidos</a>
+                    <a href="#" onclick="showAdminDashboard('coupons'); return false;">Cupons</a>
+                    <a href="#" onclick="showAdminDashboard('reports'); return false;">Relatórios</a>
+                    <div class="user-info">
+                        <span class="user-name" id="adminUserName"></span>
+                        <button class="btn-logout" onclick="logout()">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="padding-top: 32px;"><div id="adminContent"></div></div>
+    </div>
+</div>
+
+<!-- Home Section -->
+<div id="homeSection" style="display: none;">
+    <nav class="navbar" style="position: relative;">
+        <div class="container">
+            <a href="#" class="logo" onclick="showHome(); return false;">Conecta<span>Obra</span><span class="logo-tag">PRO</span></a>
+            <div class="nav-links">
+                <a href="#features">Recursos</a>
+                <a href="#how-it-works">Como Funciona</a>
+                <a href="#pricing">Planos</a>
+                <button class="btn btn-primary" style="padding: 8px 20px;" onclick="showAuth()">Começar</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <div class="hero-badge"><span class="hero-badge-dot"></span> PLATAFORMA WHITE LABEL</div>
+            <h1>A revolução dos<br><span>serviços da obra</span><br>chegou.</h1>
+            <p>Uma plataforma completa para conectar clientes e profissionais da construção civil. White label, pronta para sua marca.</p>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="showAuth()">Começar Agora →</button>
+                <button class="btn btn-secondary" onclick="scrollToSection('features')">Ver Recursos</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">Recursos <span>Completos</span></h2>
+            <div class="section-subtitle">Tudo que você precisa para gerenciar sua plataforma de serviços</div>
+            <div class="grid-3">
+                <div class="card"><div style="font-size: 48px; margin-bottom: 16px;">📱</div><h3 style="font-size: 20px; margin-bottom: 12px;">Portal do Cliente</h3><p style="color: var(--text-dim); line-height: 1.6;">Solicite serviços, acompanhe pedidos, avalie profissionais e pague com segurança.</p></div>
+                <div class="card"><div style="font-size: 48px; margin-bottom: 16px;">🔨</div><h3 style="font-size: 20px; margin-bottom: 12px;">Portal do Profissional</h3><p style="color: var(--text-dim); line-height: 1.6;">Receba chamados, aceite serviços, gerencie sua agenda e veja seus ganhos.</p></div>
+                <div class="card"><div style="font-size: 48px; margin-bottom: 16px;">📊</div><h3 style="font-size: 20px; margin-bottom: 12px;">Painel Administrativo</h3><p style="color: var(--text-dim); line-height: 1.6;">Gerencie tudo: clientes, profissionais, pedidos, comissões e relatórios.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="background: var(--dark);" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Como <span>Funciona</span></h2>
+            <div class="section-subtitle">Simples, rápido e seguro</div>
+            <div class="steps">
+                <div class="step"><div class="step-number">01</div><div class="step-icon">📝</div><div class="step-title">Solicitação</div><div class="step-desc">Cliente descreve o serviço</div></div>
+                <div class="step"><div class="step-number">02</div><div class="step-icon">🤖</div><div class="step-title">Orçamento</div><div class="step-desc">IA gera preço justo</div></div>
+                <div class="step"><div class="step-number">03</div><div class="step-icon">✅</div><div class="step-title">Aprovação</div><div class="step-desc">Cliente aceita e paga</div></div>
+                <div class="step"><div class="step-number">04</div><div class="step-icon">🔨</div><div class="step-title">Execução</div><div class="step-desc">Profissional realiza serviço</div></div>
+                <div class="step"><div class="step-number">05</div><div class="step-icon">💰</div><div class="step-title">Pagamento</div><div class="step-desc">Liberado após aprovação</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Planos <span>para sua empresa</span></h2>
+            <div class="section-subtitle">Escolha o plano ideal para começar sua plataforma</div>
+            <div class="grid-3">
+                <div class="card" style="text-align: center;">
+                    <h3 style="font-size: 24px; margin-bottom: 16px;">Startup</h3>
+                    <div style="font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--primary); margin-bottom: 16px;">R$2.900</div>
+                    <div style="color: var(--text-dim); margin-bottom: 24px;">Única</div>
+                    <ul style="list-style: none; text-align: left; margin-bottom: 24px;">
+                        <li style="padding: 8px 0;">✓ Plataforma completa</li>
+                        <li style="padding: 8px 0;">✓ 3 meses de suporte</li>
+                        <li style="padding: 8px 0;">✓ 1 domínio</li>
+                        <li style="padding: 8px 0;">✓ Marca personalizada</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showAuth()">Começar</button>
+                </div>
+                <div class="card" style="text-align: center; border-color: var(--primary);">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #080808; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">MAIS VENDIDO</div>
+                    <h3 style="font-size: 24px; margin-bottom: 16px;">Professional</h3>
+                    <div style="font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--primary); margin-bottom: 16px;">R$4.900</div>
+                    <div style="color: var(--text-dim); margin-bottom: 24px;">Única</div>
+                    <ul style="list-style: none; text-align: left; margin-bottom: 24px;">
+                        <li style="padding: 8px 0;">✓ Plataforma completa</li>
+                        <li style="padding: 8px 0;">✓ 6 meses de suporte</li>
+                        <li style="padding: 8px 0;">✓ 3 domínios</li>
+                        <li style="padding: 8px 0;">✓ Marca personalizada</li>
+                        <li style="padding: 8px 0;">✓ Treinamento incluso</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showAuth()">Começar</button>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3 style="font-size: 24px; margin-bottom: 16px;">Enterprise</h3>
+                    <div style="font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--primary); margin-bottom: 16px;">Sob Consulta</div>
+                    <div style="color: var(--text-dim); margin-bottom: 24px;">Customizado</div>
+                    <ul style="list-style: none; text-align: left; margin-bottom: 24px;">
+                        <li style="padding: 8px 0;">✓ Tudo do plano Professional</li>
+                        <li style="padding: 8px 0;">✓ Suporte prioritário</li>
+                        <li style="padding: 8px 0;">✓ Domínios ilimitados</li>
+                        <li style="padding: 8px 0;">✓ Features customizadas</li>
+                        <li style="padding: 8px 0;">✓ SLA garantido</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showAuth()">Fale Conosco</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="logo" style="margin-bottom: 16px;">Conecta<span>Obra</span><span class="logo-tag">PRO</span></div>
+            <div class="footer-copyright">© 2024 ConectaObra Pro. Plataforma White Label para serviços da construção civil.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="modalTitle"></div>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+<script>
+    // ============================================
+    // FIREBASE CONFIGURATION - SUBSTITUA PELAS SUAS
+    // ============================================
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    // ============================================
+    // APP STATE
+    // ============================================
+    let currentUser = null;
+    let currentUserType = null;
+    let authType = 'client';
+    let ratingValue = 0;
+    let selectedRatingOrderId = null;
+
+    const SERVICES = [
+        { id: 'hidraulica', name: 'Hidráulica', icon: '🔧', desc: 'Vazamentos, torneiras, chuveiros', minPrice: 200, maxPrice: 1500, requiresVisit: false },
+        { id: 'eletrica', name: 'Elétrica', icon: '⚡', desc: 'Tomadas, disjuntores, fiação', minPrice: 200, maxPrice: 2000, requiresVisit: false },
+        { id: 'pintura', name: 'Pintura', icon: '🎨', desc: 'Paredes, tetos, fachadas', minPrice: 300, maxPrice: 8000, requiresVisit: true },
+        { id: 'piso', name: 'Piso', icon: '🏠', desc: 'Cerâmica, porcelanato', minPrice: 400, maxPrice: 8000, requiresVisit: true },
+        { id: 'drywall', name: 'Drywall', icon: '🧱', desc: 'Paredes, forros', minPrice: 500, maxPrice: 15000, requiresVisit: true },
+        { id: 'desentupimento', name: 'Desentupimento', icon: '🚿', desc: 'Pias, vasos, ralos', minPrice: 200, maxPrice: 800, requiresVisit: false },
+        { id: 'reforma', name: 'Reforma', icon: '🏗️', desc: 'Pequenas reformas', minPrice: 3000, maxPrice: 30000, requiresVisit: true }
+    ];
+
+    const REGIONS = [
+        'Asa Norte', 'Asa Sul', 'Lago Norte', 'Lago Sul', 'Águas Claras',
+        'Taguatinga', 'Ceilândia', 'Samambaia', 'Gama', 'Sobradinho',
+        'Planaltina', 'Guará', 'Cruzeiro', 'Sudoeste/Octogonal', 'Park Way'
+    ];
+
+    // ============================================
+    // AUTH FUNCTIONS
+    // ============================================
+    function setAuthType(type) {
+        authType = type;
+        document.getElementById('authTypeClientBtn').className = type === 'client' ? 'btn btn-primary' : 'btn btn-secondary';
+        document.getElementById('authTypeProBtn').className = type === 'professional' ? 'btn btn-primary' : 'btn btn-secondary';
+        document.getElementById('authTypeAdminBtn').className = type === 'admin' ? 'btn btn-primary' : 'btn btn-secondary';
+        renderAuthForm();
+    }
+
+    function renderAuthForm() {
+        const container = document.getElementById('authForm');
+        const isClient = authType === 'client';
+        const isAdmin = authType === 'admin';
+        
+        if (isAdmin) {
+            container.innerHTML = `
+                <div style="margin-bottom: 24px;">
+                    <div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; margin-bottom: 4px;">Acesso Administrativo</div>
+                    <div style="color: var(--text-dim); font-size: 14px;">Área restrita para gestores da plataforma</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="authEmail" placeholder="admin@conectaobra.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Senha</label>
+                    <input type="password" class="form-input" id="authPassword" placeholder="••••••••">
+                </div>
+                <div id="authError" class="error-message" style="margin-bottom: 16px;"></div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="login()">Entrar →</button>
+            `;
+            return;
+        }
+        
+        container.innerHTML = `
+            <div style="margin-bottom: 24px;">
+                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; margin-bottom: 4px;">
+                    ${isClient ? 'Acessar como Cliente' : 'Acessar como Profissional'}
+                </div>
+                <div style="color: var(--text-dim); font-size: 14px;">
+                    ${isClient ? 'Solicite serviços e acompanhe seus pedidos' : 'Receba chamados e gerencie seus serviços'}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="authEmail" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Senha</label>
+                <input type="password" class="form-input" id="authPassword" placeholder="••••••••">
+            </div>
+            <div id="authError" class="error-message" style="margin-bottom: 16px;"></div>
+            <button class="btn btn-primary" style="width: 100%; margin-bottom: 12px;" onclick="login()">Entrar →</button>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="showRegister()">Criar conta</button>
+        `;
+    }
+
+    function showRegister() {
+        const container = document.getElementById('authForm');
+        const isClient = authType === 'client';
+        
+        container.innerHTML = `
+            <div style="margin-bottom: 24px;">
+                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; margin-bottom: 4px;">Criar conta</div>
+                <div style="color: var(--text-dim); font-size: 14px;">Preencha os dados para começar</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nome completo</label>
+                <input type="text" class="form-input" id="regName" placeholder="Seu nome">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="regEmail" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">WhatsApp</label>
+                <input type="tel" class="form-input" id="regPhone" placeholder="(61) 99999-9999">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Região</label>
+                <select class="form-select" id="regRegion">
+                    <option value="">Selecione...</option>
+                    ${REGIONS.map(r => `<option>${r}</option>`).join('')}
+                </select>
+            </div>
+            ${!isClient ? `
+            <div class="form-group">
+                <label class="form-label">Especialidades</label>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                    ${SERVICES.map(s => `<label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input type="checkbox" value="${s.id}" class="spec-checkbox"> ${s.icon} ${s.name}</label>`).join('')}
+                </div>
+            </div>
+            ` : ''}
+            <div class="form-group">
+                <label class="form-label">Senha</label>
+                <input type="password" class="form-input" id="regPassword" placeholder="••••••••">
+            </div>
+            <div id="regError" class="error-message" style="margin-bottom: 16px;"></div>
+            <button class="btn btn-primary" style="width: 100%; margin-bottom: 12px;" onclick="register()">Criar conta →</button>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="renderAuthForm()">Voltar</button>
+        `;
+    }
+
+    async function login() {
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        const errorEl = document.getElementById('authError');
+        
+        if (!email || !password) {
+            errorEl.textContent = 'Preencha todos os campos';
+            return;
+        }
+        
+        try {
+            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+            const userDoc = await db.collection('users').doc(userCredential.user.uid).get();
+            
+            if (!userDoc.exists) {
+                errorEl.textContent = 'Usuário não encontrado';
+                return;
+            }
+            
+            currentUser = { id: userCredential.user.uid, ...userDoc.data() };
+            currentUserType = currentUser.type;
+            
+            if (authType === 'admin' && currentUserType !== 'admin') {
+                errorEl.textContent = 'Acesso negado. Esta área é restrita para administradores.';
+                await auth.signOut();
+                return;
+            }
+            
+            showToast(`Bem-vindo, ${currentUser.name}!`);
+            initApp();
+        } catch (error) {
+            errorEl.textContent = error.message;
+        }
+    }
+
+    async function register() {
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const phone = document.getElementById('regPhone').value;
+        const region = document.getElementById('regRegion').value;
+        const password = document.getElementById('regPassword').value;
+        const errorEl = document.getElementById('regError');
+        
+        if (!name || !email || !phone || !region || !password) {
+            errorEl.textContent = 'Preencha todos os campos';
+            return;
+        }
+        
+        try {
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            
+            const userData = {
+                name, email, phone, region,
+                type: authType,
+                createdAt: new Date().toISOString(),
+                status: 'active',
+                totalSpent: 0,
+                totalOrders: 0
+            };
+            
+            if (authType === 'professional') {
+                const specs = Array.from(document.querySelectorAll('.spec-checkbox:checked')).map(cb => cb.value);
+                userData.specialties = specs;
+                userData.status = 'pending';
+                userData.totalEarned = 0;
+                userData.rating = 0;
+                userData.reviews = 0;
+            }
+            
+            await db.collection('users').doc(userCredential.user.uid).set(userData);
+            
+            currentUser = { id: userCredential.user.uid, ...userData };
+            currentUserType = authType;
+            
+            showToast('Conta criada com sucesso!');
+            initApp();
+        } catch (error) {
+            errorEl.textContent = error.message;
+        }
+    }
+
+    function logout() {
+        auth.signOut();
+        currentUser = null;
+        currentUserType = null;
+        document.getElementById('authSection').style.display = 'flex';
+        document.getElementById('mainSection').style.display = 'none';
+        document.getElementById('homeSection').style.display = 'none';
+        document.getElementById('navbar').style.display = 'none';
+        renderAuthForm();
+    }
+
+    // ============================================
+    // UI FUNCTIONS
+    // ============================================
+    function initApp() {
+        document.getElementById('authSection').style.display = 'none';
+        document.getElementById('mainSection').style.display = 'block';
+        document.getElementById('navbar').style.display = 'block';
+        document.getElementById('homeSection').style.display = 'none';
+        
+        if (currentUserType === 'client') {
+            showClientDashboard();
+        } else if (currentUserType === 'professional') {
+            showProfessionalDashboard();
+        } else if (currentUserType === 'admin') {
+            showAdminDashboard('dashboard');
+        }
+    }
+
+    function showHome() {
+        document.getElementById('authSection').style.display = 'none';
+        document.getElementById('mainSection').style.display = 'none';
+        document.getElementById('homeSection').style.display = 'block';
+        document.getElementById('navbar').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function showAuth() {
+        document.getElementById('authSection').style.display = 'flex';
+        document.getElementById('mainSection').style.display = 'none';
+        document.getElementById('homeSection').style.display = 'none';
+        document.getElementById('navbar').style.display = 'none';
+        renderAuthForm();
+    }
+
+    function showDashboard() {
+        if (currentUserType === 'client') showClientDashboard();
+        else if (currentUserType === 'professional') showProfessionalDashboard();
+        else if (currentUserType === 'admin') showAdminDashboard('dashboard');
+    }
+
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+    }
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    // ============================================
+    // CLIENT DASHBOARD
+    // ============================================
+    async function showClientDashboard() {
+        document.getElementById('clientDashboard').style.display = 'block';
+        document.getElementById('professionalDashboard').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'none';
+        document.getElementById('clientUserName').textContent = currentUser.name.split(' ')[0];
+        
+        const ordersSnapshot = await db.collection('orders').where('clientId', '==', currentUser.id).orderBy('createdAt', 'desc').get();
+        const orders = ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        const ratingsSnapshot = await db.collection('ratings').where('clientId', '==', currentUser.id).get();
+        const ratedOrders = new Set(ratingsSnapshot.docs.map(doc => doc.data().orderId));
+        
+        const content = document.getElementById('clientContent');
+        
+        if (orders.length === 0) {
+            content.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Nenhum pedido ainda</div><div style="margin-bottom: 24px;">Comece solicitando seu primeiro serviço</div><button class="btn btn-primary" onclick="showNewOrder()">Solicitar Serviço →</button></div>`;
+            return;
+        }
+        
+        content.innerHTML = `
+            <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="kpi-card"><div class="kpi-value">${orders.length}</div><div class="kpi-label">Total de Pedidos</div></div>
+                <div class="kpi-card success"><div class="kpi-value">${orders.filter(o => o.status === 'completed').length}</div><div class="kpi-label">Concluídos</div></div>
+            </div>
+            <div class="card-header">Meus Pedidos</div>
+            ${orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-service">
+                            <div class="order-service-icon">${SERVICES.find(s => s.id === order.serviceId)?.icon || '🔧'}</div>
+                            <div>
+                                <div class="order-service-name">${order.serviceName}</div>
+                                <div class="order-service-region">📍 ${order.region}</div>
+                            </div>
+                        </div>
+                        <div class="order-value">R$ ${order.total?.toFixed(2) || 0}</div>
+                    </div>
+                    <div style="margin-bottom: 12px; color: var(--text-dim); font-size: 14px;">${order.description}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <span class="order-status status-${order.status}">
+                            ${order.status === 'pending' ? '⏳ Aguardando' : order.status === 'accepted' ? '🔨 A caminho' : order.status === 'completed' ? '✅ Concluído' : '✕ Cancelado'}
+                        </span>
+                        <span style="font-size: 12px; color: var(--text-muted);">${new Date(order.createdAt).toLocaleDateString('pt-BR')}</span>
+                    </div>
+                    ${order.status === 'completed' && !ratedOrders.has(order.id) ? `
+                        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                            <button class="btn btn-secondary" style="width: 100%;" onclick="showRatingModal('${order.id}', '${order.professionalId}', '${order.professionalName}')">
+                                ⭐ Avaliar Profissional
+                            </button>
+                        </div>
+                    ` : ''}
+                    ${order.status === 'completed' && ratedOrders.has(order.id) ? `
+                        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                            <div style="font-size: 12px; color: var(--success); text-align: center;">✓ Você já avaliou este serviço</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('')}
+            <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="showNewOrder()">+ Novo Serviço</button>
+        `;
+    }
+
+    let currentOrder = { step: 1, serviceId: null, description: '', region: currentUser?.region || '', couponCode: null, discount: 0 };
+
+    function showNewOrder() {
+        currentOrder = { step: 1, serviceId: null, description: '', region: currentUser?.region || '', couponCode: null, discount: 0 };
+        renderOrderStep();
+    }
+
+    function renderOrderStep() {
+        const content = document.getElementById('clientContent');
+        
+        if (currentOrder.step === 1) {
+            content.innerHTML = `
+                <div class="card-header">Qual serviço você precisa?</div>
+                <div class="service-grid">
+                    ${SERVICES.map(s => `
+                        <div class="service-card" onclick="selectService('${s.id}')" id="service-${s.id}">
+                            <div class="service-icon">${s.icon}</div>
+                            <div class="service-name">${s.name}</div>
+                            <div class="service-desc">${s.desc}</div>
+                            ${s.requiresVisit ? '<div style="font-size: 10px; color: var(--warning); margin-top: 8px;">⚠ Requer visita</div>' : ''}
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="btn btn-secondary" style="margin-top: 24px; width: 100%;" onclick="showClientDashboard()">Cancelar</button>
+            `;
+        } else if (currentOrder.step === 2) {
+            const service = SERVICES.find(s => s.id === currentOrder.serviceId);
+            content.innerHTML = `
+                <div class="card-header">${service.icon} ${service.name}</div>
+                <div class="form-group">
+                    <label class="form-label">Descreva o problema</label>
+                    <textarea class="form-textarea" id="orderDesc" placeholder="Ex: Torneira da cozinha pingando há 3 dias..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Região</label>
+                    <select class="form-select" id="orderRegion">
+                        ${REGIONS.map(r => `<option ${r === currentOrder.region ? 'selected' : ''}>${r}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Cupom de desconto (opcional)</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" class="form-input" id="couponCode" placeholder="Digite seu cupom" style="flex: 1;">
+                        <button class="btn btn-secondary" onclick="applyCoupon()">Aplicar</button>
+                    </div>
+                    <div id="couponMessage" style="font-size: 12px; margin-top: 4px;"></div>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="currentOrder.step = 1; renderOrderStep()">Voltar</button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="confirmOrder()">Continuar →</button>
+                </div>
+            `;
+        } else if (currentOrder.step === 3) {
+            const service = SERVICES.find(s => s.id === currentOrder.serviceId);
+            let total = Math.floor(Math.random() * (service.maxPrice - service.minPrice) + service.minPrice);
+            if (currentOrder.discount > 0) total = total * (1 - currentOrder.discount / 100);
+            currentOrder.total = total;
+            
+            content.innerHTML = `
+                <div class="card-header">Orçamento</div>
+                <div class="card" style="margin-bottom: 24px;">
+                    <div style="font-size: 48px; font-family: 'Bebas Neue', sans-serif; color: var(--primary); text-align: center;">R$ ${total.toFixed(2)}</div>
+                    <div style="text-align: center; color: var(--text-dim); margin-top: 8px;">${service.name} - ${currentOrder.region}</div>
+                    ${currentOrder.discount > 0 ? `<div style="text-align: center; color: var(--success); margin-top: 4px;">Cupom aplicado: ${currentOrder.discount}% OFF</div>` : ''}
+                    <div class="progress-bar" style="margin-top: 24px;"><div class="progress-fill" style="width: 100%;"></div></div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-dim);">
+                        <span>✓ Preço fechado</span><span>✓ Garantia 90 dias</span><span>✓ Pagamento seguro</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="currentOrder.step = 2; renderOrderStep()">Voltar</button>
+                    <button class="btn btn-success" style="flex: 1;" onclick="createOrder()">Confirmar Pedido →</button>
+                </div>
+            `;
+        }
+    }
+
+    async function applyCoupon() {
+        const code = document.getElementById('couponCode').value.toUpperCase();
+        const messageEl = document.getElementById('couponMessage');
+        
+        const couponSnapshot = await db.collection('coupons').where('code', '==', code).where('active', '==', true).get();
+        
+        if (couponSnapshot.empty) {
+            messageEl.innerHTML = '<span style="color: var(--danger);">❌ Cupom inválido ou expirado</span>';
+            return;
+        }
+        
+        const coupon = couponSnapshot.docs[0].data();
+        const now = new Date();
+        
+        if (coupon.expiresAt && new Date(coupon.expiresAt) < now) {
+            messageEl.innerHTML = '<span style="color: var(--danger);">❌ Cupom expirado</span>';
+            return;
+        }
+        
+        currentOrder.couponCode = code;
+        currentOrder.discount = coupon.discount;
+        messageEl.innerHTML = `<span style="color: var(--success);">✅ Cupom aplicado! ${coupon.discount}% de desconto</span>`;
+    }
+
+    function selectService(serviceId) {
+        currentOrder.serviceId = serviceId;
+        currentOrder.step = 2;
+        renderOrderStep();
+    }
+
+    function confirmOrder() {
+        const desc = document.getElementById('orderDesc').value;
+        const region = document.getElementById('orderRegion').value;
+        
+        if (!desc) {
+            showToast('Descreva o problema para continuar');
+            return;
+        }
+        
+        currentOrder.description = desc;
+        currentOrder.region = region;
+        currentOrder.step = 3;
+        renderOrderStep();
+    }
+
+    async function createOrder() {
+        const service = SERVICES.find(s => s.id === currentOrder.serviceId);
+        
+        const order = {
+            clientId: currentUser.id,
+            clientName: currentUser.name,
+            clientPhone: currentUser.phone,
+            serviceId: currentOrder.serviceId,
+            serviceName: service.name,
+            description: currentOrder.description,
+            region: currentOrder.region,
+            total: currentOrder.total,
+            originalTotal: currentOrder.total / (1 - (currentOrder.discount / 100)),
+            discount: currentOrder.discount,
+            couponCode: currentOrder.couponCode,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+        
+        await db.collection('orders').add(order);
+        
+        showToast('Pedido criado com sucesso!');
+        showClientDashboard();
+    }
+
+    function showRatingModal(orderId, professionalId, professionalName) {
+        selectedRatingOrderId = orderId;
+        ratingValue = 0;
+        
+        document.getElementById('modalTitle').textContent = `Avaliar ${professionalName}`;
+        document.getElementById('modalBody').innerHTML = `
+            <div style="text-align: center;">
+                <div style="margin-bottom: 16px;">Como foi o serviço?</div>
+                <div class="rating" id="ratingStars">
+                    ${[1,2,3,4,5].map(i => `<span class="rating-star" data-value="${i}" onclick="setRating(${i})">★</span>`).join('')}
+                </div>
+                <div class="form-group" style="margin-top: 16px;">
+                    <label class="form-label">Comentário (opcional)</label>
+                    <textarea class="form-textarea" id="ratingComment" placeholder="Conte sobre sua experiência..."></textarea>
+                </div>
+            </div>
+        `;
+        document.getElementById('modalFooter').innerHTML = `
+            <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="submitRating()">Enviar Avaliação</button>
+        `;
+        document.getElementById('modal').classList.add('active');
+    }
+
+    function setRating(value) {
+        ratingValue = value;
+        document.querySelectorAll('.rating-star').forEach((star, index) => {
+            if (index < value) star.classList.add('active');
+            else star.classList.remove('active');
+        });
+    }
+
+    async function submitRating() {
+        if (ratingValue === 0) {
+            showToast('Selecione uma avaliação');
+            return;
+        }
+        
+        const comment = document.getElementById('ratingComment').value;
+        const order = await db.collection('orders').doc(selectedRatingOrderId).get();
+        const professionalId = order.data().professionalId;
+        
+        await db.collection('ratings').add({
+            orderId: selectedRatingOrderId,
+            clientId: currentUser.id,
+            professionalId: professionalId,
+            rating: ratingValue,
+            comment: comment,
+            createdAt: new Date().toISOString()
+        });
+        
+        const ratingsSnapshot = await db.collection('ratings').where('professionalId', '==', professionalId).get();
+        const ratings = ratingsSnapshot.docs.map(doc => doc.data().rating);
+        const avgRating = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        
+        await db.collection('users').doc(professionalId).update({
+            rating: avgRating,
+            reviews: ratings.length
+        });
+        
+        closeModal();
+        showToast('Avaliação enviada! Obrigado pelo feedback.');
+        showClientDashboard();
+    }
+
+    // ============================================
+    // PROFESSIONAL DASHBOARD
+    // ============================================
+    async function showProfessionalDashboard() {
+        document.getElementById('clientDashboard').style.display = 'none';
+        document.getElementById('professionalDashboard').style.display = 'block';
+        document.getElementById('adminDashboard').style.display = 'none';
+        document.getElementById('professionalUserName').textContent = currentUser.name.split(' ')[0];
+        await loadProfessionalContent('chamados');
+    }
+
+    async function showProfessionalOrders() {
+        await loadProfessionalContent('meus-servicos');
+    }
+
+    async function loadProfessionalContent(tab) {
+        const content = document.getElementById('professionalContent');
+        
+        const ordersSnapshot = await db.collection('orders').where('status', '==', 'pending').get();
+        const pendingOrders = ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        const myOrdersSnapshot = await db.collection('orders').where('professionalId', '==', currentUser.id).get();
+        const myOrders = myOrdersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        const totalEarned = myOrders.filter(o => o.status === 'completed').reduce((sum, o) => sum + (o.total * 0.85), 0);
+        
+        const ratingsSnapshot = await db.collection('ratings').where('professionalId', '==', currentUser.id).get();
+        const ratings = ratingsSnapshot.docs.map(doc => doc.data());
+        const avgRating = ratings.length > 0 ? (ratings.reduce((a, b) => a + b.rating, 0) / ratings.length).toFixed(1) : 0;
+        
+        if (tab === 'chamados') {
+            if (pendingOrders.length === 0) {
+                content.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Nenhum chamado disponível</div><div>Novos serviços aparecerão aqui</div></div>`;
+                return;
+            }
+            
+            content.innerHTML = `
+                <div class="grid-3" style="margin-bottom: 32px;">
+                    <div class="kpi-card"><div class="kpi-value">${pendingOrders.length}</div><div class="kpi-label">Chamados Disponíveis</div></div>
+                    <div class="kpi-card success"><div class="kpi-value">R$ ${totalEarned.toFixed(0)}</div><div class="kpi-label">Total Ganho</div></div>
+                    <div class="kpi-card info"><div class="kpi-value">${avgRating} ★</div><div class="kpi-label">Avaliação (${ratings.length})</div></div>
+                </div>
+                <div class="card-header">Chamados Disponíveis</div>
+                ${pendingOrders.map(order => `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-service">
+                                <div class="order-service-icon">${SERVICES.find(s => s.id === order.serviceId)?.icon || '🔧'}</div>
+                                <div>
+                                    <div class="order-service-name">${order.serviceName}</div>
+                                    <div class="order-service-region">📍 ${order.region}</div>
+                                    <div class="order-service-region" style="font-size: 11px;">👤 ${order.clientName}</div>
+                                </div>
+                            </div>
+                            <div class="order-value">R$ ${order.total.toFixed(2)}</div>
+                        </div>
+                        <div style="margin-bottom: 16px; color: var(--text-dim); font-size: 14px;">${order.description}</div>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn btn-success" style="flex: 1;" onclick="acceptOrder('${order.id}', ${order.total})">Aceitar Serviço →</button>
+                            <button class="btn btn-secondary" style="flex: 1;" onclick="declineOrder('${order.id}')">Recusar</button>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        } else {
+            if (myOrders.length === 0) {
+                content.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Nenhum serviço aceito</div><div>Os serviços que você aceitar aparecerão aqui</div></div>`;
+                return;
+            }
+            
+            content.innerHTML = `
+                <div class="grid-3" style="margin-bottom: 32px;">
+                    <div class="kpi-card"><div class="kpi-value">${myOrders.length}</div><div class="kpi-label">Serviços Realizados</div></div>
+                    <div class="kpi-card success"><div class="kpi-value">R$ ${totalEarned.toFixed(0)}</div><div class="kpi-label">Total Recebido</div></div>
+                    <div class="kpi-card info"><div class="kpi-value">${avgRating} ★</div><div class="kpi-label">Avaliação (${ratings.length})</div></div>
+                </div>
+                <div class="card-header">Meus Serviços</div>
+                ${myOrders.map(order => `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-service">
+                                <div class="order-service-icon">${SERVICES.find(s => s.id === order.serviceId)?.icon || '🔧'}</div>
+                                <div>
+                                    <div class="order-service-name">${order.serviceName}</div>
+                                    <div class="order-service-region">📍 ${order.region}</div>
+                                    <div class="order-service-region" style="font-size: 11px;">👤 ${order.clientName}</div>
+                                </div>
+                            </div>
+                            <div class="order-value">R$ ${order.total.toFixed(2)}</div>
+                        </div>
+                        <div style="margin-bottom: 12px; color: var(--text-dim); font-size: 14px;">${order.description}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                            <span class="order-status status-${order.status}">
+                                ${order.status === 'accepted' ? '🔨 Em andamento' : order.status === 'completed' ? '✅ Concluído' : '⏳ Aguardando'}
+                            </span>
+                            ${order.status === 'accepted' ? `<button class="btn btn-success" onclick="completeOrder('${order.id}')">Concluir Serviço</button>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+    }
+
+    async function acceptOrder(orderId, total) {
+        const commission = total * 0.15;
+        const professionalEarn = total - commission;
+        
+        await db.collection('orders').doc(orderId).update({
+            professionalId: currentUser.id,
+            professionalName: currentUser.name,
+            professionalPhone: currentUser.phone,
+            status: 'accepted',
+            acceptedAt: new Date().toISOString(),
+            commission: commission,
+            professionalEarn: professionalEarn
+        });
+        
+        showToast('Serviço aceito! Entre em contato com o cliente.');
+        await loadProfessionalContent('chamados');
+    }
+
+    async function declineOrder(orderId) {
+        await db.collection('orders').doc(orderId).update({
+            status: 'cancelled',
+            cancelledAt: new Date().toISOString()
+        });
+        showToast('Serviço recusado');
+        await loadProfessionalContent('chamados');
+    }
+
+    async function completeOrder(orderId) {
+        await db.collection('orders').doc(orderId).update({
+            status: 'completed',
+            completedAt: new Date().toISOString()
+        });
+        
+        const order = await db.collection('orders').doc(orderId).get();
+        const professional = await db.collection('users').doc(order.data().professionalId).get();
+        await db.collection('users').doc(order.data().professionalId).update({
+            totalEarned: (professional.data().totalEarned || 0) + order.data().professionalEarn
+        });
+        
+        showToast('Serviço concluído! Pagamento será liberado em até 48h.');
+        await loadProfessionalContent('meus-servicos');
+    }
+
+    // ============================================
+    // ADMIN DASHBOARD
+    // ============================================
+    let adminChart = null;
+
+    async function showAdminDashboard(tab) {
+        document.getElementById('clientDashboard').style.display = 'none';
+        document.getElementById('professionalDashboard').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+        document.getElementById('adminUserName').textContent = currentUser.name.split(' ')[0];
+        
+        if (tab === 'dashboard') await renderAdminDashboard();
+        else if (tab === 'users') await renderAdminUsers();
+        else if (tab === 'orders') await renderAdminOrders();
+        else if (tab === 'coupons') await renderAdminCoupons();
+        else if (tab === 'reports') await renderAdminReports();
+    }
+
+    async function renderAdminDashboard() {
+        const usersSnapshot = await db.collection('users').get();
+        const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const clients = users.filter(u => u.type === 'client');
+        const professionals = users.filter(u => u.type === 'professional');
+        const pendingProfessionals = professionals.filter(p => p.status === 'pending');
+        
+        const ordersSnapshot = await db.collection('orders').get();
+        const orders = ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const totalRevenue = orders.reduce((sum, o) => sum + (o.commission || 0), 0);
+        const completedOrders = orders.filter(o => o.status === 'completed').length;
+        
+        const last7Days = [];
+        const dailyOrders = [];
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            last7Days.push(date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }));
+            const count = orders.filter(o => {
+                const orderDate = new Date(o.createdAt);
+                return orderDate.toDateString() === date.toDateString();
+            }).length;
+            dailyOrders.push(count);
+        }
+        
+        const content = document.getElementById('adminContent');
+        content.innerHTML = `
+            <div class="grid-4" style="margin-bottom: 32px;">
+                <div class="kpi-card info"><div class="kpi-value">${clients.length}</div><div class="kpi-label">Clientes</div></div>
+                <div class="kpi-card"><div class="kpi-value">${professionals.length}</div><div class="kpi-label">Profissionais</div></div>
+                <div class="kpi-card warning"><div class="kpi-value">${pendingProfessionals.length}</div><div class="kpi-label">Aguardando Aprovação</div></div>
+                <div class="kpi-card success"><div class="kpi-value">R$ ${totalRevenue.toFixed(0)}</div><div class="kpi-label">Receita Total</div></div>
+            </div>
+            <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="card">
+                    <div class="card-header">Pedidos por Dia</div>
+                    <canvas id="ordersChart" height="200"></canvas>
+                </div>
+                <div class="card">
+                    <div class="card-header">Últimos Pedidos</div>
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        ${orders.slice(0, 5).map(order => `
+                            <div style="padding: 12px; border-bottom: 1px solid var(--border);">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span><strong>${order.serviceName}</strong></span>
+                                    <span class="order-status status-${order.status}">${order.status}</span>
+                                </div>
+                                <div style="font-size: 12px; color: var(--text-dim);">${order.clientName} • ${new Date(order.createdAt).toLocaleDateString('pt-BR')}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Profissionais Pendentes</div>
+                ${pendingProfessionals.length === 0 ? '<div class="empty-state"><div class="empty-icon">✅</div>Todos os profissionais foram aprovados</div>' : pendingProfessionals.map(pro => `
+                    <div style="padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <div><strong>${pro.name}</strong></div>
+                            <div style="font-size: 12px; color: var(--text-dim);">${pro.email} • ${pro.phone}</div>
+                            <div style="font-size: 12px; color: var(--text-dim);">Especialidades: ${(pro.specialties || []).join(', ')}</div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-success" style="padding: 6px 16px;" onclick="approveProfessional('${pro.id}')">Aprovar</button>
+                            <button class="btn btn-danger" style="padding: 6px 16px;" onclick="rejectProfessional('${pro.id}')">Rejeitar</button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        const ctx = document.getElementById('ordersChart').getContext('2d');
+        if (adminChart) adminChart.destroy();
+        adminChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: last7Days,
+                datasets: [{ label: 'Pedidos', data: dailyOrders, borderColor: '#FF5C00', backgroundColor: 'rgba(255, 92, 0, 0.1)', tension: 0.4, fill: true }]
+            },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#F2EDE6' } } }, scales: { y: { grid: { color: '#2A2A2A' }, ticks: { color: '#F2EDE6' } }, x: { ticks: { color: '#F2EDE6' } } } }
+        });
+    }
+
+    async function renderAdminUsers() {
+        const usersSnapshot = await db.collection('users').get();
+        const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const content = document.getElementById('adminContent');
+        
+        content.innerHTML = `
+            <div class="card-header">Usuários da Plataforma</div>
+            <div class="tabs" style="margin-bottom: 24px;">
+                <button class="tab active" onclick="filterUsers('all')">Todos</button>
+                <button class="tab" onclick="filterUsers('client')">Clientes</button>
+                <button class="tab" onclick="filterUsers('professional')">Profissionais</button>
+            </div>
+            <div id="usersList">
+                ${users.map(user => `
+                    <div style="padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <div><strong>${user.name}</strong> <span style="font-size: 11px; color: var(--text-muted);">${user.type === 'client' ? '👤 Cliente' : user.type === 'professional' ? '🔨 Profissional' : '📊 Admin'}</span></div>
+                            <div style="font-size: 12px; color: var(--text-dim);">${user.email} • ${user.phone}</div>
+                            <div style="font-size: 12px; color: var(--text-dim);">Região: ${user.region}</div>
+                            ${user.type === 'professional' ? `<div style="font-size: 12px; color: var(--text-dim);">Avaliação: ${(user.rating || 0).toFixed(1)} ★ (${user.reviews || 0} reviews)</div>` : ''}
+                        </div>
+                        <div>
+                            <span class="order-status ${user.status === 'active' ? 'status-completed' : 'status-pending'}">${user.status === 'active' ? 'Ativo' : 'Pendente'}</span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    async function renderAdminOrders() {
+        const ordersSnapshot = await db.collection('orders').orderBy('createdAt', 'desc').get();
+        const orders = ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const content = document.getElementById('adminContent');
+        
+        content.innerHTML = `
+            <div class="card-header">Todos os Pedidos</div>
+            ${orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-service">
+                            <div class="order-service-icon">${SERVICES.find(s => s.id === order.serviceId)?.icon || '🔧'}</div>
+                            <div>
+                                <div class="order-service-name">${order.serviceName}</div>
+                                <div class="order-service-region">📍 ${order.region}</div>
+                                <div class="order-service-region" style="font-size: 11px;">👤 ${order.clientName}</div>
+                                ${order.professionalName ? `<div class="order-service-region" style="font-size: 11px;">🔨 ${order.professionalName}</div>` : ''}
+                            </div>
+                        </div>
+                        <div class="order-value">R$ ${order.total.toFixed(2)}</div>
+                    </div>
+                    <div style="margin-bottom: 12px; color: var(--text-dim); font-size: 14px;">${order.description}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="order-status status-${order.status}">
+                            ${order.status === 'pending' ? '⏳ Aguardando' : order.status === 'accepted' ? '🔨 Em andamento' : order.status === 'completed' ? '✅ Concluído' : '✕ Cancelado'}
+                        </span>
+                        <span style="font-size: 12px; color: var(--text-muted);">${new Date(order.createdAt).toLocaleString('pt-BR')}</span>
+                    </div>
+                    ${order.commission ? `<div style="margin-top: 12px; font-size: 12px; color: var(--success);">Comissão: R$ ${order.commission.toFixed(2)}</div>` : ''}
+                </div>
+            `).join('')}
+        `;
+    }
+
+    async function renderAdminCoupons() {
+        const couponsSnapshot = await db.collection('coupons').get();
+        const coupons = couponsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const content = document.getElementById('adminContent');
+        
+        content.innerHTML = `
+            <div class="card-header">
+                <span>Cupons de Desconto</span>
+                <button class="btn btn-primary" onclick="showCreateCouponModal()">+ Novo Cupom</button>
+            </div>
+            <div class="grid-2">
+                ${coupons.map(coupon => `
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 20px; color: var(--primary);">${coupon.code}</div>
+                                <div style="font-size: 24px; font-weight: 700;">${coupon.discount}% OFF</div>
+                            </div>
+                            <span class="order-status ${coupon.active ? 'status-completed' : 'status-pending'}">${coupon.active ? 'Ativo' : 'Inativo'}</span>
+                        </div>
+                        <div style="margin-top: 12px; font-size: 12px; color: var(--text-dim);">
+                            Expira em: ${coupon.expiresAt ? new Date(coupon.expiresAt).toLocaleDateString('pt-BR') : 'Nunca'}
+                        </div>
+                        <div style="margin-top: 16px; display: flex; gap: 8px;">
+                            <button class="btn btn-secondary" style="flex: 1; padding: 6px;" onclick="toggleCoupon('${coupon.id}', ${!coupon.active})">${coupon.active ? 'Desativar' : 'Ativar'}</button>
+                            <button class="btn btn-danger" style="flex: 1; padding: 6px;" onclick="deleteCoupon('${coupon.id}')">Excluir</button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    function showCreateCouponModal() {
+        document.getElementById('modalTitle').textContent = 'Novo Cupom';
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group">
+                <label class="form-label">Código</label>
+                <input type="text" class="form-input" id="couponCode" placeholder="DESCONTO10">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Desconto (%)</label>
+                <input type="number" class="form-input" id="couponDiscount" placeholder="10" min="1" max="100">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Data de Expiração (opcional)</label>
+                <input type="date" class="form-input" id="couponExpires">
+            </div>
+        `;
+        document.getElementById('modalFooter').innerHTML = `
+            <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="createCoupon()">Criar Cupom</button>
+        `;
+        document.getElementById('modal').classList.add('active');
+    }
+
+    async function createCoupon() {
+        const code = document.getElementById('couponCode').value.toUpperCase();
+        const discount = parseInt(document.getElementById('couponDiscount').value);
+        const expiresAt = document.getElementById('couponExpires').value;
+        
+        if (!code || !discount) {
+            showToast('Preencha todos os campos');
+            return;
+        }
+        
+        await db.collection('coupons').add({
+            code: code,
+            discount: discount,
+            active: true,
+            expiresAt: expiresAt || null,
+            createdAt: new Date().toISOString()
+        });
+        
+        closeModal();
+        showToast('Cupom criado com sucesso!');
+        renderAdminCoupons();
+    }
+
+    async function toggleCoupon(couponId, active) {
+        await db.collection('coupons').doc(couponId).update({ active: active });
+        showToast(active ? 'Cupom ativado' : 'Cupom desativado');
+        renderAdminCoupons();
+    }
+
+    async function deleteCoupon(couponId) {
+        if (confirm('Tem certeza que deseja excluir este cupom?')) {
+            await db.collection('coupons').doc(couponId).delete();
+            showToast('Cupom excluído');
+            renderAdminCoupons();
+        }
+    }
+
+    async function renderAdminReports() {
+        const usersSnapshot = await db.collection('users').get();
+        const users = usersSnapshot.docs.map(doc => doc.data());
+        const clients = users.filter(u => u.type === 'client');
+        const professionals = users.filter(u => u.type === 'professional');
+        
+        const ordersSnapshot = await db.collection('orders').get();
+        const orders = ordersSnapshot.docs.map(doc => doc.data());
+        const totalRevenue = orders.reduce((sum, o) => sum + (o.commission || 0), 0);
+        const avgOrderValue = orders.length > 0 ? orders.reduce((sum, o) => sum + o.total, 0) / orders.length : 0;
+        
+        const content = document.getElementById('adminContent');
+        content.innerHTML = `
+            <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="card">
+                    <div class="card-header">Resumo da Plataforma</div>
+                    <div style="display: grid; gap: 16px;">
+                        <div style="display: flex; justify-content: space-between;"><span>Total de Clientes:</span><span style="font-weight: 700;">${clients.length}</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span>Total de Profissionais:</span><span style="font-weight: 700;">${professionals.length}</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span>Total de Pedidos:</span><span style="font-weight: 700;">${orders.length}</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span>Receita Total:</span><span style="font-weight: 700; color: var(--success);">R$ ${totalRevenue.toFixed(2)}</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span>Ticket Médio:</span><span style="font-weight: 700;">R$ ${avgOrderValue.toFixed(2)}</span></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Exportar Dados</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <button class="btn btn-secondary" onclick="exportData('users')">📥 Exportar Usuários (CSV)</button>
+                        <button class="btn btn-secondary" onclick="exportData('orders')">📥 Exportar Pedidos (CSV)</button>
+                        <button class="btn btn-secondary" onclick="exportData('revenue')">📥 Exportar Receita (CSV)</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Serviços Mais Solicitados</div>
+                <div id="servicesChart" style="height: 300px;"></div>
+            </div>
+        `;
+        
+        const serviceCount = {};
+        orders.forEach(order => {
+            serviceCount[order.serviceName] = (serviceCount[order.serviceName] || 0) + 1;
+        });
+        
+        const serviceLabels = Object.keys(serviceCount);
+        const serviceData = Object.values(serviceCount);
+        
+        const ctx = document.createElement('canvas');
+        document.getElementById('servicesChart').innerHTML = '';
+        document.getElementById('servicesChart').appendChild(ctx);
+        new Chart(ctx, {
+            type: 'bar',
+            data: { labels: serviceLabels, datasets: [{ label: 'Quantidade', data: serviceData, backgroundColor: '#FF5C00', borderRadius: 8 }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#F2EDE6' } } }, scales: { y: { grid: { color: '#2A2A2A' }, ticks: { color: '#F2EDE6' } }, x: { ticks: { color: '#F2EDE6' } } } }
+        });
+    }
+
+    async function exportData(type) {
+        let data = [];
+        let headers = [];
+        
+        if (type === 'users') {
+            const snapshot = await db.collection('users').get();
+            data = snapshot.docs.map(doc => doc.data());
+            headers = ['Nome', 'Email', 'Telefone', 'Região', 'Tipo', 'Status', 'Data Cadastro'];
+            const csv = [headers.join(','), ...data.map(u => `"${u.name}","${u.email}","${u.phone}","${u.region}","${u.type}","${u.status}","${new Date(u.createdAt).toLocaleDateString('pt-BR')}"`)].join('\n');
+            downloadCSV(csv, 'usuarios.csv');
+        } else if (type === 'orders') {
+            const snapshot = await db.collection('orders').get();
+            data = snapshot.docs.map(doc => doc.data());
+            headers = ['Serviço', 'Cliente', 'Profissional', 'Região', 'Valor', 'Comissão', 'Status', 'Data'];
+            const csv = [headers.join(','), ...data.map(o => `"${o.serviceName}","${o.clientName}","${o.professionalName || ''}","${o.region}","${o.total}","${o.commission || 0}","${o.status}","${new Date(o.createdAt).toLocaleDateString('pt-BR')}"`)].join('\n');
+            downloadCSV(csv, 'pedidos.csv');
+        } else if (type === 'revenue') {
+            const snapshot = await db.collection('orders').get();
+            data = snapshot.docs.map(doc => doc.data());
+            const monthlyRevenue = {};
+            data.forEach(o => {
+                const month = new Date(o.createdAt).toLocaleDateString('pt-BR', { month: '2-digit', year: 'numeric' });
+                monthlyRevenue[month] = (monthlyRevenue[month] || 0) + (o.commission || 0);
+            });
+            headers = ['Mês', 'Receita'];
+            const csv = [headers.join(','), ...Object.entries(monthlyRevenue).map(([month, revenue]) => `"${month}",${revenue.toFixed(2)}`)].join('\n');
+            downloadCSV(csv, 'receita.csv');
+        }
+    }
+
+    function downloadCSV(csv, filename) {
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    async function approveProfessional(userId) {
+        await db.collection('users').doc(userId).update({ status: 'active' });
+        showToast('Profissional aprovado!');
+        renderAdminDashboard();
+    }
+
+    async function rejectProfessional(userId) {
+        await db.collection('users').doc(userId).update({ status: 'rejected' });
+        showToast('Profissional rejeitado');
+        renderAdminDashboard();
+    }
+
+    function filterUsers(type) {
+        showToast(`Filtrando por ${type}`);
+    }
+
+    // ============================================
+    // INIT
+    // ============================================
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists) {
+                currentUser = { id: user.uid, ...userDoc.data() };
+                currentUserType = currentUser.type;
+                initApp();
+            }
+        } else {
+            document.getElementById('authSection').style.display = 'flex';
+            document.getElementById('mainSection').style.display = 'none';
+            document.getElementById('homeSection').style.display = 'none';
+            document.getElementById('navbar').style.display = 'none';
+            renderAuthForm();
+        }
+    });
+
+    renderAuthForm();
+</script>
+
+</body>
+</html>
