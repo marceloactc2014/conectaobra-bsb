@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#FF5C00">
+<title>MetaObra — Plataforma · DF</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--o:#FF5C00;--y:#FFD000;--bk:#080808;--dk:#0F0F0F;--card:#141414;--b1:#1E1E1E;--b2:#2A2A2A;--w:#F2EDE6;--tx:#8A8070;--mu:#444;--gr:#00C46A;--re:#FF3B3B;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;caret-color:auto;}
+html{scroll-behavior:smooth;}
+body{background:var(--bk);color:var(--w);font-family:'Syne',sans-serif;overflow-x:hidden;min-height:100vh;}
+input,textarea,select,button{font-family:'Syne',sans-serif!important;font-size:16px!important;}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--o);border-radius:2px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.4)}50%{box-shadow:0 0 0 10px rgba(255,92,0,0)}}
+@keyframes pop{0%{transform:scale(.92);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.4);background:var(--o);}50%{box-shadow:0 0 18px 4px rgba(255,92,0,.3);background:#FF7A2E;}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes glow{from{transform:scale(1)}to{transform:scale(1.07) translate(12px,-12px)}}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--gr);color:var(--bk);padding:.7rem 1.5rem;border-radius:8px;font-weight:700;font-size:.85rem;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,196,106,.4);display:none;animation:fadeUp .3s ease;}
+
+/* ── NAV ── */
+nav{background:rgba(8,8,8,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--b1);padding:.85rem 1.2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:500;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.04em;text-decoration:none;color:var(--w);}
+.logo em{color:var(--o);font-style:normal;}
+.logo-tag{font-family:'JetBrains Mono',monospace;font-size:.5rem;color:var(--o);margin-left:.4rem;letter-spacing:.1em;vertical-align:middle;background:rgba(255,92,0,.1);border:1px solid rgba(255,92,0,.3);padding:.1rem .35rem;border-radius:3px;}
+.nav-right{display:flex;align-items:center;gap:.5rem;}
+.nav-user{font-size:.72rem;color:var(--tx);}
+.nav-btn{background:none;border:1px solid var(--b2);color:var(--tx);padding:.3rem .7rem;border-radius:5px;cursor:pointer;font-size:.68rem;font-weight:600;transition:all .2s;}
+.nav-btn:hover{border-color:var(--o);color:var(--o);}
+.nav-home{font-size:.72rem;color:var(--tx);text-decoration:none;padding:.3rem .6rem;border:1px solid var(--b2);border-radius:5px;transition:all .2s;}
+.nav-home:hover{border-color:var(--o);color:var(--o);}
+
+/* ── TICKER ── */
+.ticker{background:var(--o);padding:.6rem 0;overflow:hidden;white-space:nowrap;display:none;}
+.ticker-inner{display:inline-flex;animation:ticker 26s linear infinite;}
+.ti{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.1em;color:var(--bk);padding:0 1.5rem;}
+.tdot{color:rgba(0,0,0,.25);}
+
+/* ── VIEWS ── */
+.view{display:none;}
+.view.active{display:block;animation:fadeUp .3s ease both;}
+
+/* ── AUTH ── */
+.auth-outer{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:2rem 1.2rem;position:relative;overflow:hidden;}
+.auth-orb{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,92,0,.12) 0%,transparent 68%);top:-60px;right:-60px;animation:glow 9s ease-in-out infinite alternate;pointer-events:none;}
+.auth-box{width:100%;max-width:420px;position:relative;z-index:1;}
+.auth-logo{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;text-align:center;line-height:.9;margin-bottom:.2rem;}
+.auth-logo em{color:var(--o);font-style:normal;}
+.auth-tagline{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--o);text-align:center;letter-spacing:.2em;margin-bottom:1.8rem;}
+.type-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;background:var(--dk);border-radius:10px;padding:.3rem;margin-bottom:1.3rem;}
+.type-tab{padding:.7rem;border-radius:7px;border:none;background:none;color:var(--tx);font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;}
+.type-tab.active{background:var(--o);color:var(--bk);}
+.auth-card{background:var(--card);border:1px solid var(--b1);border-radius:14px;padding:1.8rem 1.5rem;}
+.auth-title{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;margin-bottom:.2rem;}
+.auth-desc{font-size:.78rem;color:var(--tx);margin-bottom:1.3rem;line-height:1.5;}
+.field{margin-bottom:.9rem;}
+.field label{display:block;font-size:.63rem;font-weight:700;color:var(--tx);margin-bottom:.28rem;letter-spacing:.1em;text-transform:uppercase;}
+.inp{width:100%;background:var(--dk);border:1.5px solid var(--b2);border-radius:8px;padding:.78rem 1rem;color:var(--w);outline:none;transition:border-color .2s;appearance:none;}
+.inp:focus{border-color:var(--o);}
+.inp::placeholder{color:var(--mu);}
+.pw-wrap{position:relative;}
+.pw-wrap .inp{padding-right:3rem;}
+.pw-eye{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:var(--tx);width:auto;padding:0;}
+.err{color:var(--re);font-size:.7rem;margin-top:.25rem;}
+.btn{border:none;border-radius:8px;cursor:pointer;font-weight:700;letter-spacing:.04em;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;}
+.btn-p{background:var(--o);color:var(--bk);padding:.88rem 1.5rem;font-size:.92rem;width:100%;animation:blink 2.5s ease-in-out infinite;}
+.btn-p:hover{background:var(--y);animation:none;transform:translateY(-1px);}
+.btn-p:disabled{opacity:.4;cursor:not-allowed;animation:none;transform:none;}
+.btn-g{background:none;border:1px solid var(--b2);color:var(--tx);padding:.78rem 1.5rem;font-size:.85rem;width:100%;margin-top:.5rem;}
+.btn-g:hover{border-color:var(--o);color:var(--w);}
+.btn-gr{background:var(--gr);color:var(--bk);padding:.88rem 1.5rem;font-size:.9rem;}
+.btn-gr:hover{background:#00e07a;}
+.btn-re{background:none;border:1.5px solid var(--re);color:var(--re);padding:.75rem 1.5rem;font-size:.85rem;}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.spec-btn{padding:.5rem .6rem;border-radius:6px;border:1.5px solid var(--b2);background:var(--dk);color:var(--tx);font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:left;}
+.spec-btn.sel{border-color:var(--o);color:var(--o);background:rgba(255,92,0,.08);}
+.mode-link{text-align:center;margin-top:.9rem;font-size:.78rem;color:var(--tx);}
+.mode-link a{color:var(--o);cursor:pointer;font-weight:600;}
+
+/* ── CLIENT HEADER ── */
+.cli-header{background:var(--dk);border-bottom:1px solid var(--b1);padding:1.2rem 1.2rem 0;}
+.cli-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:.7rem;}
+.cli-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--o);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.3rem;}
+.cli-name{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;line-height:.9;}
+.cli-name em{color:var(--o);font-style:normal;}
+.cli-region{font-size:.72rem;color:var(--tx);margin-top:.3rem;}
+.novo-btn{background:var(--o);color:var(--bk);border:none;padding:.82rem 1.5rem;border-radius:9px;font-weight:800;font-size:.9rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;animation:blink 2.5s ease-in-out infinite;flex-shrink:0;}
+.novo-btn:hover{background:var(--y);animation:none;}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:.8rem;}
+.ms{background:var(--card);border:1px solid var(--b2);border-radius:8px;padding:.6rem;text-align:center;}
+.ms-n{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--o);line-height:1;}
+.ms-l{font-size:.55rem;color:var(--tx);text-transform:uppercase;letter-spacing:.07em;}
+.tabs{display:flex;border-top:1px solid var(--b1);overflow-x:auto;}
+.tab{padding:.82rem 1rem;font-size:.73rem;font-weight:700;color:var(--tx);cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab.active{color:var(--o);border-bottom-color:var(--o);}
+.content{padding:1.2rem;max-width:700px;margin:0 auto;padding-bottom:4rem;}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:1.2rem;margin-bottom:.7rem;}
+.sec-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--o);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.sec-tag::after{content:'';flex:1;height:1px;background:var(--b1);}
+
+/* PEDIDO CARD */
+.ped-card{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:1.1rem;margin-bottom:.6rem;transition:border-color .2s;}
+.ped-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem;}
+.ped-svc{display:flex;align-items:center;gap:.5rem;}
+.ped-ico{font-size:1.2rem;}
+.ped-name{font-weight:700;font-size:.88rem;}
+.ped-region{font-size:.68rem;color:var(--tx);margin-top:.08rem;}
+.ped-val{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--o);line-height:1;text-align:right;}
+.ped-date{font-size:.6rem;color:var(--mu);text-align:right;}
+.ped-desc{font-size:.76rem;color:var(--tx);padding:.5rem .7rem;background:var(--dk);border-radius:5px;margin:.4rem 0;line-height:1.5;}
+.ped-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.4rem;}
+.status{font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:3px;letter-spacing:.05em;}
+.s-ag{background:rgba(255,208,0,.1);color:var(--y);border:1px solid rgba(255,208,0,.25);}
+.s-ac{background:rgba(255,92,0,.1);color:var(--o);border:1px solid rgba(255,92,0,.25);}
+.s-ok{background:rgba(0,196,106,.1);color:var(--gr);border:1px solid rgba(0,196,106,.25);}
+.ped-id{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--mu);}
+
+/* AVALIAÇÃO */
+.aval-wrap{margin-top:.7rem;padding:.7rem;background:rgba(255,208,0,.05);border:1px solid rgba(255,208,0,.18);border-radius:7px;}
+.aval-label{font-size:.68rem;color:var(--y);margin-bottom:.4rem;font-weight:600;}
+.stars{display:flex;gap:.35rem;font-size:1.6rem;cursor:pointer;}
+.star{opacity:.25;transition:opacity .15s;}
+.star.sel{opacity:1;}
+.aval-done{font-size:.75rem;color:var(--gr);font-weight:600;}
+
+/* EMPTY */
+.empty{text-align:center;padding:3rem 1rem;}
+.empty-ico{font-size:2.5rem;margin-bottom:.7rem;}
+.empty-h{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:.3rem;}
+.empty-p{font-size:.8rem;color:var(--tx);}
+
+/* INICIO */
+.banner{background:linear-gradient(135deg,rgba(255,92,0,.15),rgba(255,92,0,.05));border:1px solid rgba(255,92,0,.2);border-radius:12px;padding:1.2rem;margin-bottom:1rem;display:flex;gap:.9rem;align-items:center;}
+.banner-ico{font-size:1.8rem;flex-shrink:0;}
+.banner-h{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--o);margin-bottom:.2rem;}
+.banner-p{font-size:.76rem;color:var(--tx);line-height:1.5;}
+.svc-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;margin-bottom:1rem;}
+@media(max-width:420px){.svc-mini-grid{grid-template-columns:repeat(2,1fr);}}
+.svc-mini{background:var(--card);border:1px solid var(--b1);border-radius:9px;padding:.8rem .5rem;cursor:pointer;text-align:center;transition:all .2s;}
+.svc-mini:hover{border-color:var(--o);transform:translateY(-2px);}
+.svc-mini:active{transform:scale(.96);}
+.svc-mini-ico{font-size:1.3rem;margin-bottom:.25rem;}
+.svc-mini-name{font-size:.65rem;font-weight:700;color:var(--w);}
+.gars{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.gar{background:var(--card);border:1px solid var(--b1);border-radius:8px;padding:.8rem;display:flex;gap:.55rem;align-items:flex-start;}
+.gar-ico{font-size:1.1rem;flex-shrink:0;}
+.gar-h{font-weight:700;font-size:.78rem;margin-bottom:.1rem;}
+.gar-p{font-size:.65rem;color:var(--tx);line-height:1.4;}
+
+/* CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 320px);min-height:350px;}
+.chat-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:.6rem;padding:.3rem 0;}
+.msg{display:flex;gap:.5rem;align-items:flex-end;max-width:88%;}
+.msg.bot{align-self:flex-start;}
+.msg.user{align-self:flex-end;flex-direction:row-reverse;}
+.bot-av{width:28px;height:28px;border-radius:50%;background:rgba(255,92,0,.15);border:1px solid rgba(255,92,0,.3);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.msg-bubble{padding:.6rem .85rem;border-radius:12px;font-size:.82rem;line-height:1.5;}
+.msg.bot .msg-bubble{background:var(--b1);border:1px solid var(--b2);color:var(--w);border-bottom-left-radius:3px;}
+.msg.user .msg-bubble{background:var(--o);color:var(--bk);font-weight:600;border-bottom-right-radius:3px;}
+.msg-time{font-size:.56rem;color:var(--mu);margin-bottom:.15rem;}
+.chat-opts{display:flex;flex-wrap:wrap;gap:.35rem;padding:.6rem 0;}
+.chat-opt{background:var(--card);border:1px solid var(--b2);border-radius:20px;padding:.4rem .85rem;font-size:.75rem;color:var(--tx);cursor:pointer;transition:all .2s;}
+.chat-opt:hover{border-color:var(--o);color:var(--o);}
+.chat-row{display:flex;gap:.5rem;padding-top:.6rem;border-top:1px solid var(--b1);}
+.chat-inp{flex:1;background:var(--dk);border:1.5px solid var(--b2);border-radius:8px;padding:.65rem .9rem;color:var(--w);outline:none;}
+.chat-inp:focus{border-color:var(--o);}
+.chat-send{background:var(--o);color:var(--bk);border:none;border-radius:8px;padding:.65rem 1rem;cursor:pointer;font-weight:700;font-size:.82rem;}
+
+/* PERFIL */
+.prof-row{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--b1);font-size:.82rem;}
+.prof-row:last-child{border:none;}
+.prof-lbl{color:var(--tx);font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;}
+.prof-val{font-weight:600;}
+
+/* NOVO PEDIDO */
+.np-header{padding:1rem 1.2rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:.7rem;}
+.np-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;}
+.step-bar{display:flex;gap:.3rem;margin-bottom:1.5rem;}
+.sd{flex:1;height:4px;border-radius:2px;background:var(--b1);transition:all .4s;}
+.sd.done{background:var(--o);box-shadow:0 0 6px rgba(255,92,0,.4);}
+.step-label{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--o);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.5rem;}
+.step-h{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:.25rem;}
+.step-sub{font-size:.8rem;color:var(--tx);margin-bottom:1.2rem;line-height:1.5;}
+.np-content{padding:1rem 1.2rem 4rem;max-width:600px;margin:0 auto;}
+
+/* SVC SELECT */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem;}
+@media(min-width:500px){.svc-grid{grid-template-columns:repeat(4,1fr);}}
+.svc-card{background:var(--card);border:1.5px solid var(--b1);border-radius:10px;padding:1rem .8rem;cursor:pointer;transition:all .2s;}
+.svc-card:hover{border-color:var(--b2);}
+.svc-card.sel{border-color:var(--o);background:rgba(255,92,0,.06);}
+.svc-card:active{transform:scale(.97);}
+.svc-ico{font-size:1.4rem;margin-bottom:.3rem;}
+.svc-name{font-weight:700;font-size:.82rem;margin-bottom:.15rem;}
+.svc-desc{font-size:.63rem;color:var(--tx);line-height:1.3;}
+.svc-visita{font-size:.58rem;color:var(--y);margin-top:.2rem;}
+.visita-box{background:rgba(255,208,0,.06);border:1px solid rgba(255,208,0,.2);border-radius:10px;padding:1.1rem;margin-bottom:1rem;}
+.visita-h{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--y);margin-bottom:.3rem;}
+.visita-p{font-size:.78rem;color:var(--tx);margin-bottom:.8rem;line-height:1.6;}
+.vopts{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.vopt{padding:.75rem;border-radius:7px;border:1.5px solid var(--b2);background:var(--bk);cursor:pointer;text-align:center;font-size:.78rem;font-weight:600;color:var(--tx);transition:all .2s;}
+.vopt.sel{border-color:var(--y);color:var(--y);background:rgba(255,208,0,.07);}
+.piso-opts{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.8rem;}
+.popt{padding:.9rem;border-radius:9px;border:1.5px solid var(--b2);background:var(--bk);cursor:pointer;text-align:center;transition:all .2s;}
+.popt.sel{border-color:var(--o);background:rgba(255,92,0,.06);}
+.popt-ico{font-size:1.6rem;margin-bottom:.3rem;}
+.popt-name{font-weight:700;font-size:.85rem;}
+.popt-price{font-size:.68rem;color:var(--tx);margin-top:.15rem;}
+.local-opts{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.8rem;}
+.lopt{padding:.7rem;border-radius:7px;border:1.5px solid var(--b2);background:var(--bk);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;font-weight:700;font-size:.82rem;color:var(--tx);transition:all .2s;}
+.lopt.sel{border-color:var(--o);color:var(--o);background:rgba(255,92,0,.06);}
+.piso-info{background:rgba(255,92,0,.06);border:1px solid rgba(255,92,0,.15);border-radius:8px;padding:.8rem;margin-bottom:.8rem;font-size:.75rem;color:var(--tx);line-height:1.7;}
+.piso-info strong{color:var(--gr);}
+
+/* ORÇAMENTO */
+.orc-card{background:var(--card);border:1px solid rgba(255,92,0,.2);border-radius:12px;padding:1.3rem;margin-bottom:.9rem;}
+.orc-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--o);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.7rem;}
+.orc-resumo{font-size:.82rem;color:var(--tx);padding:.6rem .8rem;background:var(--dk);border-radius:6px;margin-bottom:1rem;line-height:1.5;}
+.orc-item{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--b1);font-size:.8rem;}
+.orc-item:last-child{border:none;}
+.orc-item-n{color:var(--tx);}
+.orc-item-v{font-family:'JetBrains Mono',monospace;font-weight:600;}
+.orc-total{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0 .2rem;border-top:1px solid var(--b1);margin-top:.3rem;}
+.orc-total-l{font-weight:700;}
+.orc-total-v{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--o);line-height:1;}
+.orc-meta{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.5rem;}
+.orc-meta span{font-size:.7rem;color:var(--tx);}
+.orc-meta strong{color:var(--w);}
+.orc-obs{font-size:.7rem;color:var(--tx);margin-top:.5rem;padding:.5rem .7rem;background:var(--dk);border-radius:5px;line-height:1.5;}
+.orc-acts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.9rem;}
+
+/* PAGAMENTO */
+.pag-opts{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;}
+.pag-opt{padding:.9rem 1rem;border-radius:10px;border:1.5px solid var(--b2);background:var(--dk);cursor:pointer;display:flex;align-items:center;gap:.8rem;transition:all .2s;}
+.pag-opt.sel{border-color:var(--o);background:rgba(255,92,0,.05);}
+.pag-ico{font-size:1.3rem;}
+.pag-name{font-weight:700;font-size:.88rem;}
+.pag-desc{font-size:.68rem;color:var(--tx);margin-top:.1rem;}
+.parcelas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;margin:.6rem 0 1rem;}
+.parc-btn{padding:.5rem;border-radius:6px;border:1.5px solid var(--b2);background:var(--bk);cursor:pointer;text-align:center;font-size:.7rem;font-weight:600;color:var(--tx);transition:all .2s;}
+.parc-btn.sel{border-color:var(--o);color:var(--o);background:rgba(255,92,0,.07);}
+.mp-note{background:rgba(0,196,106,.06);border:1px solid rgba(0,196,106,.18);border-radius:7px;padding:.7rem .9rem;margin-bottom:.9rem;font-size:.73rem;color:var(--tx);}
+.mp-note strong{color:var(--w);}
+.pag-total-box{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:1rem;margin-bottom:1rem;}
+.pag-total-l{font-size:.82rem;color:var(--tx);}
+.pag-total-v{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--o);line-height:1;}
+.pag-total-sub{font-size:.65rem;color:var(--mu);margin-top:.2rem;}
+
+/* CONFIRMAÇÃO */
+.confirm-box{text-align:center;padding:1.5rem 0;}
+.confirm-ico{font-size:4rem;margin-bottom:.8rem;display:block;animation:pop .4s ease;}
+.confirm-h{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gr);margin-bottom:.4rem;}
+.confirm-sub{font-size:.83rem;color:var(--tx);margin-bottom:1rem;line-height:1.7;}
+.confirm-id{font-family:'JetBrains Mono',monospace;background:var(--dk);border:1px solid var(--b2);padding:.45rem 1.1rem;border-radius:4px;display:inline-block;color:var(--o);font-size:.88rem;letter-spacing:.18em;margin-bottom:1.2rem;}
+.tl{text-align:left;background:var(--dk);border:1px solid var(--b1);border-radius:10px;padding:1rem 1.1rem;}
+.tl-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--tx);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.7rem;}
+.tl-item{display:flex;gap:.65rem;margin-bottom:.55rem;align-items:flex-start;}
+.tl-dot{width:7px;height:7px;border-radius:50%;background:var(--o);flex-shrink:0;margin-top:.3rem;animation:pulse 2s infinite;}
+.tl-dot.gray{background:var(--b2);animation:none;}
+.tl-txt{font-size:.78rem;color:var(--tx);line-height:1.4;}
+.tl-txt strong{color:var(--w);}
+.wa-confirm-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.88rem;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.9rem;cursor:pointer;margin-top:.9rem;text-decoration:none;}
+
+/* PRO DASH */
+.pro-header{background:var(--dk);border-bottom:1px solid var(--b1);padding:1.2rem 1.2rem 0;}
+.pro-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:.9rem;}
+@media(min-width:500px){.pro-kpis{grid-template-columns:repeat(4,1fr);}}
+.kpi{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:.9rem;text-align:center;}
+.kpi-n{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--o);line-height:1;}
+.kpi.gr .kpi-n{color:var(--gr);}
+.kpi.ye .kpi-n{color:var(--y);}
+.kpi.wh .kpi-n{color:var(--w);}
+.kpi-l{font-size:.58rem;color:var(--tx);text-transform:uppercase;letter-spacing:.07em;margin-top:.2rem;}
+.chamado-card{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:1rem;margin-bottom:.6rem;}
+.cc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem;}
+.cc-name{font-weight:700;font-size:.9rem;}
+.cc-region{font-size:.68rem;color:var(--tx);margin-top:.08rem;}
+.cc-val{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--o);line-height:1;text-align:right;}
+.cc-liq{font-size:.63rem;color:var(--gr);text-align:right;}
+.cc-desc{font-size:.76rem;color:var(--tx);padding:.5rem .7rem;background:var(--dk);border-radius:5px;margin:.4rem 0;line-height:1.5;}
+.cc-acts{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.5rem;}
+.btn-aceitar{padding:.7rem;background:var(--gr);color:var(--bk);border:none;border-radius:7px;font-weight:800;font-size:.8rem;cursor:pointer;}
+.btn-passar{padding:.7rem;background:none;border:1px solid var(--b2);color:var(--tx);border-radius:7px;font-size:.78rem;cursor:pointer;}
+.com-badge{background:rgba(255,92,0,.12);border:1px solid rgba(255,92,0,.2);border-radius:3px;padding:.1rem .4rem;font-size:.58rem;color:var(--o);font-weight:700;margin-left:.35rem;}
+</style>
+</head>
+<body>
+<div class="toast" id="toastEl"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="Institucional.html" class="logo">Meta<em>Obra</em><span class="logo-tag">DF</span></a>
+  <div class="nav-right">
+    <span class="nav-user" id="navUser"></span>
+    <a href="Institucional.html" class="nav-home">🏠</a>
+    <button class="nav-btn" id="btnLogout" onclick="doLogout()" style="display:none">Sair</button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker" id="mainTicker">
+  <div class="ticker-inner" id="tickerEl">
+    <span class="ti">PROFISSIONAIS VERIFICADOS</span><span class="tdot">✦</span>
+    <span class="ti">GARANTIA 90 DIAS</span><span class="tdot">✦</span>
+    <span class="ti">PAGAMENTO MERCADO PAGO</span><span class="tdot">✦</span>
+    <span class="ti">APENAS NO DF</span><span class="tdot">✦</span>
+  </div>
+</div>
+
+<!-- VIEW: AUTH -->
+<div class="view active" id="viewAuth">
+  <div class="auth-outer">
+    <div class="auth-orb"></div>
+    <div class="auth-box">
+      <div class="auth-logo">Meta<em>Obra</em></div>
+      <div class="auth-tagline">// PLATAFORMA DE SERVIÇOS · DF</div>
+      <div class="type-tabs">
+        <button class="type-tab active" onclick="setType('client')" id="tabCli">👤 Sou Cliente</button>
+        <button class="type-tab" onclick="setType('pro')" id="tabPro">🔨 Sou Profissional</button>
+      </div>
+      <div class="auth-card" id="authCard"></div>
+      <div style="text-align:center;margin-top:.9rem;">
+        <a href="Institucional.html" style="font-size:.75rem;color:var(--tx);text-decoration:none;">← Voltar ao início</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW: CLIENTE -->
+<div class="view" id="viewCliente">
+  <div class="cli-header">
+    <div class="cli-top">
+      <div>
+        <div class="cli-tag">// MetaObra · DF</div>
+        <div class="cli-name">Olá, <em id="cliName">Cliente</em> 👋</div>
+        <div class="cli-region" id="cliRegion"></div>
+      </div>
+      <button class="novo-btn" onclick="showNovoPedido()">+ Solicitar Serviço</button>
+    </div>
+    <div class="mini-stats" id="cliStats"></div>
+    <div class="tabs">
+      <button class="tab active" onclick="cliTab('inicio')" id="cliTabInicio">🏠 Início</button>
+      <button class="tab" onclick="cliTab('pedidos')" id="cliTabPedidos">📋 Pedidos</button>
+      <button class="tab" onclick="cliTab('chat')" id="cliTabChat">💬 Suporte</button>
+      <button class="tab" onclick="cliTab('perfil')" id="cliTabPerfil">👤 Perfil</button>
+    </div>
+  </div>
+  <div class="content" id="cliContent"></div>
+</div>
+
+<!-- VIEW: NOVO PEDIDO -->
+<div class="view" id="viewNovoPedido">
+  <div class="np-header">
+    <button class="nav-btn" onclick="showCliente()">← Voltar</button>
+    <span class="np-title">Novo Serviço</span>
+  </div>
+  <div class="np-content">
+    <div class="step-bar" id="stepBar">
+      <div class="sd done" id="sd1"></div>
+      <div class="sd" id="sd2"></div>
+      <div class="sd" id="sd3"></div>
+      <div class="sd" id="sd4"></div>
+    </div>
+    <div id="stepContent"></div>
+  </div>
+</div>
+
+<!-- VIEW: PRO -->
+<div class="view" id="viewPro">
+  <div class="pro-header">
+    <div class="cli-top">
+      <div>
+        <div class="cli-tag">// Painel Profissional · DF</div>
+        <div class="cli-name">Olá, <em id="proName">Pro</em> 🔨</div>
+      </div>
+    </div>
+    <div class="pro-kpis" id="proKpis"></div>
+    <div class="tabs">
+      <button class="tab active" onclick="proTab('chamados')" id="proTabChamados">📋 Chamados</button>
+      <button class="tab" onclick="proTab('aceitos')" id="proTabAceitos">✅ Aceitos</button>
+      <button class="tab" onclick="proTab('ganhos')" id="proTabGanhos">💰 Ganhos</button>
+    </div>
+  </div>
+  <div class="content" id="proContent"></div>
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+const app = initializeApp({
+  apiKey:"AIzaSyAefv4XC9BYZ1gPDD8ITF419bBskHI2Iik",
+  authDomain:"conectaobra-bsb.firebaseapp.com",
+  projectId:"conectaobra-bsb",
+  storageBucket:"conectaobra-bsb.firebasestorage.app",
+  messagingSenderId:"1034783709360",
+  appId:"1:1034783709360:web:36931b3d8d5e1ca1f58375"
+});
+const db=getFirestore(app);
+window.fbAdd=async(col,data)=>{try{return await addDoc(collection(db,col),{...data,createdAt:new Date().toISOString()});}catch(e){return null;}};
+window.fbSet=async(col,id,data)=>{try{await setDoc(doc(db,col,id),{...data,updatedAt:new Date().toISOString()});return true;}catch(e){return false;}};
+window.fbList=async(col)=>{try{const s=await getDocs(collection(db,col));return s.docs.map(d=>({...d.data(),_id:d.id}));}catch(e){return [];}};
+window.firebaseOK=true;
+</script>
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────
+const WA='5561985986566';
+const TAXA_VISITA=250;
+const SVCS=[
+  {id:'hidraulica',icon:'🔧',name:'Hidráulica',desc:'Torneira, chuveiro, vazamento',visita:false,min:200,max:1500,time:'1-3h'},
+  {id:'eletrica',icon:'⚡',name:'Elétrica',desc:'Tomada, disjuntor, fiação',visita:false,min:200,max:2000,time:'1-4h'},
+  {id:'pintura',icon:'🎨',name:'Pintura',desc:'Paredes, teto, fachadas',visita:true,min:300,max:8000,time:'1-5 dias'},
+  {id:'piso',icon:'🏠',name:'Piso',desc:'Cerâmica, porcelanato',visita:true,min:400,max:8000,time:'1-5 dias',isPiso:true},
+  {id:'drywall',icon:'🧱',name:'Drywall',desc:'Paredes, forros, divisórias',visita:true,min:500,max:15000,time:'1-5 dias'},
+  {id:'desentupimento',icon:'🚿',name:'Desentupimento',desc:'Pias, vasos, ralos',visita:false,min:200,max:800,time:'1-3h'},
+  {id:'reforma',icon:'🏗️',name:'Reforma',desc:'Banheiro, cozinha, ambiente',visita:true,min:3000,max:30000,time:'3-30 dias'},
+];
+const REGIOES=['Asa Norte','Asa Sul','Lago Norte','Lago Sul','Águas Claras','Taguatinga','Ceilândia','Samambaia','Gama','Sobradinho','Planaltina','Guará','Cruzeiro','Sudoeste/Octogonal','Park Way','Vicente Pires','Riacho Fundo','Recanto das Emas','Santa Maria','São Sebastião','Núcleo Bandeirante','Jardim Botânico','Outro — DF'];
+
+let currentUser=null,authType='client',authMode='login',selSpecs=[];
+let currentStep=1,pedidoData={},currentOrc=null,selPag='pix',selParc=1;
+
+function ls(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch{return null;}}
+function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+function fmt(v){return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function comissao(v){return v<=500?.20:v<=3000?.15:.10;}
+function toast(msg,color='var(--gr)'){const t=document.getElementById('toastEl');t.textContent=msg;t.style.background=color;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+// Ticker
+document.getElementById('tickerEl').innerHTML+=document.getElementById('tickerEl').innerHTML;
+
+// Init
+window.onload=()=>{
+  const s=ls('co_session');
+  if(s&&s.id){loginUser(s,false);}
+  else{renderAuthForm();}
+};
+
+// ── AUTH ────────────────────────────────────────────────────
+function setType(t){
+  authType=t;
+  document.getElementById('tabCli').classList.toggle('active',t==='client');
+  document.getElementById('tabPro').classList.toggle('active',t==='pro');
+  selSpecs=[];renderAuthForm();
+}
+
+function renderAuthForm(){
+  const isLogin=authMode==='login', isPro=authType==='pro';
+  const regionHtml=isPro
+    ?`<div class="field"><label>CEP *</label><input class="inp" id="aRegion" placeholder="00000-000" type="tel"></div>`
+    :`<div class="field"><label>Região no DF *</label><select class="inp" id="aRegion"><option value="">Selecione...</option>${REGIOES.map(r=>`<option>${r}</option>`).join('')}</select></div>`;
+  const specsHtml=isPro&&!isLogin?`<div class="field"><label>Especialidades *</label><div class="spec-grid">${SVCS.map(s=>`<button class="spec-btn" data-id="${s.id}" type="button" onclick="toggleSpec(this)">${s.icon} ${s.name}</button>`).join('')}</div></div>`:'';
+  document.getElementById('authCard').innerHTML=`
+    <div class="auth-title">${isLogin?(isPro?'Entrar como Pro':'Entrar como Cliente'):(isPro?'Cadastro Profissional':'Cadastro Cliente')}</div>
+    <div class="auth-desc">${isLogin?'WhatsApp e senha para entrar.':'Rápido e gratuito. Comece agora.'}</div>
+    ${!isLogin?`<div class="field"><label>Nome completo *</label><input class="inp" id="aName" placeholder="Seu nome" autocomplete="name"></div>`:''}
+    <div class="field"><label>WhatsApp *</label><input class="inp" id="aPhone" placeholder="(61) 99999-9999" type="tel" autocomplete="tel"></div>
+    ${!isLogin?regionHtml:''}
+    ${specsHtml}
+    <div class="field"><label>Senha *</label>
+      <div class="pw-wrap">
+        <input class="inp" id="aPwd" type="password" placeholder="${isLogin?'Sua senha':'Crie uma senha'}" onkeydown="if(event.key==='Enter')doAuth()">
+        <button class="pw-eye" type="button" onclick="togglePwd('aPwd',this)">👁️</button>
+      </div>
+    </div>
+    <div class="err" id="authErr"></div>
+    <button class="btn btn-p" style="margin-top:.3rem;animation:none" onclick="doAuth()">${isLogin?'Entrar →':'Criar conta →'}</button>
+    <div class="mode-link">${isLogin?`Não tenho conta — <a onclick="authMode='register';renderAuthForm()">Cadastrar</a>`:`Já tenho conta — <a onclick="authMode='login';renderAuthForm()">Entrar</a>`}</div>`;
+}
+
+function toggleSpec(btn){
+  const id=btn.dataset.id;
+  if(selSpecs.includes(id)){selSpecs=selSpecs.filter(x=>x!==id);btn.classList.remove('sel');}
+  else{selSpecs.push(id);btn.classList.add('sel');}
+}
+function togglePwd(id,btn){
+  const inp=document.getElementById(id);inp.type=inp.type==='password'?'text':'password';btn.textContent=inp.type==='password'?'👁️':'🙈';
+}
+
+function doAuth(){
+  const phone=document.getElementById('aPhone')?.value.trim();
+  const pwd=document.getElementById('aPwd')?.value;
+  const err=document.getElementById('authErr');
+  err.textContent='';
+  if(!phone||phone.replace(/\D/g,'').length<10){err.textContent='⚠ WhatsApp inválido';return;}
+  if(!pwd||pwd.length<4){err.textContent='⚠ Senha muito curta';return;}
+  const users=ls('co_users')||[];
+  if(authMode==='login'){
+    const u=users.find(u=>u.phone.replace(/\D/g,'')===phone.replace(/\D/g,'')&&u.pwd===pwd&&u.type===authType);
+    if(!u){err.textContent='⚠ Dados incorretos ou conta não encontrada';return;}
+    loginUser(u,true);
+  } else {
+    const name=document.getElementById('aName')?.value.trim();
+    if(!name){err.textContent='⚠ Informe seu nome';return;}
+    const region=document.getElementById('aRegion')?.value;
+    if(!region){err.textContent='⚠ Informe sua região';return;}
+    if(users.find(u=>u.phone.replace(/\D/g,'')===phone.replace(/\D/g,''))){err.textContent='⚠ WhatsApp já cadastrado';return;}
+    const u={id:'U'+Date.now(),type:authType,name,phone,region,pwd,specs:selSpecs,createdAt:new Date().toISOString()};
+    users.push(u);ss('co_users',users);
+    if(window.fbSet)window.fbSet('usuarios',u.id,u);
+    loginUser(u,true);
+  }
+}
+
+function loginUser(u,save){
+  currentUser=u;
+  if(save)ss('co_session',u);
+  document.getElementById('navUser').textContent=u.name.split(' ')[0];
+  document.getElementById('btnLogout').style.display='block';
+  document.getElementById('mainTicker').style.display='block';
+  if(u.type==='client')showCliente();
+  else showPro();
+}
+
+function doLogout(){
+  ss('co_session',null);currentUser=null;
+  document.getElementById('navUser').textContent='';
+  document.getElementById('btnLogout').style.display='none';
+  document.getElementById('mainTicker').style.display='none';
+  authMode='login';renderAuthForm();showView('viewAuth');
+}
+
+// ── CLIENTE ─────────────────────────────────────────────────
+function showCliente(){
+  document.getElementById('cliName').textContent=currentUser.name.split(' ')[0];
+  document.getElementById('cliRegion').textContent='📍 '+currentUser.region;
+  showView('viewCliente');
+  cliTab('inicio');
+}
+
+function cliTab(tab){
+  ['inicio','pedidos','chat','perfil'].forEach(t=>{
+    document.getElementById('cliTab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active',t===tab);
+  });
+  const pedidos=(ls('co_pedidos')||[]).filter(p=>p.clienteId===currentUser.id);
+  const ativos=pedidos.filter(p=>p.status==='aguardando'||p.status==='aceito').length;
+  document.getElementById('cliStats').innerHTML=`
+    <div class="ms"><div class="ms-n">${pedidos.length}</div><div class="ms-l">Pedidos</div></div>
+    <div class="ms"><div class="ms-n">${ativos}</div><div class="ms-l">Ativos</div></div>
+    <div class="ms"><div class="ms-n">90</div><div class="ms-l">Dias gar.</div></div>`;
+  const c=document.getElementById('cliContent');
+  if(tab==='inicio')renderInicio(c,pedidos);
+  else if(tab==='pedidos')renderPedidos(c,pedidos);
+  else if(tab==='chat')renderChat(c);
+  else if(tab==='perfil')renderPerfil(c);
+}
+
+function renderInicio(c,pedidos){
+  c.innerHTML=`
+    <div class="banner"><div class="banner-ico">🔨</div><div>
+      <div class="banner-h">O que precisa resolver hoje?</div>
+      <div class="banner-p">Profissionais verificados no DF — rápido, com garantia e preço fechado.</div>
+    </div></div>
+    <div class="sec-tag">Serviços disponíveis</div>
+    <div class="svc-mini-grid">${SVCS.map(s=>`<div class="svc-mini" onclick="showNovoPedido('${s.id}')"><div class="svc-mini-ico">${s.icon}</div><div class="svc-mini-name">${s.name}</div></div>`).join('')}</div>
+    <div class="sec-tag">Padrão de qualidade</div>
+    <div class="gars">
+      <div class="gar"><div class="gar-ico">🛡️</div><div><div class="gar-h">Garantia 90 dias</div><div class="gar-p">Problema voltou? Resolvemos.</div></div></div>
+      <div class="gar"><div class="gar-ico">💰</div><div><div class="gar-h">Preço fechado</div><div class="gar-p">Sem surpresa no final.</div></div></div>
+      <div class="gar"><div class="gar-ico">🦺</div><div><div class="gar-h">EPI obrigatório</div><div class="gar-p">Segurança em todo atendimento.</div></div></div>
+      <div class="gar"><div class="gar-ico">📸</div><div><div class="gar-h">Foto antes/depois</div><div class="gar-p">Registro obrigatório.</div></div></div>
+      <div class="gar"><div class="gar-ico">🕐</div><div><div class="gar-h">Pontualidade</div><div class="gar-p">Horário cumprido.</div></div></div>
+      <div class="gar"><div class="gar-ico">✅</div><div><div class="gar-h">Você aprova</div><div class="gar-p">Paga só após aprovar.</div></div></div>
+    </div>
+    ${pedidos.length?`<div class="sec-tag" style="margin-top:1rem">Últimos pedidos</div>${pedidos.slice(0,2).map(p=>pedCard(p)).join('')}`:''}`;
+}
+
+function pedCard(p){
+  const sm={aguardando:'s-ag',aceito:'s-ac',concluido:'s-ok'};
+  const sl={aguardando:'⏳ Aguardando',aceito:'🔨 A caminho',concluido:'✅ Concluído'};
+  const svc=SVCS.find(s=>s.id===p.svcId);
+  const avalHtml=p.status==='concluido'&&!p.avaliado?`
+    <div class="aval-wrap">
+      <div class="aval-label">⭐ Avalie este serviço:</div>
+      <div class="stars" id="stars_${p.id}">${[1,2,3,4,5].map(n=>`<span class="star" onclick="avaliar('${p.id}',${n})" data-n="${n}">★</span>`).join('')}</div>
+    </div>`:p.avaliado?`<div style="font-size:.72rem;color:var(--gr);margin-top:.5rem">✅ Avaliado — ${'★'.repeat(p.avaliacao||5)}</div>`:'';
+  return `<div class="ped-card">
+    <div class="ped-top">
+      <div class="ped-svc"><span class="ped-ico">${svc?.icon||'🔧'}</span><div><div class="ped-name">${p.svcNome}</div><div class="ped-region">📍 ${currentUser.region}</div></div></div>
+      <div><div class="ped-val">R$${fmt(p.total||0)}</div><div class="ped-date">${new Date(p.createdAt).toLocaleDateString('pt-BR')}</div></div>
+    </div>
+    ${p.desc?`<div class="ped-desc">${p.desc}</div>`:''}
+    <div class="ped-bottom">
+      <span class="status ${sm[p.status]||'s-ag'}">${sl[p.status]||'⏳'}</span>
+      <span class="ped-id">${p.id}</span>
+    </div>
+    ${avalHtml}
+  </div>`;
+}
+
+function avaliar(pedId,nota){
+  const pedidos=ls('co_pedidos')||[];
+  const p=pedidos.find(x=>x.id===pedId);
+  if(p){p.avaliacao=nota;p.avaliado=true;}
+  ss('co_pedidos',pedidos);
+  if(window.fbSet&&p)window.fbSet('pedidos',pedId.replace('#',''),p);
+  const row=document.getElementById('stars_'+pedId);
+  if(row)row.parentElement.innerHTML=`<div class="aval-done">✅ Obrigado! Avaliação: ${'★'.repeat(nota)}</div>`;
+  toast('⭐ Avaliação enviada!');
+}
+
+function renderPedidos(c,pedidos){
+  if(!pedidos.length){c.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-h">Nenhum pedido</div><div class="empty-p">Toque em "Solicitar Serviço" para começar!</div></div>`;return;}
+  c.innerHTML=pedidos.map(p=>pedCard(p)).join('');
+}
+
+function renderChat(c){
+  c.innerHTML=`
+    <div class="sec-tag">Central de suporte</div>
+    <div class="chat-wrap">
+      <div class="chat-msgs" id="chatMsgs"></div>
+      <div id="chatOpts" class="chat-opts"></div>
+      <div class="chat-row">
+        <input class="chat-inp" id="chatInp" placeholder="Digite sua dúvida..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="chat-send" onclick="sendChat()">→</button>
+      </div>
+    </div>`;
+  initChat();
+}
+
+function renderPerfil(c){
+  c.innerHTML=`
+    <div class="card">
+      <div class="sec-tag">Seus dados</div>
+      ${[['Nome',currentUser.name],['WhatsApp',currentUser.phone],['Região',currentUser.region],['Membro desde',new Date(currentUser.createdAt||Date.now()).toLocaleDateString('pt-BR')]].map(([l,v])=>`
+      <div class="prof-row"><div class="prof-lbl">${l}</div><div class="prof-val">${v}</div></div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="sec-tag">Padrão garantido</div>
+      <div style="font-size:.8rem;color:var(--tx);line-height:2">
+        ✅ Profissional com EPI obrigatório<br/>
+        ✅ Preço fechado antes de começar<br/>
+        ✅ Serviço aprovado por você antes do pagamento<br/>
+        ✅ Foto antes e depois registrada<br/>
+        ✅ Garantia de 90 dias no executado
+      </div>
+    </div>
+    <button class="btn btn-g" onclick="doLogout()">Sair da conta</button>`;
+}
+
+// ── CHAT ────────────────────────────────────────────────────
+function addBot(txt){
+  const m=document.getElementById('chatMsgs');if(!m)return;
+  const d=document.createElement('div');d.className='msg bot';
+  d.innerHTML=`<div class="bot-av">🤖</div><div><div class="msg-time">Central MetaObra</div><div class="msg-bubble">${txt}</div></div>`;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;
+}
+function addUser(txt){
+  const m=document.getElementById('chatMsgs');if(!m)return;
+  const d=document.createElement('div');d.className='msg user';
+  d.innerHTML=`<div><div class="msg-time" style="text-align:right">Você</div><div class="msg-bubble">${txt}</div></div>`;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;
+}
+function showOpts(opts){
+  const el=document.getElementById('chatOpts');if(!el)return;
+  el.innerHTML=opts.map(o=>`<div class="chat-opt" onclick="handleOpt('${o}')">${o}</div>`).join('');
+}
+function handleOpt(opt){
+  addUser(opt);document.getElementById('chatOpts').innerHTML='';
+  setTimeout(()=>{
+    if(opt.includes('serviço')||opt.includes('Serviço')){addBot('Ótimo! Te direciono para o formulário. 🚀');setTimeout(()=>showNovoPedido(),1200);}
+    else if(opt.includes('pedido')){addBot('Veja o status dos pedidos na aba "📋 Pedidos".');setTimeout(()=>showOpts(['Ver meus pedidos','Outra dúvida']),500);}
+    else if(opt.includes('preço')||opt.includes('garantia')){addBot('💰 Mínimo R$200 · 🛡️ Garantia 90 dias · 💳 PIX, débito e crédito · 📋 Preço fechado antes de começar.');}
+    else if(opt.includes('equipe')||opt.includes('central')){addBot('Nossa equipe está disponível! Solicite o serviço pela plataforma para mais agilidade. 🚀');}
+    else{addBot('Como posso te ajudar?');setTimeout(()=>showOpts(['Solicitar serviço','Ver pedidos','Preços e garantia']),500);}
+  },600);
+}
+function sendChat(){
+  const inp=document.getElementById('chatInp');if(!inp||!inp.value.trim())return;
+  const txt=inp.value.trim();inp.value='';
+  addUser(txt);document.getElementById('chatOpts').innerHTML='';
+  setTimeout(()=>{addBot('Mensagem recebida! Solicite o serviço diretamente pela plataforma para mais agilidade. 🚀');setTimeout(()=>showOpts(['Solicitar agora','Aguardar resposta']),500);},700);
+}
+function initChat(){
+  setTimeout(()=>{
+    addBot('Olá! 👋 Como posso te ajudar?');
+    setTimeout(()=>showOpts(['Solicitar um serviço','Dúvida sobre pedido','Preços e garantia','Falar com a equipe']),400);
+  },300);
+}
+
+// ── NOVO PEDIDO ──────────────────────────────────────────────
+function showNovoPedido(svcId=null){
+  currentStep=1;pedidoData={};currentOrc=null;selPag='pix';selParc=1;
+  if(svcId){pedidoData.svcId=svcId;pedidoData.svc=SVCS.find(s=>s.id===svcId);}
+  showView('viewNovoPedido');
+  renderStep();
+  if(svcId){setTimeout(()=>{currentStep=2;renderStep();},200);}
+}
+
+function updateBar(){for(let i=1;i<=4;i++)document.getElementById('sd'+i).classList.toggle('done',i<=currentStep);}
+
+function renderStep(){
+  updateBar();
+  const el=document.getElementById('stepContent');
+  if(currentStep===1)rS1(el);
+  else if(currentStep===2)rS2(el);
+  else if(currentStep===3)rS3(el);
+  else rS4(el);
+}
+
+function rS1(el){
+  el.innerHTML=`<div class="step-label">// passo 1 de 4</div>
+    <div class="step-h">Qual serviço?</div>
+    <div class="step-sub">Selecione o que você precisa.</div>
+    <div class="svc-grid">${SVCS.map(s=>`<div class="svc-card ${pedidoData.svcId===s.id?'sel':''}" onclick="pickSvc('${s.id}')" id="sc_${s.id}">
+      <div class="svc-ico">${s.icon}</div><div class="svc-name">${s.name}</div>
+      <div class="svc-desc">${s.desc}</div>${s.visita?'<div class="svc-visita">⚠ Visita técnica</div>':''}
+    </div>`).join('')}</div>`;
+}
+
+function pickSvc(id){
+  pedidoData.svcId=id;pedidoData.svc=SVCS.find(s=>s.id===id);
+  document.querySelectorAll('.svc-card').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('sc_'+id).classList.add('sel');
+  setTimeout(()=>{currentStep=2;renderStep();},250);
+}
+
+function rS2(el){
+  const svc=pedidoData.svc;
+  let pisoH='',visitaH='';
+  if(svc.isPiso){pisoH=`
+    <div class="sec-tag">Tipo de revestimento</div>
+    <div class="piso-opts">
+      <div class="popt ${pedidoData.pisoTipo==='ceramica'?'sel':''}" onclick="pickPiso('ceramica',this)"><div class="popt-ico">🟫</div><div class="popt-name">Cerâmica</div><div class="popt-price">A partir R$40/m²</div></div>
+      <div class="popt ${pedidoData.pisoTipo==='porcelanato'?'sel':''}" onclick="pickPiso('porcelanato',this)"><div class="popt-ico">⬜</div><div class="popt-name">Porcelanato</div><div class="popt-price">A partir R$60/m²</div></div>
+    </div>
+    <div class="local-opts">
+      <div class="lopt ${pedidoData.pisoLocal==='piso'?'sel':''}" onclick="pickLocal('piso',this)">⬜ Piso</div>
+      <div class="lopt ${pedidoData.pisoLocal==='parede'?'sel':''}" onclick="pickLocal('parede',this)">🧱 Parede</div>
+    </div>
+    <div class="piso-info">Para orçamento exato é necessária <strong>visita técnica.</strong><br/>Taxa: R$250 — descontada se fechar o serviço.</div>`;}
+  if(svc.visita){visitaH=`
+    <div class="visita-box">
+      <div class="visita-h">⚠ Visita Técnica</div>
+      <div class="visita-p">Este serviço requer avaliação presencial. Taxa: <strong style="color:var(--y)">R$250</strong> — descontada se fechar.</div>
+      <div class="vopts">
+        <div class="vopt ${pedidoData.visita==='sim'?'sel':''}" onclick="pickVisita('sim',this)">✅ Agendar visita</div>
+        <div class="vopt ${pedidoData.visita==='nao'?'sel':''}" onclick="pickVisita('nao',this)">📝 Só orçamento estimado</div>
+      </div>
+    </div>`;}
+  el.innerHTML=`<div class="step-label">// passo 2 de 4</div>
+    <div class="step-h">${svc.icon} ${svc.name}</div>
+    <div class="step-sub">Descreva o que precisa.</div>
+    ${pisoH}${visitaH}
+    <div class="field"><label>Descreva o problema *</label>
+      <textarea class="inp" id="tDesc" style="min-height:90px;resize:none;" placeholder="Ex: Torneira da cozinha pingando há 3 dias...">${pedidoData.desc||''}</textarea>
+    </div>
+    <div class="field"><label>Quando prefere o atendimento?</label>
+      <select class="inp" id="tWhen">
+        <option value="">Selecione...</option>
+        <option value="urgente" ${pedidoData.when==='urgente'?'selected':''}>🔴 Urgente — hoje ou amanhã</option>
+        <option value="semana" ${pedidoData.when==='semana'?'selected':''}>🟡 Esta semana</option>
+        <option value="mes" ${pedidoData.when==='mes'?'selected':''}>🟢 Este mês</option>
+      </select>
+    </div>
+    <div class="err" id="s2err"></div>
+    <div style="display:flex;gap:.5rem">
+      <button class="btn btn-g" style="width:auto;padding:.75rem 1.2rem" onclick="currentStep=1;renderStep()">← Voltar</button>
+      <button class="btn btn-p" style="flex:1;animation:none" onclick="nextS2()">Continuar →</button>
+    </div>`;
+}
+
+function pickPiso(t,el){pedidoData.pisoTipo=t;document.querySelectorAll('.popt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');}
+function pickLocal(l,el){pedidoData.pisoLocal=l;document.querySelectorAll('.lopt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');}
+function pickVisita(o,el){pedidoData.visita=o;document.querySelectorAll('.vopt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');}
+
+function nextS2(){
+  const desc=document.getElementById('tDesc').value.trim();
+  if(!desc){document.getElementById('s2err').textContent='⚠ Descreva o problema';return;}
+  pedidoData.desc=desc;pedidoData.when=document.getElementById('tWhen').value;
+  currentStep=3;renderStep();gerarOrc();
+}
+
+function rS3(el){
+  el.innerHTML=`<div class="step-label">// passo 3 de 4</div>
+    <div class="step-h">Gerando <span style="color:var(--o)">Orçamento</span></div>
+    <div id="orcLoad" style="text-align:center;padding:2rem 0">
+      <div style="font-size:3rem;margin-bottom:.8rem">🧠</div>
+      <div style="font-size:.82rem;color:var(--tx);line-height:1.7;margin-bottom:1.2rem">Nossa IA está calculando o melhor preço para você.</div>
+      <div style="display:flex;justify-content:center"><div style="width:28px;height:28px;border:2px solid var(--b2);border-top-color:var(--o);border-radius:50%;animation:spin .7s linear infinite"></div></div>
+    </div>
+    <div id="orcResult" style="display:none"></div>`;
+}
+
+async function gerarOrc(){
+  const svc=pedidoData.svc;
+  const hasV=svc.visita&&pedidoData.visita==='sim';
+  const prompt=`Você é o sistema de orçamentos da MetaObra no DF.
+Pedido: ${svc.name} | "${pedidoData.desc}" | ${currentUser.region} | ${pedidoData.when||'normal'} | Visita: ${hasV?'Sim':'Não'}
+Retorne SOMENTE JSON sem markdown:
+{"servico":"${svc.name}","resumo":"1 frase","itens":[{"desc":"item","valor":100}],"prazo":"${svc.time}","garantia":"90 dias","total":0,"obs":"nota"}
+Total entre R$${svc.min} e R$${svc.max}. 2-4 itens reais DF 2026.${hasV?' Inclua R$250 visita técnica.':''}`;
+  let orc=null;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})});
+    const d=await r.json();
+    orc=JSON.parse(d.content.map(c=>c.text||'').join('').replace(/```json|```/g,'').trim());
+  }catch{
+    const base=hasV?svc.min+TAXA_VISITA:svc.min;
+    orc={servico:svc.name,resumo:`Execução de ${svc.name.toLowerCase()} em ${currentUser.region} — DF`,
+      itens:[...(hasV?[{desc:'Visita técnica e análise',valor:TAXA_VISITA}]:[]),
+        {desc:'Mão de obra + deslocamento',valor:Math.round(base*.85)},
+        {desc:'Materiais e insumos',valor:Math.round(base*.15)}],
+      prazo:svc.time,garantia:'90 dias',total:base,
+      obs:hasV?'Visita descontada se fechar o serviço.':'Material cedido pelo cliente.'};
+  }
+  currentOrc=orc;
+  const ld=document.getElementById('orcLoad');
+  const rs=document.getElementById('orcResult');
+  if(!ld||!rs)return;
+  ld.style.display='none';
+  rs.innerHTML=`
+    <div class="orc-card">
+      <div class="orc-tag">// orçamento MetaObra · ${new Date().toLocaleDateString('pt-BR')}</div>
+      <div class="orc-resumo">${orc.resumo}</div>
+      ${orc.itens.map(i=>`<div class="orc-item"><span class="orc-item-n">${i.desc}</span><span class="orc-item-v">R$ ${fmt(i.valor)}</span></div>`).join('')}
+      <div class="orc-total"><span class="orc-total-l">Total estimado</span><span class="orc-total-v">R$ ${fmt(orc.total)}</span></div>
+      <div class="orc-meta"><span>⏱ Prazo: <strong>${orc.prazo}</strong></span><span>🛡 Garantia: <strong>${orc.garantia}</strong></span></div>
+      ${orc.obs?`<div class="orc-obs">💡 ${orc.obs}</div>`:''}
+    </div>
+    <div class="orc-acts">
+      <button class="btn btn-gr" onclick="aprovarOrc()">✅ Aprovar</button>
+      <button class="btn btn-re" onclick="showCliente()">✕ Cancelar</button>
+    </div>`;
+  rs.style.display='block';
+}
+
+function aprovarOrc(){currentStep=4;renderS4PagForm();}
+
+function renderS4PagForm(){
+  updateBar();
+  const total=currentOrc?.total||0;
+  document.getElementById('stepContent').innerHTML=`
+    <div class="step-label">// passo 4 de 4 — pagamento</div>
+    <div class="step-h">Como quer <span style="color:var(--o)">pagar?</span></div>
+    <div class="pag-opts">
+      <div class="pag-opt sel" onclick="sPag('pix',this)"><span class="pag-ico">💸</span><div><div class="pag-name">PIX</div><div class="pag-desc">Aprovação imediata · Sem taxas</div></div></div>
+      <div class="pag-opt" onclick="sPag('debito',this)"><span class="pag-ico">💳</span><div><div class="pag-name">Débito</div><div class="pag-desc">Aprovação imediata</div></div></div>
+      <div class="pag-opt" onclick="sPag('credito',this)"><span class="pag-ico">🏦</span><div><div class="pag-name">Crédito</div><div class="pag-desc">Parcelamento disponível</div></div></div>
+    </div>
+    <div id="parcelasWrap" style="display:none">
+      <div style="font-size:.65rem;color:var(--tx);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem">Parcelas:</div>
+      <div class="parcelas-grid">${[1,2,3,4,5,6,10,12].map(n=>`<div class="parc-btn ${n===1?'sel':''}" onclick="sParc(${n},this)">${n}x R$${fmt(total/n)}</div>`).join('')}</div>
+    </div>
+    <div class="mp-note">🔒 Processado via <strong>Mercado Pago</strong> · PIX, débito e crédito com segurança</div>
+    <div class="pag-total-box">
+      <div class="pag-total-l">Total a pagar</div>
+      <div class="pag-total-v">R$ ${fmt(total)}</div>
+      <div class="pag-total-sub">Retido até você aprovar o serviço</div>
+    </div>
+    <div class="err" id="pagErr"></div>
+    <button class="btn btn-p" id="btnPagar" onclick="confirmarPag()" style="animation:none">💸 Confirmar Pagamento →</button>
+    <button class="btn btn-g" onclick="currentStep=3;renderStep();gerarOrc()" style="margin-top:.5rem">← Voltar ao orçamento</button>`;
+}
+
+function sPag(tipo,el){
+  selPag=tipo;
+  document.querySelectorAll('.pag-opt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');
+  document.getElementById('parcelasWrap').style.display=tipo==='credito'?'block':'none';
+}
+function sParc(n,el){selParc=n;document.querySelectorAll('.parc-btn').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');}
+
+async function confirmarPag(){
+  const btn=document.getElementById('btnPagar');
+  btn.disabled=true;btn.innerHTML='<div style="width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#080808;border-radius:50%;animation:spin .6s linear infinite;display:inline-block"></div> Processando...';
+  await new Promise(r=>setTimeout(r,1800));
+  const pedidos=ls('co_pedidos')||[];
+  const id='#CO-'+Math.floor(100000+Math.random()*900000);
+  const p={id,clienteId:currentUser.id,clienteNome:currentUser.name,svcId:pedidoData.svcId,
+    svcNome:pedidoData.svc.name,desc:pedidoData.desc,when:pedidoData.when,
+    total:currentOrc?.total||0,orcamento:currentOrc,pagamento:selPag,parcelas:selParc,
+    status:'aguardando',region:currentUser.region,avaliado:false,createdAt:new Date().toISOString()};
+  pedidos.unshift(p);ss('co_pedidos',pedidos);
+  if(window.fbSet)window.fbSet('pedidos',id.replace('#',''),p);
+
+  // WhatsApp para o dono
+  const msgDono=encodeURIComponent(
+    '🔔 *NOVO PEDIDO — MetaObra*\n\n'+
+    '👤 Cliente: *'+currentUser.name+'*\n'+
+    '📍 Região: '+currentUser.region+'\n'+
+    '🔧 Serviço: '+pedidoData.svc.name+'\n'+
+    '💰 Valor: R$ '+fmt(currentOrc?.total||0)+'\n'+
+    '📝 '+pedidoData.desc.slice(0,80)+'\n'+
+    '🆔 '+id+'\n'+
+    '📅 '+new Date().toLocaleString('pt-BR')
+  );
+  window.open('https://wa.me/'+WA+'?text='+msgDono,'_blank');
+
+  // Tela de confirmação
+  document.getElementById('stepContent').innerHTML=`
+    <div class="confirm-box">
+      <span class="confirm-ico">🎉</span>
+      <div class="confirm-h">Pedido Confirmado!</div>
+      <div class="confirm-sub">Profissional verificado entrará em contato em breve.</div>
+      <div class="confirm-id">${id}</div>
+      <div class="tl">
+        <div class="tl-tag">// próximos passos</div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-txt"><strong>Profissional aceita</strong> o chamado</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-txt"><strong>Agendamento</strong> confirmado pelo WhatsApp</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-txt"><strong>Serviço executado</strong> com foto antes e depois</div></div>
+        <div class="tl-item"><div class="tl-dot gray"></div><div class="tl-txt">Você <strong>aprova e avalia</strong> — pagamento liberado ⭐</div></div>
+      </div>
+      <button class="btn btn-p" style="margin-top:1.2rem;animation:none" onclick="showCliente()">Ver meus pedidos →</button>
+    </div>`;
+  updateBar();
+  toast('✅ Pedido confirmado!');
+}
+
+// ── PRO DASHBOARD ────────────────────────────────────────────
+function showPro(){
+  document.getElementById('proName').textContent=currentUser.name.split(' ')[0];
+  showView('viewPro');
+  loadProDash();
+}
+
+function loadProDash(){
+  const pedidos=ls('co_pedidos')||[];
+  const chamados=pedidos.filter(p=>p.status==='aguardando');
+  const aceitos=pedidos.filter(p=>p.proId===currentUser.id);
+  const ganhoLiq=aceitos.filter(p=>p.status==='concluido').reduce((s,p)=>s+((p.total||0)*(1-comissao(p.total||0))),0);
+  document.getElementById('proKpis').innerHTML=`
+    <div class="kpi"><div class="kpi-n">${chamados.length}</div><div class="kpi-l">Chamados</div></div>
+    <div class="kpi"><div class="kpi-n">${aceitos.length}</div><div class="kpi-l">Aceitos</div></div>
+    <div class="kpi gr"><div class="kpi-n">R$${Math.round(ganhoLiq).toLocaleString('pt-BR')}</div><div class="kpi-l">Líquido</div></div>
+    <div class="kpi ye"><div class="kpi-n">${aceitos.filter(p=>p.status==='concluido').length}</div><div class="kpi-l">Concluídos</div></div>`;
+  proTab('chamados');
+}
+
+function proTab(tab){
+  ['chamados','aceitos','ganhos'].forEach(t=>{document.getElementById('proTab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active',t===tab);});
+  const c=document.getElementById('proContent');
+  const pedidos=ls('co_pedidos')||[];
+  if(tab==='chamados'){
+    const chs=pedidos.filter(p=>p.status==='aguardando');
+    if(!chs.length){c.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-h">Nenhum chamado</div><div class="empty-p">Novos chamados aparecerão aqui.</div></div>`;return;}
+    c.innerHTML=chs.map(p=>{
+      const com=comissao(p.total||0),liq=(p.total||0)*(1-com);
+      const urgC={urgente:'var(--re)',semana:'var(--y)',mes:'var(--gr)'};
+      return `<div class="chamado-card">
+        <div class="cc-top">
+          <div><div class="cc-name">${SVCS.find(s=>s.id===p.svcId)?.icon||'🔧'} ${p.svcNome}<span class="com-badge">${(com*100).toFixed(0)}%</span></div><div class="cc-region">📍 ${p.region}</div></div>
+          <div><div class="cc-val">R$${fmt(p.total||0)}</div><div class="cc-liq">Líquido: R$${fmt(liq)}</div></div>
+        </div>
+        <div class="cc-desc">${p.desc}</div>
+        ${p.when?`<div style="font-size:.7rem;color:${urgC[p.when]||'var(--tx)'};margin-bottom:.3rem">${p.when==='urgente'?'🔴 Urgente':p.when==='semana'?'🟡 Esta semana':'🟢 Este mês'}</div>`:''}
+        <div class="cc-acts">
+          <button class="btn-aceitar" onclick="aceitarChamado('${p.id}')">✅ Aceitar</button>
+          <button class="btn-passar">Passar</button>
+        </div>
+      </div>`;}).join('');
+  } else if(tab==='aceitos'){
+    const ac=pedidos.filter(p=>p.proId===currentUser.id);
+    if(!ac.length){c.innerHTML=`<div class="empty"><div class="empty-ico">✅</div><div class="empty-h">Nenhum aceito</div><div class="empty-p">Aceite chamados na aba anterior.</div></div>`;return;}
+    c.innerHTML=ac.map(p=>{
+      const liq=(p.total||0)*(1-comissao(p.total||0));
+      return `<div class="chamado-card">
+        <div class="cc-top"><div><div class="cc-name">${p.svcNome}</div><div class="cc-region">📍 ${p.region} · ${p.clienteNome}</div></div>
+        <div><div class="cc-val">R$${fmt(p.total||0)}</div><div class="cc-liq">Líquido: R$${fmt(liq)}</div></div></div>
+        <div class="cc-desc">${p.desc}</div>
+        ${p.status!=='concluido'?`<button class="btn-aceitar" style="width:100%;margin-top:.4rem" onclick="concluirChamado('${p.id}')">✅ Marcar Concluído</button>`:`<div style="color:var(--gr);font-weight:700;font-size:.8rem;margin-top:.4rem">✓ Concluído</div>`}
+      </div>`;}).join('');
+  } else {
+    const ac=pedidos.filter(p=>p.proId===currentUser.id);
+    const bruto=ac.filter(p=>p.status==='concluido').reduce((s,p)=>s+(p.total||0),0);
+    const liq=ac.filter(p=>p.status==='concluido').reduce((s,p)=>s+((p.total||0)*(1-comissao(p.total||0))),0);
+    c.innerHTML=`<div class="card">
+      <div class="sec-tag">Resumo financeiro</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.7rem">
+        <div class="kpi gr"><div class="kpi-n">R$${Math.round(liq).toLocaleString('pt-BR')}</div><div class="kpi-l">Líquido total</div></div>
+        <div class="kpi"><div class="kpi-n">R$${Math.round(bruto).toLocaleString('pt-BR')}</div><div class="kpi-l">Bruto total</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-tag">Tabela de comissões</div>
+      <div style="font-size:.82rem">
+        <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--b1)"><span style="color:var(--tx)">R$200–500</span><span style="font-family:'JetBrains Mono',monospace;color:var(--o)">20%</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--b1)"><span style="color:var(--tx)">R$500–3k</span><span style="font-family:'JetBrains Mono',monospace;color:var(--o)">15%</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.5rem 0"><span style="color:var(--tx)">R$3k–30k</span><span style="font-family:'JetBrains Mono',monospace;color:var(--o)">10%</span></div>
+      </div>
+    </div>`;
+  }
+}
+
+function aceitarChamado(id){
+  const pedidos=ls('co_pedidos')||[];
+  const p=pedidos.find(x=>x.id===id);
+  if(p){p.status='aceito';p.proId=currentUser.id;p.proNome=currentUser.name;}
+  ss('co_pedidos',pedidos);
+  if(window.fbSet&&p)window.fbSet('pedidos',id.replace('#',''),p);
+  // WhatsApp para o dono notificar profissional aceito
+  const msgAceito=encodeURIComponent('✅ *CHAMADO ACEITO*\n\nProfissional: '+currentUser.name+'\nPedido: '+id);
+  window.open('https://wa.me/'+WA+'?text='+msgAceito,'_blank');
+  toast('✅ Chamado aceito!');loadProDash();
+}
+
+function concluirChamado(id){
+  const pedidos=ls('co_pedidos')||[];
+  const p=pedidos.find(x=>x.id===id);
+  if(p)p.status='concluido';
+  ss('co_pedidos',pedidos);
+  if(window.fbSet&&p)window.fbSet('pedidos',id.replace('#',''),p);
+  toast('🎉 Serviço concluído!');loadProDash();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#FF5C00">
+<!-- AJUSTE: descrição atualizada de 25 para 50 vagas -->
+<meta name="description" content="Energia Solar MetaObra — Condição Fundadores DF. Apenas 50 vagas. Desconto 25% + instalação profissional inclusa no Distrito Federal.">
+<title>☀️ Energia Solar MetaObra — Condição Fundadores DF</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --o:#FF5C00;--y:#FF5C00;--bk:#080808;--dk:#0D0D0D;--card:#131313;--b1:#242424;--b2:#323232;
+  --w:#F2EDE6;--tx:#8A8070;--mu:#4A4A4A;--gr:#10B981;--bl:#2563EB;--sol:#FF5C00;
+  --sol-dim:rgba(255,92,0,.1);--gr-dim:rgba(16,185,129,.1);--bl-dim:rgba(37,99,235,.1);
+  /* AJUSTE: token âmbar para tema solar */
+  --amber:#FF5C00;--amber-dim:rgba(255,92,0,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;caret-color:auto;}
+/* AJUSTE 2: scroll-padding-top para evitar conteúdo oculto atrás do header fixo */
+html{scroll-behavior:smooth;scroll-padding-top:90px;}
+body{background:var(--bk);color:var(--w);font-family:'Syne',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--y);border-radius:2px}
+input,select,button,textarea{font-family:'Syne',sans-serif!important;font-size:16px!important;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse-sol{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.5)}50%{box-shadow:0 0 0 14px rgba(255,92,0,0)}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes glow-sol{from{transform:scale(1);opacity:.6}to{transform:scale(1.12) translate(10px,-10px);opacity:1}}
+@keyframes blink-btn{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.4);background:var(--y);}50%{box-shadow:0 0 22px 7px rgba(255,92,0,.3);background:#FF7A2E;}}
+@keyframes blink-tag{0%,100%{opacity:1;}50%{opacity:.4;}}
+@keyframes pop{0%{transform:scale(.3);opacity:0}80%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes ray{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+.noise{position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.35;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--b1) 1px,transparent 1px),linear-gradient(90deg,var(--b1) 1px,transparent 1px);background-size:60px 60px;-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,black 5%,transparent 70%);opacity:.12;pointer-events:none;z-index:0;}
+.orb-sol{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,92,0,.12) 0%,transparent 65%);top:-120px;right:-100px;animation:glow-sol 11s ease-in-out infinite alternate;pointer-events:none;z-index:0;}
+.orb-gr{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(16,185,129,.07) 0%,transparent 65%);bottom:10%;left:-80px;pointer-events:none;z-index:0;}
+
+/* Cabeçalho: logo no mesmo padrão do rodapé */
+
+/* AJUSTE 2: header fixo com blur e z-index alto */
+header{position:sticky;top:0;z-index:9999;background:rgba(8,8,8,.98);backdrop-filter:blur(10px);border-bottom:1px solid #e5e7eb;}
+nav{padding:.9rem 1.4rem;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.05em;text-decoration:none;color:var(--w);}
+.logo em{color:var(--o);font-style:normal;}
+.logo-tag{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--o);margin-left:.4rem;letter-spacing:.1em;vertical-align:middle;background:rgba(255,92,0,.1);border:1px solid rgba(255,92,0,.3);padding:.1rem .35rem;border-radius:3px;}
+.nav-solar-badge{font-family:'JetBrains Mono',monospace;font-size:.52rem;background:var(--sol-dim);border:1px solid rgba(255,92,0,.3);color:var(--y);padding:.18rem .5rem;border-radius:3px;letter-spacing:.08em;animation:blink-tag 2s ease-in-out infinite;}
+.nav-cta{background:var(--y);color:var(--bk);border:none;border-radius:6px;padding:.38rem .85rem;font-weight:800;font-size:.7rem;cursor:pointer;letter-spacing:.04em;white-space:nowrap;}
+.nav-cta:hover{background:#FF7A2E;}
+
+.ticker{background:linear-gradient(90deg,var(--y),#FF4500);padding:.6rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;animation:ticker 28s linear infinite;}
+.ti{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.14em;color:var(--bk);padding:0 2rem;}
+.tdot{color:rgba(0,0,0,.3);}
+
+/* AJUSTE 2: margin-top removido do ticker, header sticky ocupa o topo */
+/* AJUSTE 3: Hero com padrão de painel fotovoltaico no background via ::after */
+.hero-section{padding:2rem 1.2rem 2.5rem;position:relative;z-index:1;overflow:hidden;}
+.hero-section::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(255,92,0,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,92,0,.05) 1px, transparent 1px),
+    linear-gradient(rgba(255,92,0,.03) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,92,0,.03) 2px, transparent 2px);
+  background-size:60px 60px, 60px 60px, 12px 12px, 12px 12px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 90% at 60% 40%, black 10%, transparent 70%);
+  mask-image:radial-gradient(ellipse 80% 90% at 60% 40%, black 10%, transparent 70%);
+  opacity:.6;
+}
+.hero-section>*{position:relative;z-index:1;}
+
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--card);border:1px solid rgba(255,92,0,.25);padding:.3rem .9rem;border-radius:100px;margin-bottom:1.2rem;font-size:.6rem;font-family:'JetBrains Mono',monospace;color:var(--y);letter-spacing:.1em;}
+.bdot{width:7px;height:7px;border-radius:50%;background:var(--y);animation:pulse-sol 2s infinite;flex-shrink:0;}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,11vw,5.5rem);line-height:.88;letter-spacing:-.01em;margin-bottom:1.1rem;}
+.hero-h1 .sol{color:var(--y);}
+.hero-h1 .gr{color:var(--gr);}
+.hero-h1 .dim{color:var(--mu);}
+.hero-sub{font-size:.88rem;line-height:1.8;color:var(--tx);margin-bottom:1.6rem;max-width:520px;}
+.hero-sub strong{color:var(--w);}
+.hero-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--y);color:var(--bk);border:none;border-radius:10px;padding:1rem 1.8rem;font-weight:800;font-size:1rem;cursor:pointer;letter-spacing:.04em;animation:blink-btn 2.2s ease-in-out infinite;text-decoration:none;}
+.hero-cta:hover{animation:none;background:#FF7A2E;}
+.hero-scarcity{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,59,59,.08);border:1px solid rgba(255,59,59,.25);border-radius:6px;padding:.35rem .75rem;margin-top:.9rem;font-size:.72rem;color:#FF6B6B;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;}
+.hero-trust{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.4rem;}
+.trust-pill{background:var(--card);border:1px solid var(--b2);padding:.28rem .65rem;border-radius:100px;font-size:.65rem;color:var(--tx);}
+
+.sec-wrap{padding:2rem 1.2rem;}
+.sec-wrap.alt{background:var(--dk);}
+.sec-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--y);letter-spacing:.22em;text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;}
+.sec-tag::after{content:'';flex:1;height:1px;background:var(--b1);}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1;margin-bottom:1.2rem;}
+.sec-h .sol{color:var(--y);}
+.sec-h .gr{color:var(--gr);}
+
+.calc-card{background:var(--card);border:1px solid rgba(255,92,0,.2);border-radius:14px;padding:1.4rem 1.2rem;}
+.calc-input-wrap{position:relative;margin-bottom:1rem;}
+.calc-prefix{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--y);pointer-events:none;}
+.calc-input{width:100%;background:var(--dk);border:1px solid rgba(255,92,0,.3);border-radius:8px;padding:.8rem 1rem .8rem 2.4rem;color:var(--w);font-size:1.1rem!important;font-family:'JetBrains Mono',monospace!important;outline:none;transition:border-color .2s;}
+.calc-input:focus{border-color:var(--y);box-shadow:0 0 0 3px rgba(255,92,0,.1);}
+.calc-input::placeholder{color:var(--mu);}
+.calc-btn{width:100%;padding:.88rem;background:var(--y);color:var(--bk);border:none;border-radius:9px;font-weight:800;font-size:.95rem;cursor:pointer;letter-spacing:.04em;transition:background .2s;}
+.calc-btn:hover{background:#FF7A2E;}
+.calc-result{display:none;margin-top:1rem;background:var(--dk);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:1rem 1.1rem;}
+.calc-result.show{display:block;animation:fadeUp .4s ease;}
+.calc-grid{display:grid;grid-template-columns:1fr;gap:.6rem;}
+.calc-item{display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
+.calc-item-label{font-size:.72rem;color:var(--tx);}
+.calc-item-value{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--y);}
+.calc-item-value.gr{color:var(--gr);}
+.calc-item-value.bl{color:#60A5FA;}
+.calc-disclaimer{font-size:.62rem;color:var(--mu);margin-top:.7rem;line-height:1.6;font-family:'JetBrains Mono',monospace;}
+
+.steps-grid{display:flex;flex-direction:column;gap:.5rem;}
+.step-card{background:var(--card);border:1px solid var(--b2);border-radius:11px;padding:.9rem 1rem;display:flex;gap:.8rem;align-items:flex-start;}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:rgba(255,92,0,.2);line-height:1;flex-shrink:0;width:30px;}
+.step-ico{font-size:1.4rem;flex-shrink:0;}
+.step-h{font-weight:700;font-size:.85rem;margin-bottom:.2rem;color:var(--w);}
+.step-p{font-size:.73rem;color:var(--tx);line-height:1.5;}
+
+/* AJUSTE 3: bordas âmbar na tabela de preços */
+.price-table-wrap{overflow-x:auto;margin-bottom:.8rem;border:1px solid var(--amber);border-radius:12px;overflow:hidden;}
+.price-table{width:100%;border-collapse:collapse;min-width:360px;}
+.price-table th{background:var(--card);border:1px solid var(--b2);padding:.65rem .8rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--y);text-align:left;letter-spacing:.08em;text-transform:uppercase;}
+.price-table td{border:1px solid var(--b2);padding:.65rem .8rem;font-size:.78rem;color:var(--tx);vertical-align:top;}
+.price-table tr:nth-child(even) td{background:rgba(255,255,255,.015);}
+.price-table .kit-name{font-weight:700;color:var(--w);font-family:'Bebas Neue',sans-serif;font-size:.95rem;}
+.price-table .price-total{color:var(--tx);text-decoration:line-through;font-size:.72rem;}
+.price-table .price-founder{color:var(--y);font-weight:800;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;}
+.price-note{font-size:.68rem;color:var(--mu);line-height:1.7;font-family:'JetBrains Mono',monospace;background:rgba(255,92,0,.04);border:1px solid rgba(255,92,0,.12);border-radius:7px;padding:.7rem .9rem;margin-top:.5rem;}
+
+/* AJUSTE 3: bordas âmbar nos cards de garantia */
+.gar-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.gar-card{background:var(--card);border:1px solid var(--amber);border-radius:11px;padding:.9rem;display:flex;gap:.7rem;align-items:flex-start;}
+.gar-card-badge{display:inline-block;background:var(--amber-dim);border:1px solid var(--amber);color:var(--amber);font-size:.55rem;font-family:'JetBrains Mono',monospace;border-radius:3px;padding:.1rem .35rem;letter-spacing:.08em;margin-bottom:.3rem;}
+.gar-ico{font-size:1.4rem;flex-shrink:0;}
+.gar-h{font-weight:700;font-size:.82rem;margin-bottom:.18rem;color:var(--w);}
+.gar-p{font-size:.68rem;color:var(--tx);line-height:1.45;}
+
+.faq-list{display:flex;flex-direction:column;gap:.4rem;}
+.faq-item{background:var(--card);border:1px solid var(--b2);border-radius:10px;overflow:hidden;}
+.faq-q{width:100%;background:none;border:none;padding:.9rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-align:left;gap:.8rem;}
+.faq-q-text{font-size:.82rem;font-weight:700;color:var(--w);line-height:1.4;}
+.faq-chevron{font-size:.9rem;color:var(--y);transition:transform .3s;flex-shrink:0;}
+.faq-item.open .faq-chevron{transform:rotate(180deg);}
+.faq-a{display:none;padding:0 1rem .9rem;font-size:.78rem;color:var(--tx);line-height:1.7;}
+.faq-item.open .faq-a{display:block;animation:fadeUp .3s ease;}
+
+.solar-form-card{background:var(--card);border:1px solid rgba(255,92,0,.2);border-radius:14px;padding:1.4rem 1.2rem;}
+.form-tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--y);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.4rem;font-weight:700;animation:blink-tag 1.5s ease-in-out infinite;}
+.form-h{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;margin-bottom:.6rem;}
+.form-h .sol{color:var(--y);}
+.field{margin-bottom:.85rem;}
+.field label{display:block;font-size:.62rem;font-weight:700;color:var(--tx);margin-bottom:.28rem;letter-spacing:.12em;text-transform:uppercase;}
+.field input,.field select,.field textarea{width:100%;background:var(--dk);border:1px solid var(--b2);border-radius:8px;padding:.75rem 1rem;color:var(--w);font-size:1rem!important;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--y);box-shadow:0 0 0 3px rgba(255,92,0,.08);}
+.field input::placeholder,.field textarea::placeholder{color:var(--mu);}
+.field input.v-ok{border-color:var(--gr)!important;}
+.field input.v-err{border-color:#FF3B3B!important;}
+.errmsg{color:#FF3B3B;font-size:.68rem;margin-top:.22rem;display:block;}
+.lgpd-field{margin-bottom:.9rem;}
+.lgpd-label{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer;font-size:.72rem;color:var(--tx);line-height:1.6;}
+.lgpd-label input[type="checkbox"]{flex-shrink:0;width:18px;height:18px;accent-color:var(--y);cursor:pointer;margin-top:.1rem;}
+.lgpd-label a{color:var(--y);text-decoration:underline;}
+.lgpd-label strong{color:var(--w);}
+.solar-submit{width:100%;padding:.95rem;background:var(--y);color:var(--bk);border:none;border-radius:10px;font-weight:800;font-size:1rem;cursor:pointer;margin-top:.4rem;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:.5rem;animation:blink-btn 2s ease-in-out infinite;}
+.solar-submit:hover:not(:disabled){animation:none;background:#FF7A2E;}
+.solar-submit:disabled{opacity:.35;cursor:not-allowed;animation:none;}
+.form-foot{text-align:center;font-size:.63rem;color:var(--mu);line-height:1.5;margin-top:.6rem;}
+.spinner{width:18px;height:18px;border:2px solid rgba(0,0,0,.3);border-top-color:var(--bk);border-radius:50%;animation:spin .6s linear infinite;}
+
+.success-card{background:var(--card);border:1px solid var(--gr);border-radius:14px;padding:2rem 1.4rem;text-align:center;animation:pop .5s ease;}
+.s-ico{font-size:3.5rem;display:block;margin-bottom:.8rem;}
+.s-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gr);margin-bottom:.3rem;}
+.s-desc{color:var(--tx);font-size:.82rem;line-height:1.7;margin-bottom:.9rem;}
+.s-id{font-family:'JetBrains Mono',monospace;background:var(--dk);border:1px solid var(--b2);padding:.4rem 1rem;border-radius:4px;display:inline-block;color:var(--y);font-size:.85rem;letter-spacing:.15em;margin-bottom:.9rem;}
+.wa-link{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.92rem;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.95rem;cursor:pointer;text-decoration:none;}
+
+footer{padding:1.5rem 1.2rem;border-top:1px solid var(--b1);text-align:center;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:.4rem;}
+.footer-logo em{color:var(--o);font-style:normal;}
+.footer-copy{font-size:.65rem;color:var(--mu);margin-bottom:.6rem;}
+.footer-links{display:flex;justify-content:center;gap:1.2rem;}
+.footer-links a{color:var(--tx);text-decoration:none;font-size:.72rem;transition:color .2s;}
+.footer-links a:hover{color:var(--y);}
+
+@media(min-width:768px){
+  nav{padding:1rem 2.5rem;}
+  .hero-section{padding:4.5rem 3rem 3rem;max-width:1100px;margin:0 auto;}
+  .sec-wrap{padding:3rem 2rem;max-width:1000px;margin:0 auto;}
+  .gar-grid{grid-template-columns:repeat(4,1fr);}
+  .calc-grid{grid-template-columns:repeat(3,1fr);}
+  .steps-grid{display:grid;grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="orb-sol" aria-hidden="true"></div>
+<div class="orb-gr" aria-hidden="true"></div>
+
+<!-- AJUSTE 2: header com position sticky, z-index 9999 e backdrop-filter -->
+<header aria-label="Cabeçalho">
+  <nav aria-label="Navegação principal">
+
+    <a class="logo" href="Institucional.html" aria-label="MetaObra — voltar ao início">Meta<em>Obra</em><span class="logo-tag">DF</span></a>
+
+    <div style="display:flex;align-items:center;gap:.75rem;">
+      <span class="nav-solar-badge">☀️ SOLAR</span>
+      <button class="nav-cta" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})" aria-label="Garantir vaga Fundadores">Garantir Vaga →</button>
+    </div>
+  </nav>
+</header>
+
+<!-- AJUSTE 4: "25 VAGAS" → "50 VAGAS" no ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="tickerEl">
+    <span class="ti">APENAS 50 VAGAS NO DF</span><span class="tdot">✦</span>
+    <span class="ti">DESCONTO 25% FUNDADORES</span><span class="tdot">✦</span>
+    <span class="ti">INSTALAÇÃO PROFISSIONAL INCLUSA</span><span class="tdot">✦</span>
+    <span class="ti">ART PELO ENGENHEIRO</span><span class="tdot">✦</span>
+    <span class="ti">ECONOMIA ATÉ 95%</span><span class="tdot">✦</span>
+    <span class="ti">HOMOLOGAÇÃO DISTRIBUIDORA</span><span class="tdot">✦</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- AJUSTE 3: padrão solar no hero via CSS ::after (aplicado na classe .hero-section) -->
+  <section class="hero-section" aria-label="Oferta Fundadores Energia Solar">
+    <div class="hero-badge"><span class="bdot" aria-hidden="true"></span>Condição Fundadores · Brasília DF</div>
+    <h1 class="hero-h1">
+      Corte sua conta<br>
+      de luz em até<br>
+      <span class="sol">95%</span> <span class="dim">agora.</span>
+    </h1>
+    <!-- AJUSTE 4: "25 clientes Fundadores" → "50 clientes Fundadores"; "primeiras 25" → "primeiras 50" -->
+    <p class="hero-sub">
+      <strong>50 clientes Fundadores no DF</strong> têm acesso ao menor preço do mercado com desconto de 25% + instalação profissional homologada pela distribuidora. Condição válida somente para as primeiras 50 contratações.
+    </p>
+    <div>
+      <a href="#formulario" class="hero-cta" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'});return false;" aria-label="Simular minha economia">Simular Minha Economia →</a>
+    </div>
+    <!-- AJUSTE 4: "25 vagas" → "50 vagas" na scarcity bar -->
+    <div class="hero-scarcity" aria-label="Apenas 50 vagas disponíveis">🔒 Apenas 50 vagas no DF · Condição Fundadores</div>
+    <div class="hero-trust" aria-label="Diferenciais">
+      <!-- AJUSTE 3: ícones temáticos nos bullets -->
+      <span class="trust-pill">🛡️ 90 dias instalação</span>
+      <span class="trust-pill">☀️ Painéis 25–30 anos</span>
+      <span class="trust-pill">🔋 Inversor 10–12 anos</span>
+      <span class="trust-pill">📐 Medidor Bidirecional</span>
+      <span class="trust-pill">⚡ Homologação inclusa</span>
+      <span class="trust-pill">📋 ART pelo engenheiro</span>
+    </div>
+  </section>
+
+  <section class="sec-wrap alt" id="calculadora" aria-label="Calculadora de Economia Solar">
+    <div class="sec-tag" aria-hidden="true">Simulação gratuita</div>
+    <h2 class="sec-h">Quanto você vai <span class="sol">economizar?</span></h2>
+    <div class="calc-card">
+      <div class="field">
+        <label for="calcBill">Valor médio da conta de luz (R$) <abbr title="obrigatório">*</abbr></label>
+        <div class="calc-input-wrap">
+          <span class="calc-prefix" aria-hidden="true">R$</span>
+          <input type="number" id="calcBill" class="calc-input" placeholder="Ex: 450" min="50" max="9999" aria-describedby="calcHint" inputmode="numeric">
+        </div>
+        <div id="calcHint" style="font-size:.6rem;color:var(--mu);margin-top:.18rem;">Digite o valor médio mensal da sua conta de energia</div>
+      </div>
+      <button class="calc-btn" onclick="calcular()" aria-label="Calcular economia solar">⚡ Calcular Minha Economia</button>
+      <div class="calc-result" id="calcResult" aria-live="polite" aria-label="Resultado da simulação">
+        <div class="calc-grid">
+          <div class="calc-item">
+            <span class="calc-item-label">💰 Economia mensal estimada</span>
+            <span class="calc-item-value" id="resMonthly">—</span>
+          </div>
+          <div class="calc-item">
+            <span class="calc-item-label">⏱ Payback estimado</span>
+            <span class="calc-item-value bl" id="resPayback">—</span>
+          </div>
+          <div class="calc-item">
+            <span class="calc-item-label">📈 Economia em 10 anos</span>
+            <span class="calc-item-value gr" id="res10yr">—</span>
+          </div>
+        </div>
+        <div class="calc-disclaimer">* Estimativa baseada em tarifa média DF (R$0,89/kWh) e offset de 85%. Valores reais dependem de vistoria técnica. Custo estimado do sistema: <span id="resSysCost">—</span>.</div>
+        <button class="solar-submit" style="margin-top:.9rem;animation:none;" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})" aria-label="Ir para o formulário de proposta">Quero Essa Economia → Receber Proposta →</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-wrap" id="como-funciona" aria-label="Como funciona o processo de instalação solar">
+    <div class="sec-tag" aria-hidden="true">Do zero ao painel ativo</div>
+    <h2 class="sec-h">Como <span class="sol">funciona</span></h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num" aria-hidden="true">01</div>
+        <div class="step-ico" aria-hidden="true">💬</div>
+        <div>
+          <div class="step-h">Simulação rápida</div>
+          <p class="step-p">Você informa o valor da conta e recebe uma estimativa de economia em segundos. Sem compromisso.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num" aria-hidden="true">02</div>
+        <div class="step-ico" aria-hidden="true">📋</div>
+        <div>
+          <div class="step-h">Validação do Orçamento</div>
+          <p class="step-p">Nossa equipe analisa seu perfil de consumo e prepara um orçamento detalhado e personalizado para sua residência.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num" aria-hidden="true">03</div>
+        <div class="step-ico" aria-hidden="true">🔍</div>
+        <div>
+          <div class="step-h">Visita técnica gratuita</div>
+          <p class="step-p">Engenheiro responsável vai até o imóvel para avaliar o telhado, incidência solar e ponto de conexão. Sem custo.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num" aria-hidden="true">04</div>
+        <div class="step-ico" aria-hidden="true">⚡</div>
+        <div>
+          <div class="step-h">Instalação + Homologação</div>
+          <p class="step-p">Instalação pelos técnicos MetaObra com ART emitida. Protocolo junto à distribuidora (CEB/NEOENERGIA) incluso.</p>
+        </div>
+      </div>
+      <div class="step-card" style="grid-column:1/-1;">
+        <div class="step-num" aria-hidden="true">05</div>
+        <div class="step-ico" aria-hidden="true">📡</div>
+        <div>
+          <div class="step-h">Ativação e Monitoramento</div>
+          <p class="step-p">Sistema ativado após vistoria da distribuidora. Você acompanha a geração em tempo real pelo aplicativo do inversor. Pronto — sua conta começa a cair já no primeiro mês.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AJUSTE 3: borda âmbar na tabela de preços -->
+  <section class="sec-wrap alt" id="precos" aria-label="Tabela de preços Condição Fundadores">
+    <div class="sec-tag" aria-hidden="true">Transparência total</div>
+    <h2 class="sec-h">Preços <span class="sol">Fundadores</span></h2>
+    <!-- AJUSTE 3: badge âmbar acima da tabela -->
+    <div style="display:inline-flex;align-items:center;gap:.4rem;background:var(--amber-dim);border:1px solid var(--amber);border-radius:5px;padding:.3rem .75rem;margin-bottom:.8rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--amber);letter-spacing:.08em;">
+      🔒 CONDIÇÃO FUNDADORES · PREÇO FIXO POR 5 DIAS
+    </div>
+    <div class="price-table-wrap">
+      <table class="price-table" aria-label="Tabela de kits solares com preços Fundadores">
+        <thead>
+          <tr>
+            <th scope="col">Kit</th>
+            <th scope="col">Painéis + Inversores + Estrutura + Engenharia + Instalação + Homologação</th>
+            <th scope="col">Total ao Cliente</th>
+            <th scope="col">Preço Fundador (−25%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="kit-name">2 kWp</span><br><span style="font-size:.65rem;color:var(--mu);">~180–250 kWh/mês</span></td>
+            <td>Completo — tudo incluso</td>
+            <td><span class="price-total">R$ 11.050,00</span></td>
+            <td><span class="price-founder">R$ 8.287,50</span></td>
+          </tr>
+          <tr>
+            <td><span class="kit-name">3 kWp</span><br><span style="font-size:.65rem;color:var(--mu);">~360–420 kWh/mês</span></td>
+            <td>Completo — tudo incluso</td>
+            <td><span class="price-total">R$ 13.650,00</span></td>
+            <td><span class="price-founder">R$ 10.237,50</span></td>
+          </tr>
+          <tr>
+            <td><span class="kit-name">5 kWp</span><br><span style="font-size:.65rem;color:var(--mu);">~580–700 kWh/mês</span></td>
+            <td>Completo — tudo incluso</td>
+            <td><span class="price-total">R$ 16.990,00</span></td>
+            <td><span class="price-founder">R$ 12.742,50</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-note" role="note">⚠ Valores sujeitos a ajuste conforme telhado, complexidade estrutural ou ocorrência econômica imprevisível. O orçamento definitivo é entregue após visita técnica gratuita.</div>
+    <p style="font-size:.65rem;color:var(--mu);margin-top:.5rem;font-family:'JetBrains Mono',monospace;text-align:center;">* Consumo acima de 700 kWh/mês solicitar orçamento.</p>
+  </section>
+
+  <!-- AJUSTE 3: ícones temáticos e bordas âmbar nos cards de garantia -->
+  <section class="sec-wrap" id="garantias" aria-label="Garantias e segurança">
+    <div class="sec-tag" aria-hidden="true">Proteção completa</div>
+    <h2 class="sec-h">Garantia <span class="gr">e Segurança</span></h2>
+    <div class="gar-grid">
+      <!-- AJUSTE 3: ícone temático ☀️ Painéis -->
+      <div class="gar-card">
+        <div class="gar-ico" aria-hidden="true">🛡️</div>
+        <div>
+          <div class="gar-card-badge">MetaObra</div>
+          <div class="gar-h">90 dias MetaObra</div>
+          <p class="gar-p">Garantia de instalação pela MetaObra. Qualquer problema na execução, resolvemos sem custo.</p>
+        </div>
+      </div>
+      <!-- AJUSTE 3: ícone ☀️ Painéis -->
+      <div class="gar-card">
+        <div class="gar-ico" aria-hidden="true">☀️</div>
+        <div>
+          <div class="gar-card-badge">Painéis</div>
+          <div class="gar-h">25 a 30 anos — Painéis</div>
+          <p class="gar-p">Garantia de geração pelo fabricante. Painéis certificados pelo INMETRO com performance garantida.</p>
+        </div>
+      </div>
+      <!-- AJUSTE 3: ícone 🔋 Inversor -->
+      <div class="gar-card">
+        <div class="gar-ico" aria-hidden="true">🔋</div>
+        <div>
+          <div class="gar-card-badge">Inversor</div>
+          <div class="gar-h">10 a 12 anos — Inversor</div>
+          <p class="gar-p">Garantia do fabricante para o inversor, o coração do sistema. Cobertura total contra defeitos de fábrica.</p>
+        </div>
+      </div>
+      <!-- AJUSTE 3: ícones 📐 Medidor Bidirecional e ⚡ Homologação -->
+      <div class="gar-card">
+        <div class="gar-ico" aria-hidden="true">📋</div>
+        <div>
+          <div class="gar-card-badge">Homologação</div>
+          <div class="gar-h">ART pelo Engenheiro</div>
+          <p class="gar-p">Anotação de Responsabilidade Técnica emitida pelo engenheiro responsável. Instalação 100% legalizada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-wrap alt" id="faq" aria-label="Perguntas frequentes">
+    <div class="sec-tag" aria-hidden="true">Dúvidas frequentes</div>
+    <h2 class="sec-h">Perguntas <span class="sol">respondidas</span></h2>
+    <div class="faq-list" role="list">
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq1">
+          <span class="faq-q-text">Quem responde pela garantia da instalação?</span>
+          <span class="faq-chevron" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a" id="faq1" role="region">
+          A <strong>MetaObra</strong> responde pela garantia de 90 dias sobre mão de obra e execução. Para os equipamentos, os fabricantes fornecem garantia de 25 a 30 anos nos painéis e 10 a 12 anos no inversor. A ART emitida pelo engenheiro responsável formaliza legalmente a responsabilidade técnica de toda a instalação.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq2">
+          <span class="faq-q-text">Preciso trocar meu medidor de energia?</span>
+          <span class="faq-chevron" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a" id="faq2" role="region">
+          Sim. A distribuidora (CEB/Neoenergia no DF) realiza a troca do medidor convencional por um medidor bidirecional que contabiliza tanto o consumo quanto a energia injetada na rede. Esse processo faz parte da homologação e é de responsabilidade da distribuidora — a MetaObra cuida de todo o protocolo e acompanhamento junto a ela.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq3">
+          <span class="faq-q-text">E se chover durante a instalação?</span>
+          <span class="faq-chevron" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a" id="faq3" role="region">
+          Instalações em telhado são realizadas apenas em condições climáticas seguras. Em caso de chuva ou previsão de mau tempo, o serviço é remarcado sem custo adicional. Seus painéis e inversores são entregues somente após instalação concluída com segurança — a qualidade e a segurança da equipe são prioridade absoluta.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq4">
+          <span class="faq-q-text">Posso parcelar a mão de obra?</span>
+          <span class="faq-chevron" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a" id="faq4" role="region">
+          A consulta sobre parcelamento é feita durante a validação do orçamento, de acordo com a forma de pagamento negociada. Muitos clientes optam por financiar o sistema completo (kit + instalação) através de linhas de crédito solar com juros reduzidos disponíveis em bancos como Santander, BV e Sicredi. Nossa equipe orienta as melhores opções para o seu perfil.
+        </div>
+      </div>
+
+      <!-- AJUSTE 5: validade do orçamento de 30 dias → 5 dias -->
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq5">
+          <span class="faq-q-text">O preço do kit pode mudar após o orçamento?</span>
+          <span class="faq-chevron" aria-hidden="true">▼</span>
+        </button>
+        <div class="faq-a" id="faq5" role="region">
+          O preço do orçamento é válido por <strong>5 dias</strong> a partir da emissão. Variações cambiais ou de insumos que ocorram após esse prazo podem impactar o valor do kit — condição informada de forma transparente em contrato. O desconto Fundadores (25%) é garantido desde que a contratação seja concluída dentro do período de validade da proposta e enquanto houver vagas disponíveis.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AJUSTE 4: "25 vagas" → "50 vagas" no formulário -->
+  <section class="sec-wrap" id="formulario" aria-label="Formulário de captação solar">
+    <div class="sec-tag" aria-hidden="true">Vagas Fundadores</div>
+    <div class="solar-form-card" id="solarFormCard">
+      <div class="form-tag" aria-hidden="true">☀️ Condição Fundadores · DF</div>
+      <h2 class="form-h">Receba sua proposta em <span class="sol">24h</span></h2>
+      <p style="font-size:.78rem;color:var(--tx);margin-bottom:1.1rem;line-height:1.5;">Preencha os dados abaixo. Nossa equipe entra em contato em até 24h com um orçamento personalizado — sem compromisso.</p>
+
+      <div class="field">
+        <label for="sNome">Nome completo <abbr title="obrigatório">*</abbr></label>
+        <input type="text" id="sNome" name="nome" placeholder="Seu nome completo" autocomplete="name" required aria-required="true" aria-describedby="sErrNome">
+        <span class="errmsg" id="sErrNome" role="alert" aria-live="polite"></span>
+      </div>
+
+      <div class="field">
+        <label for="sFone">WhatsApp <abbr title="obrigatório">*</abbr></label>
+        <input type="tel" id="sFone" name="whatsapp" placeholder="(61) 99999-9999" autocomplete="tel" required aria-required="true" pattern="\(\d{2}\) \d{4,5}-\d{4}" aria-describedby="sFoneHint sErrFone">
+        <div style="font-size:.6rem;color:var(--mu);margin-top:.18rem;" id="sFoneHint">Formato: (XX) XXXXX-XXXX</div>
+        <span class="errmsg" id="sErrFone" role="alert" aria-live="polite"></span>
+      </div>
+
+      <div class="field">
+        <label for="sEndereco">Endereço / Região no DF <abbr title="obrigatório">*</abbr></label>
+        <input type="text" id="sEndereco" name="endereco" placeholder="Ex: Asa Norte, Ceilândia, Taguatinga..." required aria-required="true" aria-describedby="sErrEnd">
+        <span class="errmsg" id="sErrEnd" role="alert" aria-live="polite"></span>
+      </div>
+
+      <div class="field">
+        <label for="sConta">Valor médio da conta de luz (R$) <abbr title="obrigatório">*</abbr></label>
+        <input type="number" id="sConta" name="conta" placeholder="Ex: 350" min="50" max="9999" inputmode="numeric" required aria-required="true" aria-describedby="sErrConta">
+        <span class="errmsg" id="sErrConta" role="alert" aria-live="polite"></span>
+      </div>
+
+      <div class="lgpd-field">
+        <label class="lgpd-label" for="sLgpd">
+          <input type="checkbox" id="sLgpd" name="lgpd" required aria-required="true" aria-describedby="sErrLgpd" onchange="updateSolarBtn()">
+          <span>Li e concordo com a <a href="Index.html#politica-privacidade" target="_blank" rel="noopener noreferrer" aria-label="Política de Privacidade MetaObra">Política de Privacidade</a> e <strong>autorizo contato via WhatsApp</strong> pela MetaObra.</span>
+        </label>
+        <span class="errmsg" id="sErrLgpd" role="alert" aria-live="polite"></span>
+      </div>
+
+      <button type="button" class="solar-submit" id="solarBtn" onclick="submitSolar()" disabled aria-disabled="true">☀️ Receber Proposta em 24h →</button>
+      <div class="form-foot">🔒 Dados protegidos · Sem spam · Proposta gratuita e sem compromisso</div>
+    </div>
+
+    <div class="success-card" id="solarSuccess" style="display:none" role="alert" aria-live="polite">
+      <span class="s-ico" aria-hidden="true">☀️</span>
+      <div class="s-title">Vaga Garantida!</div>
+      <p class="s-desc">Seu interesse foi registrado! Em até 24h nossa equipe entrará em contato com sua proposta personalizada.</p>
+      <div class="s-id" id="solarId" aria-label="Código da solicitação">#SOL-000000</div>
+      <a id="solarWaBtn" href="#" target="_blank" rel="noopener noreferrer" class="wa-link" aria-label="Confirmar pelo WhatsApp">💬 Confirmar pelo WhatsApp →</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- AJUSTE 6: links sociais preservados integralmente -->
+<footer>
+  <div class="footer-logo">Meta<em>Obra</em></div>
+  <div class="footer-copy">© 2026 MetaObra · Brasília, Distrito Federal · Energia Solar</div>
+  <nav class="footer-links" aria-label="Redes sociais">
+    <a href="https://tiktok.com/@metaobra" target="_blank" rel="noopener noreferrer">TikTok</a>
+    <a href="https://instagram.com/metaobra.oficial" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://wa.me/5561985986566" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </nav>
+</footer>
+
+<script>
+const WA_SOLAR = "5561985986566";
+
+document.getElementById('tickerEl').innerHTML += document.getElementById('tickerEl').innerHTML;
+
+function fmt(val){
+  return 'R$ ' + val.toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0});
+}
+
+function calcular(){
+  const bill = parseFloat(document.getElementById('calcBill').value);
+  if(!bill || bill < 50){
+    document.getElementById('calcBill').classList.add('v-err');
+    return;
+  }
+  document.getElementById('calcBill').classList.remove('v-err');
+  const monthly_savings = bill * 0.85;
+  const system_cost = bill * 30;
+  const payback_months = Math.round(system_cost / monthly_savings);
+  const savings_10yr = (monthly_savings * 120) - system_cost;
+
+  document.getElementById('resMonthly').textContent = fmt(monthly_savings) + '/mês';
+  document.getElementById('resPayback').textContent = payback_months + ' meses';
+  document.getElementById('res10yr').textContent = fmt(Math.max(savings_10yr, 0));
+  document.getElementById('resSysCost').textContent = fmt(system_cost);
+
+  const r = document.getElementById('calcResult');
+  r.style.display = 'block';
+  r.classList.add('show');
+  r.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+document.getElementById('calcBill').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') calcular();
+});
+
+function toggleFaq(btn){
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el=>{
+    el.classList.remove('open');
+    el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+  });
+  if(!isOpen){
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
+}
+
+document.getElementById('sFone').addEventListener('input', function(){
+  let raw = this.value.replace(/\D/g,'').slice(0,11);
+  let masked = raw;
+  if(raw.length > 2) masked = '(' + raw.slice(0,2) + ') ' + raw.slice(2);
+  if(raw.length > 7) masked = '(' + raw.slice(0,2) + ') ' + raw.slice(2,7) + '-' + raw.slice(7);
+  this.value = masked;
+  const digits = raw.length;
+  if(digits === 0){this.classList.remove('v-ok','v-err'); document.getElementById('sErrFone').textContent='';}
+  else if(digits >= 10){this.classList.add('v-ok'); this.classList.remove('v-err'); document.getElementById('sErrFone').textContent='';}
+  else{this.classList.add('v-err'); this.classList.remove('v-ok'); document.getElementById('sErrFone').textContent='⚠ Digite ao menos 10 dígitos';}
+});
+
+function updateSolarBtn(){
+  const checked = document.getElementById('sLgpd').checked;
+  const btn = document.getElementById('solarBtn');
+  btn.disabled = !checked;
+  btn.setAttribute('aria-disabled', String(!checked));
+  if(checked) document.getElementById('sErrLgpd').textContent = '';
+}
+
+async function submitSolar(){
+  const nome = document.getElementById('sNome').value.trim();
+  const fone = document.getElementById('sFone').value.trim();
+  const end = document.getElementById('sEndereco').value.trim();
+  const conta = document.getElementById('sConta').value.trim();
+  const lgpd = document.getElementById('sLgpd').checked;
+  let ok = true;
+
+  ['sErrNome','sErrFone','sErrEnd','sErrConta','sErrLgpd'].forEach(id => document.getElementById(id).textContent='');
+
+  if(!nome){document.getElementById('sErrNome').textContent='⚠ Informe seu nome'; ok=false;}
+  if(!fone || fone.replace(/\D/g,'').length < 10){document.getElementById('sErrFone').textContent='⚠ WhatsApp inválido'; ok=false;}
+  if(!end){document.getElementById('sErrEnd').textContent='⚠ Informe seu endereço ou região'; ok=false;}
+  if(!conta || parseFloat(conta) < 50){document.getElementById('sErrConta').textContent='⚠ Informe o valor médio da conta (mín. R$50)'; ok=false;}
+  if(!lgpd){document.getElementById('sErrLgpd').textContent='⚠ Aceite a Política de Privacidade para continuar'; ok=false;}
+  if(!ok) return;
+
+  const btn = document.getElementById('solarBtn');
+  btn.disabled = true; btn.setAttribute('aria-disabled','true');
+  btn.innerHTML = '<div class="spinner" aria-hidden="true"></div> Enviando...';
+
+  await new Promise(r => setTimeout(r, 800));
+
+  const id = '#SOL-' + Math.floor(100000 + Math.random() * 900000);
+
+  const msgDono = encodeURIComponent(
+    '☀️ *NOVO LEAD SOLAR — MetaObra*\n\n' +
+    '👤 Nome: *' + nome + '*\n' +
+    '📱 WhatsApp: ' + fone + '\n' +
+    '📍 Endereço: ' + end + '\n' +
+    '💡 Conta média: R$ ' + conta + '\n' +
+    '✅ LGPD: Consentimento registrado\n' +
+    '🆔 ' + id + '\n' +
+    '📅 ' + new Date().toLocaleString('pt-BR') + '\n\n' +
+    '_Condição Fundadores DF — Energia Solar MetaObra_'
+  );
+  window.open('https://wa.me/' + WA_SOLAR + '?text=' + msgDono, '_blank');
+
+  const foneClean = fone.replace(/\D/g,'');
+  // AJUSTE 4: mensagem ao cliente atualizada de 25 para 50 vagas
+  const msgCliente = encodeURIComponent(
+    'Olá *' + nome + '*! ☀️\n\n' +
+    'Recebemos seu interesse na *Energia Solar MetaObra*! ✅\n\n' +
+    '🆔 Código: ' + id + '\n' +
+    '📍 Região: ' + end + '\n' +
+    '💡 Conta informada: R$ ' + conta + '\n\n' +
+    'Em até 24h nossa equipe entra em contato com sua proposta personalizada. 🚀\n\n' +
+    '🔒 Apenas 50 vagas · Condição Fundadores DF\n' +
+    '🛡️ Garantia de instalação · ART pelo engenheiro\n\n' +
+    '_MetaObra · Energia Solar · Brasília DF_'
+  );
+  document.getElementById('solarWaBtn').href = 'https://wa.me/' + foneClean + '?text=' + msgCliente;
+  document.getElementById('solarId').textContent = id;
+
+  document.getElementById('solarFormCard').style.display = 'none';
+  document.getElementById('solarSuccess').style.display = 'block';
+  document.getElementById('solarSuccess').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
+</body>
+</html>

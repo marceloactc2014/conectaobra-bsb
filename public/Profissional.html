@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#FF5C00">
+<meta name="description" content="Seja um profissional parceiro da MetaObra no DF. Receba chamados verificados, pagamento garantido e sem burocracia.">
+<title>MetaObra — Seja um Profissional Parceiro · DF</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* AJUSTE: scroll-padding-top para links âncora atrás do header fixo */
+html{scroll-behavior:smooth;scroll-padding-top:72px;}
+:root{--o:#FF5C00;--y:#FFD000;--bk:#080808;--dk:#0F0F0F;--card:#141414;--b1:#1E1E1E;--b2:#2A2A2A;--w:#F2EDE6;--tx:#8A8070;--mu:#444;--gr:#00C46A;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;caret-color:auto;}
+body{background:var(--bk);color:var(--w);font-family:'Syne',sans-serif;overflow-x:hidden;}
+input,select,textarea,button{font-family:'Syne',sans-serif!important;font-size:16px!important;}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--o);border-radius:2px}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.5)}50%{box-shadow:0 0 0 10px rgba(255,92,0,0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.4);background:var(--o);}50%{box-shadow:0 0 18px 4px rgba(255,92,0,.3);background:#FF7A2E;}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* AJUSTE: Cabeçalho fixo (sticky) com blur e sombra */
+nav{
+  background:rgba(8,8,8,.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--b1);
+  box-shadow:0 2px 12px rgba(0,0,0,.35);
+  padding:.9rem 1.2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:5000;
+  width:100%;
+}
+/* AJUSTE: Logo com imagem SVG + fallback texto */
+.logo-link{display:flex;align-items:center;text-decoration:none;}
+.logo-img{max-height:38px;width:auto;margin-right:12px;vertical-align:middle;filter:drop-shadow(0 1px 2px rgba(0,0,0,.05));}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.04em;text-decoration:none;color:var(--w);display:flex;align-items:center;}
+.logo em{color:var(--o);font-style:normal;}
+.logo-tag{font-family:'JetBrains Mono',monospace;font-size:.5rem;color:var(--o);margin-left:.4rem;letter-spacing:.1em;vertical-align:middle;background:rgba(255,92,0,.1);border:1px solid rgba(255,92,0,.3);padding:.1rem .35rem;border-radius:3px;}
+.nav-right{display:flex;align-items:center;gap:.5rem;}
+.nav-btn{background:none;border:1px solid var(--b2);color:var(--tx);padding:.32rem .7rem;border-radius:6px;cursor:pointer;font-size:.68rem;font-weight:600;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;}
+.nav-btn:hover{border-color:var(--o);color:var(--o);}
+.nav-btn.cta{background:var(--o);color:var(--bk);border-color:var(--o);font-weight:800;}
+.nav-btn.cta:hover{background:var(--y);}
+
+/* HERO */
+.hero{padding:2rem 1.2rem 1.5rem;position:relative;overflow:hidden;}
+.hero-orb{position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(255,92,0,.12) 0%,transparent 68%);top:-80px;right:-60px;pointer-events:none;}
+.badge{display:inline-flex;align-items:center;gap:.45rem;background:var(--card);border:1px solid var(--b2);padding:.28rem .85rem;border-radius:100px;margin-bottom:1.1rem;font-size:.6rem;font-family:'JetBrains Mono',monospace;color:var(--tx);letter-spacing:.08em;animation:fadeUp .4s both;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:pulse 2s infinite;flex-shrink:0;}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,9vw,4rem);line-height:.92;margin-bottom:1rem;position:relative;z-index:1;animation:fadeUp .4s .1s both;}
+h1 .o{color:var(--o);}
+h1 .m{color:var(--mu);}
+.hdesc{font-size:.9rem;line-height:1.75;color:var(--tx);margin-bottom:1.5rem;position:relative;z-index:1;animation:fadeUp .4s .2s both;}
+.hdesc strong{color:var(--w);}
+
+/* COMISSÕES */
+.sec-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--o);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;}
+.sec-tag::after{content:'';flex:1;height:1px;background:var(--b1);}
+.com-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1.5rem;}
+.com-card{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:.9rem .6rem;text-align:center;position:relative;overflow:hidden;}
+.com-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--o);}
+.com-pct{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--o);line-height:1;}
+.com-lbl{font-size:.62rem;color:var(--tx);margin-top:.2rem;line-height:1.3;}
+.com-range{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--gr);margin-top:.3rem;}
+.com-ex{font-size:.6rem;color:var(--mu);margin-top:.2rem;}
+
+/* SIMULADOR */
+.sim-card{background:var(--card);border:1px solid var(--b2);border-radius:12px;padding:1.2rem;margin-bottom:1.5rem;}
+.sim-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;margin-bottom:.8rem;color:var(--w);}
+.sim-title span{color:var(--o);}
+.sim-row{display:flex;gap:.5rem;align-items:center;margin-bottom:.7rem;}
+.sim-lbl{font-size:.7rem;color:var(--tx);min-width:120px;}
+.sim-input{flex:1;background:var(--bk);border:1.5px solid var(--b2);border-radius:7px;padding:.5rem .8rem;color:var(--w);outline:none;font-size:.88rem!important;transition:border-color .2s;}
+.sim-input:focus{border-color:var(--o);}
+.sim-btn{width:100%;padding:.75rem;background:var(--dk);border:1.5px solid var(--o);color:var(--o);border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem;margin-bottom:.7rem;}
+.sim-btn:hover{background:var(--o);color:var(--bk);}
+.sim-result{display:none;background:var(--bk);border:1px solid var(--b1);border-radius:8px;padding:.9rem;}
+.sim-res-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--b1);font-size:.78rem;}
+.sim-res-row:last-child{border:none;}
+.sim-res-row span:first-child{color:var(--tx);}
+.sim-res-row span:last-child{font-family:'JetBrains Mono',monospace;color:var(--gr);font-weight:700;}
+
+/* TICKER */
+.ticker{background:var(--o);padding:.6rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;animation:ticker 22s linear infinite;}
+.ti{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.1em;color:var(--bk);padding:0 1.5rem;}
+.tdot{color:rgba(0,0,0,.25);}
+
+/* FORM */
+.form-section{padding:1.5rem 1.2rem;}
+.prog-card{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;}
+.waitlist-label{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.55rem;}
+.waitlist-text{font-size:.72rem;color:var(--w);font-weight:700;}
+.beta-badge{font-family:'JetBrains Mono',monospace;font-size:.55rem;background:rgba(255,92,0,.15);border:1px solid rgba(255,92,0,.4);color:var(--o);padding:.15rem .45rem;border-radius:3px;letter-spacing:.1em;display:inline-flex;align-items:center;gap:.25rem;}
+.prog-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
+.prog-lbl{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--tx);letter-spacing:.12em;text-transform:uppercase;}
+.prog-n{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--o);line-height:1;}
+.prog-n span{font-size:.9rem;color:var(--mu);}
+.bar{background:var(--bk);border-radius:100px;height:7px;overflow:hidden;border:1px solid var(--b2);}
+.barfill{height:100%;background:linear-gradient(90deg,var(--o),var(--y));border-radius:100px;box-shadow:0 0 8px rgba(255,92,0,.4);transition:width 1.2s ease;}
+.bfoot{display:flex;justify-content:space-between;margin-top:.35rem;font-size:.62rem;}
+.bpct{color:var(--gr);}
+.brest{color:var(--mu);}
+.fcard{background:var(--card);border:1px solid var(--b1);border-radius:14px;padding:1.4rem 1.2rem;}
+.ftag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--o);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.3rem;font-weight:700;}
+.fhead{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;line-height:1;margin-bottom:.25rem;}
+.fsub{font-size:.8rem;color:var(--tx);margin-bottom:1.2rem;line-height:1.5;}
+.field{margin-bottom:.85rem;}
+.field label{display:block;font-size:.63rem;font-weight:700;color:var(--tx);margin-bottom:.28rem;letter-spacing:.1em;text-transform:uppercase;}
+.field input,.field select,.field textarea{width:100%;background:var(--bk);border:1.5px solid var(--b2);border-radius:8px;padding:.78rem 1rem;color:var(--w);outline:none;transition:border-color .2s;appearance:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--o);}
+.field input::placeholder,.field textarea::placeholder{color:var(--mu);}
+.field textarea{resize:none;height:75px;}
+.errmsg{color:#FF4444;font-size:.67rem;margin-top:.2rem;}
+.field input.input-valid{border-color:var(--gr)!important;}
+.field input.input-invalid{border-color:#FF3B3B!important;}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.sbtn{padding:.65rem .6rem;border-radius:8px;border:1.5px solid var(--b2);background:var(--bk);color:var(--tx);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:.35rem;text-decoration:none;}
+.sbtn.sel{border-color:var(--o)!important;color:var(--o)!important;background:rgba(255,92,0,.12)!important;box-shadow:inset 0 0 0 1px var(--o);}
+.sbtn[data-id="hidraulica"]{border-color:#1E6FA0;color:#4DB8FF;background:rgba(29,111,160,.1);}
+.sbtn[data-id="eletrica"]{border-color:#B8A000;color:#FFD700;background:rgba(184,160,0,.1);}
+.sbtn[data-id="pintura"]{border-color:#9B3A9B;color:#DA70D6;background:rgba(155,58,155,.1);}
+.sbtn[data-id="piso"]{border-color:#A06020;color:#DEB887;background:rgba(160,96,32,.1);}
+.sbtn[data-id="drywall"]{border-color:#2E7D32;color:#66BB6A;background:rgba(46,125,50,.1);}
+.sbtn[data-id="desentupimento"]{border-color:#007A5E;color:#00C49A;background:rgba(0,122,94,.1);}
+.sbtn[data-id="reforma"]{border-color:#8B0000;color:#FF6B6B;background:rgba(139,0,0,.1);}
+.sbtn[data-id="outro"]{border-color:#444;color:#AAA;background:rgba(85,85,85,.1);}
+/* AJUSTE: estilo Solar Fotovoltaica — destaque dourado, largura total */
+.sbtn[data-id="solar"]{border-color:#C9A800;color:#FFD000;background:rgba(255,208,0,.1);font-weight:700;grid-column:1/-1;justify-content:center;letter-spacing:.03em;}
+.sbtn[data-id="solar"]:hover{background:rgba(255,208,0,.2);border-color:#FFD000;}
+.foto-aviso{background:rgba(255,92,0,.07);border:1px solid rgba(255,92,0,.2);border-radius:8px;padding:.85rem 1rem;margin-bottom:.9rem;font-size:.78rem;color:var(--tx);line-height:1.6;}
+.foto-aviso strong{color:var(--w);}
+.lgpd-field{margin-bottom:.9rem;margin-top:.4rem;}
+.lgpd-label{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer;font-size:.72rem;color:var(--tx);line-height:1.6;}
+.lgpd-label input[type="checkbox"]{flex-shrink:0;width:18px;height:18px;accent-color:var(--o);cursor:pointer;margin-top:.1rem;}
+.lgpd-label a{color:var(--o);text-decoration:underline;}
+.lgpd-label strong{color:var(--w);}
+.bsub{width:100%;padding:1rem;background:var(--o);color:var(--bk);border:none;border-radius:10px;font-weight:800;font-size:1rem;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:.5rem;animation:blink 2s ease-in-out infinite;}
+.bsub:hover:not(:disabled){animation:none;background:var(--y);}
+.bsub:disabled{opacity:.4;cursor:not-allowed;animation:none;}
+.ffoot{text-align:center;font-size:.65rem;color:var(--mu);line-height:1.5;margin-top:.6rem;}
+.spinner{width:18px;height:18px;border:2px solid rgba(0,0,0,.3);border-top-color:var(--bk);border-radius:50%;animation:spin .6s linear infinite;}
+.success{background:var(--card);border:1px solid var(--gr);border-radius:14px;padding:2rem 1.4rem;text-align:center;animation:pop .4s ease;}
+.si{font-size:3rem;display:block;margin-bottom:.7rem;}
+.st{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gr);margin-bottom:.35rem;}
+.sd{color:var(--tx);font-size:.82rem;line-height:1.7;margin-bottom:.9rem;}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.9rem;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.92rem;cursor:pointer;text-decoration:none;margin-bottom:.5rem;}
+.back-btn{display:flex;align-items:center;justify-content:center;width:100%;padding:.8rem;background:none;border:1.5px solid var(--b2);color:var(--tx);border-radius:10px;font-weight:600;font-size:.85rem;cursor:pointer;text-decoration:none;}
+.proximos{background:rgba(0,196,106,.07);border:1px solid rgba(0,196,106,.18);border-radius:10px;padding:1rem 1.1rem;text-align:left;margin-top:.8rem;}
+.prox-title{font-size:.62rem;color:var(--gr);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+.prox-item{font-size:.78rem;color:var(--tx);line-height:1.9;}
+.como-sec{padding:2rem 1.2rem;background:var(--dk);border-top:1px solid var(--b1);}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,2.5rem);line-height:1;margin-bottom:1.2rem;}
+.sec-h .o{color:var(--o);}
+.steps{display:flex;flex-direction:column;gap:.5rem;}
+.step{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:.9rem 1rem;display:flex;gap:.8rem;align-items:flex-start;}
+.step-n{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:rgba(255,92,0,.2);line-height:1;flex-shrink:0;width:26px;}
+.step-ico{font-size:1.3rem;flex-shrink:0;}
+.step-h{font-weight:700;font-size:.86rem;margin-bottom:.18rem;}
+.step-p{font-size:.73rem;color:var(--tx);line-height:1.5;}
+.exig-sec{padding:2rem 1.2rem;border-top:1px solid var(--b1);}
+.exig-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:1rem;}
+.exig-card{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:.9rem;display:flex;gap:.7rem;align-items:flex-start;}
+.exig-ico{font-size:1.2rem;flex-shrink:0;}
+.exig-h{font-weight:700;font-size:.8rem;margin-bottom:.15rem;}
+.exig-p{font-size:.7rem;color:var(--tx);line-height:1.4;}
+.privacy-section{padding:1.8rem 1.2rem;border-top:1px solid var(--b1);background:var(--dk);}
+.privacy-section h2{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--o);margin-bottom:.6rem;}
+.privacy-section p{font-size:.7rem;color:var(--tx);line-height:1.8;margin-bottom:.5rem;}
+footer{padding:1.5rem 1.2rem;border-top:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;text-decoration:none;color:var(--w);}
+.footer-logo em{color:var(--o);font-style:normal;}
+.footer-copy{font-size:.65rem;color:var(--mu);}
+.footer-links{display:flex;gap:1rem;}
+.footer-links a{color:var(--tx);text-decoration:none;font-size:.72rem;transition:color .2s;}
+.footer-links a:hover{color:var(--o);}
+@media(max-width:480px){
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- AJUSTE: Cabeçalho fixo com logo SVG + fallback texto -->
+<header>
+  <nav aria-label="Navegação principal">
+    <div style="display:flex;align-items:center;">
+      <!-- AJUSTE: Logo imagem com fallback em texto estilizado -->
+      <a href="Institucional.html" class="logo-link" aria-label="MetaObra - Página Inicial">
+        <img src="logo-metaobra.svg" alt="Logo MetaObra" class="logo-img"
+          onerror="this.style.display='none';document.getElementById('logoFallbackPro').style.display='flex';">
+      </a>
+      <div class="logo" id="logoFallbackPro">
+        <a href="Institucional.html" style="text-decoration:none;color:inherit;display:flex;align-items:center;">Meta<em>Obra</em><span class="logo-tag">DF</span></a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="Plataforma.html" target="_blank" rel="noopener noreferrer" class="nav-btn cta">🔧 Plataforma</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero" aria-label="Apresentação para profissionais parceiros">
+  <div class="hero-orb" aria-hidden="true"></div>
+  <div class="badge"><span class="bdot" aria-hidden="true"></span>Vagas abertas para parceiros · DF</div>
+  <h1>Trabalhe com<br/><span class="o">quem garante</span><br/>seus chamados<br/><span class="m">e seu pagamento.</span></h1>
+  <p class="hdesc">Chega de depender só de indicação. A MetaObra conecta você a clientes verificados no DF — <strong>você executa, nós gerenciamos tudo.</strong></p>
+
+  <!-- COMISSÕES -->
+  <div class="sec-tag" aria-hidden="true">sua comissão</div>
+  <div class="com-grid" role="list" aria-label="Faixas de chamados por valor">
+    <div class="com-card" role="listitem">
+      <div class="com-pct" style="font-size:1.6rem;">R$150</div>
+      <div class="com-lbl">Chamado Mínimo</div>
+      <div class="com-range">Serviços simples e rápidos</div>
+    </div>
+    <div class="com-card" role="listitem">
+      <div class="com-pct" style="font-size:1.6rem;">R$200</div>
+      <div class="com-lbl">Chamado Padrão</div>
+      <div class="com-range">Serviços intermediários</div>
+    </div>
+    <div class="com-card" style="border-color:rgba(255,92,0,.3);" role="listitem">
+      <div class="com-pct" style="font-size:1.4rem;">R$250<span style="font-size:1rem;color:var(--tx)">+</span></div>
+      <div class="com-lbl">Chamado-Alvo</div>
+      <div class="com-range">A partir de R$250,00</div>
+    </div>
+  </div>
+
+  <!-- SIMULADOR DE GANHOS -->
+  <div class="sim-card" aria-label="Simulador de ganhos mensais">
+    <div class="sim-title">💰 Simule seu <span>ganho</span></div>
+    <div class="sim-row">
+      <label class="sim-lbl" for="simChamados">Chamados por mês</label>
+      <input type="number" class="sim-input" id="simChamados" placeholder="Ex: 40" value="40" min="1" max="200" aria-label="Número de chamados por mês">
+    </div>
+    <div class="sim-row">
+      <label class="sim-lbl" for="simTicket">Ticket médio (R$)</label>
+      <input type="number" class="sim-input" id="simTicket" placeholder="Ex: 200" value="200" min="150" aria-label="Valor médio por chamado em reais">
+    </div>
+    <button type="button" class="sim-btn" onclick="calcSim()">Calcular meu ganho →</button>
+    <div class="sim-result" id="simResult" role="region" aria-live="polite" aria-label="Resultado da simulação">
+      <div class="sim-res-row"><span>Faturamento bruto/mês</span><span id="simBruto">—</span></div>
+      <div class="sim-res-row"><span>Comissão MetaObra</span><span id="simCom" style="color:var(--o)!important">—</span></div>
+      <div class="sim-res-row"><span>Você recebe líquido</span><span id="simLiq">—</span></div>
+      <div class="sim-res-row"><span>Projeção anual</span><span id="simAno">—</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="tickerEl">
+    <span class="ti">PAGAMENTO GARANTIDO</span><span class="tdot">✦</span>
+    <span class="ti">CHAMADOS NO DF</span><span class="tdot">✦</span>
+    <span class="ti">SEM BUROCRACIA</span><span class="tdot">✦</span>
+    <span class="ti">VOCÊ EXECUTA — NÓS GERENCIAMOS</span><span class="tdot">✦</span>
+    <span class="ti">GARANTIA 90 DIAS</span><span class="tdot">✦</span>
+    <span class="ti">CLIENTES VERIFICADOS</span><span class="tdot">✦</span>
+  </div>
+</div>
+
+<!-- FORM -->
+<section class="form-section" aria-label="Formulário de cadastro profissional">
+
+  <div class="prog-card" role="status" aria-label="Vagas disponíveis para profissionais">
+    <div class="waitlist-label">
+      <span class="waitlist-text">📋 Lista de Espera · Parceiros Fundadores</span>
+      <span class="beta-badge" aria-label="Beta fechado">🔒 Beta Fechado</span>
+    </div>
+    <div class="prog-row">
+      <span class="prog-lbl">Vagas de profissionais</span>
+      <span class="prog-n" id="progNum">4 <span>/ 20</span></span>
+    </div>
+    <div class="bar" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="20" aria-label="4 de 20 vagas preenchidas">
+      <div class="barfill" id="barFill" style="width:40%"></div>
+    </div>
+    <div class="bfoot">
+      <span class="bpct" id="progPct">40% preenchido</span>
+      <span class="brest" id="progRest">6 vagas restantes</span>
+    </div>
+  </div>
+
+  <div class="fcard" id="formCard">
+    <div class="ftag" aria-hidden="true">🔨 Seja parceiro</div>
+    <div class="fhead">Cadastro Profissional</div>
+    <p class="fsub">Preencha abaixo. Nossa equipe entrará em contato pelo WhatsApp em até 48h.</p>
+
+    <div class="field">
+      <label for="proName">Nome completo <abbr title="obrigatório">*</abbr></label>
+      <input type="text" id="proName" name="name" placeholder="Seu nome completo" autocomplete="name" required aria-required="true" aria-describedby="errName">
+      <div class="errmsg" id="errName" role="alert" aria-live="polite"></div>
+    </div>
+
+    <div class="field">
+      <label for="proPhone">WhatsApp <abbr title="obrigatório">*</abbr></label>
+      <input type="tel" id="proPhone" name="phone" placeholder="(61) 99999-9999" autocomplete="tel" required aria-required="true" pattern="\(\d{2}\) \d{4,5}-\d{4}" aria-describedby="errPhone phoneHint">
+      <div style="font-size:.6rem;color:var(--mu);margin-top:.18rem;" id="phoneHint">Formato: (XX) XXXXX-XXXX</div>
+      <div class="errmsg" id="errPhone" role="alert" aria-live="polite"></div>
+    </div>
+
+    <div class="field">
+      <label for="proCep">CEP — área de atendimento <abbr title="obrigatório">*</abbr></label>
+      <input type="tel" id="proCep" name="cep" placeholder="00000-000" maxlength="9" required aria-required="true" aria-describedby="errCep">
+      <div class="errmsg" id="errCep" role="alert" aria-live="polite"></div>
+    </div>
+
+    <div class="field">
+      <label>Especialidades <abbr title="obrigatório">*</abbr> <span class="errmsg" id="errSvc" style="display:inline;margin:0" role="alert" aria-live="polite"></span></label>
+      <div class="sgrid" role="group" aria-label="Selecione suas especialidades">
+        <button class="sbtn" data-id="hidraulica" type="button" onclick="toggleSvc(this)" aria-pressed="false">🔧 Hidráulica</button>
+        <button class="sbtn" data-id="eletrica" type="button" onclick="toggleSvc(this)" aria-pressed="false">⚡ Elétrica</button>
+        <button class="sbtn" data-id="pintura" type="button" onclick="toggleSvc(this)" aria-pressed="false">🎨 Pintura</button>
+        <button class="sbtn" data-id="piso" type="button" onclick="toggleSvc(this)" aria-pressed="false">🏠 Piso</button>
+        <button class="sbtn" data-id="drywall" type="button" onclick="toggleSvc(this)" aria-pressed="false">🧱 Drywall</button>
+        <button class="sbtn" data-id="desentupimento" type="button" onclick="toggleSvc(this)" aria-pressed="false">🚿 Desentupimento</button>
+        <button class="sbtn" data-id="reforma" type="button" onclick="toggleSvc(this)" aria-pressed="false">🏗️ Reformas</button>
+        <button class="sbtn" data-id="outro" type="button" onclick="toggleSvc(this)" aria-pressed="false">🛠️ Outro</button>
+        <!-- AJUSTE: Especialidade Solar Fotovoltaica adicionada após Reformas/Outro, largura total -->
+        <button class="sbtn" data-id="solar" type="button" onclick="toggleSvc(this)" aria-pressed="false">☀️ Instalação Solar (Fotovoltaica)</button>
+      </div>
+    </div>
+
+    <!-- AJUSTE: rótulo alterado de "Anos de experiência" para "Tempo de experiência" -->
+    <div class="field">
+      <label for="proExp">Tempo de experiência <abbr title="obrigatório">*</abbr></label>
+      <select id="proExp" name="exp" required aria-required="true" aria-describedby="errExp">
+        <option value="">Selecione...</option>
+        <option>1 a 2 anos</option><option>3 a 5 anos</option>
+        <option>5 a 10 anos</option><option>Mais de 10 anos</option>
+      </select>
+      <div class="errmsg" id="errExp" role="alert" aria-live="polite"></div>
+    </div>
+
+    <div class="field">
+      <label for="proDoc">RG ou CPF <abbr title="obrigatório">*</abbr></label>
+      <input type="text" id="proDoc" name="doc" placeholder="000.000.000-00" required aria-required="true" aria-describedby="errDoc">
+      <div class="errmsg" id="errDoc" role="alert" aria-live="polite"></div>
+    </div>
+
+    <div class="field">
+      <label for="proBio">Descreva sua experiência (opcional)</label>
+      <textarea id="proBio" name="bio" placeholder="Ex: 8 anos com hidráulica e elétrica no DF..."></textarea>
+    </div>
+
+    <div class="foto-aviso" role="note">
+      📸 Após o cadastro, nossa equipe solicitará <strong>2 a 3 fotos de trabalhos realizados</strong> pelo WhatsApp antes da entrevista.
+    </div>
+
+    <div class="lgpd-field">
+      <label class="lgpd-label" for="lgpdCheck">
+        <input type="checkbox" id="lgpdCheck" name="lgpd" required aria-required="true" aria-describedby="errLgpd" onchange="updateSubmitBtn()">
+        <span>Li e concordo com a <a href="#politica-privacidade" aria-label="Política de Privacidade">Política de Privacidade</a> e <strong>autorizo contato via WhatsApp</strong> pela MetaObra.</span>
+      </label>
+      <div class="errmsg" id="errLgpd" role="alert" aria-live="polite"></div>
+    </div>
+
+    <button type="button" class="bsub" id="btnSub" onclick="submitPro()" disabled aria-disabled="true">🚀 Quero ser Parceiro →</button>
+    <div class="ffoot">🔒 Dados protegidos · Entraremos em contato em até 48h</div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="successCard" style="display:none" role="alert" aria-live="polite">
+    <div class="success">
+      <span class="si" aria-hidden="true">🎉</span>
+      <div class="st">Cadastro Recebido!</div>
+      <p class="sd">Nossa equipe entrará em contato pelo WhatsApp em até 48h.</p>
+      <a id="waProBtn" href="#" target="_blank" rel="noopener noreferrer" class="wa-btn" aria-label="Confirmar cadastro pelo WhatsApp">💬 Confirmar pelo WhatsApp →</a>
+      <a href="Index.html" target="_blank" rel="noopener noreferrer" class="back-btn">← Ver página do cliente</a>
+      <div class="proximos" aria-label="Próximos passos">
+        <div class="prox-title">📋 Próximos passos</div>
+        <div class="prox-item">
+          1️⃣ Equipe entra em contato pelo WhatsApp<br/>
+          2️⃣ Você envia fotos de trabalhos realizados<br/>
+          3️⃣ Entrevista rápida com nossa equipe<br/>
+          4️⃣ Aprovado — começa a receber chamados! 🚀
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como-sec" aria-label="Como funciona para profissionais">
+  <div class="sec-tag" aria-hidden="true">como funciona</div>
+  <h2 class="sec-h">Simples, direto <span class="o">e justo.</span></h2>
+  <div class="steps">
+    <div class="step"><div class="step-n" aria-hidden="true">01</div><div class="step-ico" aria-hidden="true">📋</div><div><div class="step-h">Você se cadastra</div><p class="step-p">Preenche o formulário e passa pela entrevista com nossa equipe.</p></div></div>
+    <div class="step"><div class="step-n" aria-hidden="true">02</div><div class="step-ico" aria-hidden="true">✅</div><div><div class="step-h">Aprovado</div><p class="step-p">Entra no grupo de profissionais parceiros no WhatsApp.</p></div></div>
+    <div class="step"><div class="step-n" aria-hidden="true">03</div><div class="step-ico" aria-hidden="true">📲</div><div><div class="step-h">Recebe chamados</div><p class="step-p">Quando surgir serviço na sua área, a MetaObra te aciona.</p></div></div>
+    <div class="step"><div class="step-n" aria-hidden="true">04</div><div class="step-ico" aria-hidden="true">🔨</div><div><div class="step-h">Você executa</div><p class="step-p">Vai até o cliente, executa com qualidade e registra o antes e depois.</p></div></div>
+    <div class="step"><div class="step-n" aria-hidden="true">05</div><div class="step-ico" aria-hidden="true">💰</div><div><div class="step-h">Recebe na hora</div><p class="step-p">Cliente aprova, você recebe — descontada apenas a comissão.</p></div></div>
+  </div>
+</section>
+
+<!-- EXIGÊNCIAS -->
+<section class="exig-sec" aria-label="Padrão exigido dos profissionais">
+  <div class="sec-tag" aria-hidden="true">padrão exigido</div>
+  <h2 class="sec-h">Nosso nome está em <span class="o">jogo.</span></h2>
+  <div class="exig-grid">
+    <div class="exig-card"><div class="exig-ico" aria-hidden="true">🦺</div><div><div class="exig-h">EPI obrigatório</div><p class="exig-p">Equipamentos de proteção em todos os atendimentos.</p></div></div>
+    <div class="exig-card"><div class="exig-ico" aria-hidden="true">🕐</div><div><div class="exig-h">Pontualidade</div><p class="exig-p">Horário combinado é horário cumprido.</p></div></div>
+    <div class="exig-card"><div class="exig-ico" aria-hidden="true">🧹</div><div><div class="exig-h">Ambiente limpo</div><p class="exig-p">Entregar o local limpo e organizado.</p></div></div>
+    <div class="exig-card"><div class="exig-ico" aria-hidden="true">📸</div><div><div class="exig-h">Foto antes/depois</div><p class="exig-p">Registro fotográfico obrigatório em todo serviço.</p></div></div>
+    <div class="exig-card"><div class="exig-ico" aria-hidden="true">✅</div><div><div class="exig-h">Aprovação do cliente</div><p class="exig-p">Cliente verifica antes de você ir embora.</p></div></div>
+    <div class="exig-card"><div class="exig-ico" aria-hidden="true">📋</div><div><div class="exig-h">Escopo fechado</div><p class="exig-p">Só execute o serviço aprovado. Acréscimos passam pela central.</p></div></div>
+  </div>
+</section>
+
+<section class="privacy-section" id="politica-privacidade" aria-label="Política de Privacidade">
+  <h2>Política de Privacidade</h2>
+  <p>A <strong>MetaObra</strong> coleta apenas os dados necessários para o credenciamento de profissionais parceiros no DF: nome, WhatsApp, CEP, especialidades, experiência e documento de identificação.</p>
+  <p>Esses dados são utilizados exclusivamente para contato, triagem e aprovação de novos parceiros. Não vendemos, repassamos ou compartilhamos suas informações com terceiros para fins publicitários.</p>
+  <p>Em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018)</strong>, você pode solicitar a exclusão dos seus dados a qualquer momento via WhatsApp: <a href="https://wa.me/5561985986566" style="color:var(--o);" target="_blank" rel="noopener noreferrer">(61) 98598-6566</a>.</p>
+  <p style="font-size:.65rem;color:var(--mu);">Última atualização: Abril de 2026</p>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <a href="Institucional.html" class="footer-logo">Meta<em>Obra</em></a>
+  <div class="footer-copy">© 2026 MetaObra · Brasília, DF</div>
+  <nav class="footer-links" aria-label="Links de navegação">
+    <a href="Index.html">← Cliente</a>
+    <a href="Plataforma.html" target="_blank" rel="noopener noreferrer">Plataforma</a>
+    <a href="https://tiktok.com/@metaobra" target="_blank" rel="noopener noreferrer">TikTok</a>
+  </nav>
+</footer>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+const app = initializeApp({
+  apiKey:"AIzaSyAefv4XC9BYZ1gPDD8ITF419bBskHI2Iik",
+  authDomain:"conectaobra-bsb.firebaseapp.com",
+  projectId:"conectaobra-bsb",
+  storageBucket:"conectaobra-bsb.firebasestorage.app",
+  messagingSenderId:"1034783709360",
+  appId:"1:1034783709360:web:36931b3d8d5e1ca1f58375"
+});
+const db = getFirestore(app);
+window.fbAdd = async(col,data)=>{try{return await addDoc(collection(db,col),{...data,createdAt:new Date().toISOString()});}catch(e){return null;}};
+window.fbList = async(col)=>{try{const s=await getDocs(collection(db,col));return s.docs.map(d=>({...d.data(),_id:d.id}));}catch(e){return [];}};
+window.firebaseOK=true;
+</script>
+
+<script>
+const WA = "5561985986566";
+const SEED_COUNT = 4;
+let selectedSvcs = [];
+
+function ls(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch{return null;}}
+function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+
+document.getElementById('tickerEl').innerHTML += document.getElementById('tickerEl').innerHTML;
+
+function loadProg(){
+  const pros = ls('co_pros') || [];
+  const n = SEED_COUNT + pros.length;
+  const total = 20;
+  const pct = Math.min(Math.round((n / total) * 100), 100);
+  const remaining = Math.max(total - n, 0);
+  document.getElementById('progNum').innerHTML = n + ' <span>/ 20</span>';
+  document.getElementById('barFill').style.width = pct + '%';
+  document.getElementById('barFill').parentElement.setAttribute('aria-valuenow', n);
+  document.getElementById('progPct').textContent = pct + '% preenchido';
+  document.getElementById('progRest').textContent = remaining + ' vagas restantes';
+}
+loadProg();
+
+function updateSubmitBtn(){
+  const checked = document.getElementById('lgpdCheck').checked;
+  const btn = document.getElementById('btnSub');
+  btn.disabled = !checked;
+  btn.setAttribute('aria-disabled', String(!checked));
+  if(checked) document.getElementById('errLgpd').textContent = '';
+}
+
+document.getElementById('proPhone').addEventListener('input', function(){
+  let raw = this.value.replace(/\D/g,'').slice(0, 11);
+  let masked = raw;
+  if(raw.length > 2)  masked = '(' + raw.slice(0,2) + ') ' + raw.slice(2);
+  if(raw.length > 7)  masked = '(' + raw.slice(0,2) + ') ' + raw.slice(2,7) + '-' + raw.slice(7);
+  this.value = masked;
+  const digits = raw.length;
+  if(digits === 0){
+    this.classList.remove('input-valid','input-invalid');
+    document.getElementById('errPhone').textContent = '';
+  } else if(digits >= 10){
+    this.classList.add('input-valid'); this.classList.remove('input-invalid');
+    document.getElementById('errPhone').textContent = '';
+  } else {
+    this.classList.add('input-invalid'); this.classList.remove('input-valid');
+    document.getElementById('errPhone').textContent = '⚠ Digite ao menos 10 dígitos';
+  }
+});
+
+document.getElementById('proCep').addEventListener('input', function(){
+  let v = this.value.replace(/\D/g,'');
+  if(v.length > 5) v = v.slice(0,5) + '-' + v.slice(5,8);
+  this.value = v;
+});
+
+function toggleSvc(btn){
+  const id = btn.dataset.id;
+  if(selectedSvcs.includes(id)){
+    selectedSvcs = selectedSvcs.filter(x => x !== id);
+    btn.classList.remove('sel');
+    btn.setAttribute('aria-pressed','false');
+  } else {
+    selectedSvcs.push(id);
+    btn.classList.add('sel');
+    btn.setAttribute('aria-pressed','true');
+  }
+  document.getElementById('errSvc').textContent = '';
+}
+
+function calcSim(){
+  const ch = parseInt(document.getElementById('simChamados').value) || 0;
+  const tk = parseInt(document.getElementById('simTicket').value) || 0;
+  if(!ch || !tk){ alert('Preencha chamados e ticket médio!'); return; }
+  const pct = tk <= 500 ? .20 : tk <= 3000 ? .15 : .10;
+  const bruto = ch * tk;
+  const com   = bruto * pct;
+  const liq   = bruto - com;
+  const fmt = v => v.toLocaleString('pt-BR', {minimumFractionDigits:0});
+  document.getElementById('simBruto').textContent = 'R$ ' + fmt(bruto);
+  document.getElementById('simCom').textContent   = 'R$ ' + fmt(com) + ' (' + Math.round(pct*100) + '%)';
+  document.getElementById('simLiq').textContent   = 'R$ ' + fmt(liq);
+  document.getElementById('simAno').textContent   = 'R$ ' + fmt(liq * 12);
+  document.getElementById('simResult').style.display = 'block';
+}
+
+async function submitPro(){
+  const name  = document.getElementById('proName').value.trim();
+  const phone = document.getElementById('proPhone').value.trim();
+  const cep   = document.getElementById('proCep').value.trim();
+  const exp   = document.getElementById('proExp').value;
+  const doc   = document.getElementById('proDoc').value.trim();
+  const bio   = document.getElementById('proBio').value.trim();
+  const lgpd  = document.getElementById('lgpdCheck').checked;
+  let ok = true;
+  ['errName','errPhone','errCep','errExp','errDoc'].forEach(id => document.getElementById(id).textContent = '');
+  document.getElementById('errSvc').textContent  = '';
+  document.getElementById('errLgpd').textContent = '';
+  if(!name)  { document.getElementById('errName').textContent  = '⚠ Informe seu nome'; ok = false; }
+  if(!phone || phone.replace(/\D/g,'').length < 10){ document.getElementById('errPhone').textContent = '⚠ WhatsApp inválido (mínimo 10 dígitos)'; ok = false; }
+  if(!cep || cep.replace(/\D/g,'').length < 8){ document.getElementById('errCep').textContent = '⚠ CEP inválido'; ok = false; }
+  if(!selectedSvcs.length){ document.getElementById('errSvc').textContent = ' — Selecione ao menos uma'; ok = false; }
+  if(!exp)   { document.getElementById('errExp').textContent   = '⚠ Informe seu tempo de experiência'; ok = false; }
+  if(!doc)   { document.getElementById('errDoc').textContent   = '⚠ Informe RG ou CPF'; ok = false; }
+  if(!lgpd)  { document.getElementById('errLgpd').textContent  = '⚠ Você precisa aceitar a Política de Privacidade para continuar.'; ok = false; }
+  if(!ok) return;
+  const btn = document.getElementById('btnSub');
+  btn.disabled = true; btn.setAttribute('aria-disabled','true');
+  btn.innerHTML = '<div class="spinner" aria-hidden="true"></div> Enviando...';
+  const pros = ls('co_pros') || [];
+  if(pros.find(p => p.phone.replace(/\D/g,'') === phone.replace(/\D/g,''))){
+    document.getElementById('errPhone').textContent = '✓ Número já cadastrado!';
+    btn.disabled = false; btn.setAttribute('aria-disabled','false');
+    btn.innerHTML = '🚀 Quero ser Parceiro →';
+    return;
+  }
+  const id = '#PRO-' + Math.floor(100000 + Math.random() * 900000);
+  const pro = { id, name, phone, cep, exp, doc, bio, services: selectedSvcs, lgpdConsent: true, status: 'pendente', createdAt: new Date().toISOString() };
+  pros.unshift(pro);
+  ss('co_pros', pros);
+  if(window.fbAdd) window.fbAdd('profissionais', pro);
+  const expTxt = document.getElementById('proExp').options[document.getElementById('proExp').selectedIndex]?.text || exp;
+  const msgDono = encodeURIComponent('🔔 *NOVO PROFISSIONAL — MetaObra*\n\n🔨 Nome: *' + name + '*\n📱 WhatsApp: ' + phone + '\n📍 CEP: ' + cep + '\n🛠️ Especialidades: ' + selectedSvcs.join(', ') + '\n📅 Experiência: ' + expTxt + '\n✅ LGPD: Consentimento registrado\n🆔 ' + id + '\n📅 ' + new Date().toLocaleString('pt-BR'));
+  window.open('https://wa.me/' + WA + '?text=' + msgDono, '_blank');
+  const phoneClean = phone.replace(/\D/g,'');
+  const msgPro = encodeURIComponent('Olá *' + name + '*! 👋\n\nSeu cadastro como profissional parceiro da *MetaObra* foi recebido! 🔨\n\n🆔 Código: ' + id + '\n🛠️ Especialidades: ' + selectedSvcs.join(', ') + '\n\nNossa equipe entrará em contato em até 48h para os próximos passos. 🚀\n\n_MetaObra · O iFood da Construção Civil · DF_');
+  document.getElementById('waProBtn').href = 'https://wa.me/' + phoneClean + '?text=' + msgPro;
+  loadProg();
+  document.getElementById('formCard').style.display  = 'none';
+  document.getElementById('successCard').style.display = 'block';
+  window.scrollTo({top: document.getElementById('successCard').offsetTop - 80, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
