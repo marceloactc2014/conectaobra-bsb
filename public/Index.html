@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<!-- ═══════════════════════════════════════════════════════════════
+     MetaObra — Landing Page v4
+     Alterações v4:
+     [B1] Rebranding completo: ConectaObra → MetaObra
+     [B2] Nova seção "Como a IA Faz Seu Orçamento"
+     [B3] Mobile-first: touch targets, layout, fontes, espaçamentos
+     [B4] Cursor reescrito: transform-only, z-index 99999, sem sumiço
+     ═══════════════════════════════════════════════════════════════ -->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#FF5C00">
+<meta name="description" content="O iFood da Construção Civil. Profissionais verificados no DF com orçamento por IA, pagamento seguro e garantia de 90 dias.">
+<title>MetaObra — O iFood da Construção Civil · DF</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ══ TOKENS ══ */
+:root{
+  --o:#FF5C00; --y:#FFD000; --bk:#080808; --dk:#0F0F0F;
+  --card:#141414; --b1:#1F1F1F; --b2:#2A2A2A;
+  --w:#F5F0EA; --tx:#B8B0A4; --mu:#555; --gr:#00C46A;
+  --mp:#009EE3;
+  /* [B3] Mobile touch target mínimo */
+  --touch:48px;
+}
+
+/* ══ RESET ══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bk);color:var(--w);font-family:'Syne',sans-serif;font-weight:300;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--o);border-radius:2px}
+img{max-width:100%;display:block;}
+
+/* ══════════════════════════════════════════
+   [B4] CURSOR — reescrito com transform-only
+   Posicionamento via translate(x,y) direto
+   sem transição em left/top, z-index 99999
+   ══════════════════════════════════════════ */
+.cursor,.cursor-ring{
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  pointer-events:none;
+  z-index:99999;
+  will-change:transform;
+}
+.cursor{
+  width:10px; height:10px;
+  background:var(--o);
+  border-radius:50%;
+  transition:background .15s, scale .15s;
+}
+.cursor-ring{
+  width:34px; height:34px;
+  border:1.5px solid rgba(255,92,0,.5);
+  border-radius:50%;
+  transition:opacity .2s;
+  margin-top:-12px; margin-left:-12px;
+}
+/* Só ativa cursor customizado em pointer devices */
+@media(pointer:fine){
+  body{cursor:none;}
+  .cursor,.cursor-ring{display:block;}
+}
+
+/* ══ ANIMAÇÕES ══ */
+@keyframes glow{from{transform:scale(1)}to{transform:scale(1.07) translate(12px,-12px)}}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.5)}50%{box-shadow:0 0 0 10px rgba(255,92,0,0)}}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.4);background:var(--o);}50%{box-shadow:0 0 20px 4px rgba(255,92,0,.3);background:#FF7A2E;}}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes aiPulse{0%,100%{opacity:.4;transform:scaleX(.95)}50%{opacity:1;transform:scaleX(1)}}
+@keyframes flowDot{0%{opacity:0;transform:translateX(-8px)}50%{opacity:1}100%{opacity:0;transform:translateX(8px)}}
+
+/* ══════════════
+   NAV
+   ══════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:.9rem 1.25rem;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:all .4s;
+  background:transparent;
+}
+nav.scrolled{background:rgba(8,8,8,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--b1);}
+
+/* [B1] Logo MetaObra */
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.04em;text-decoration:none;color:var(--w);}
+.logo em{color:var(--o);font-style:normal;}
+.logo-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.48rem;color:var(--o);
+  margin-left:.4rem;letter-spacing:.1em;vertical-align:middle;
+  background:rgba(255,92,0,.1);border:1px solid rgba(255,92,0,.3);
+  padding:.1rem .35rem;border-radius:3px;
+}
+
+/* Desktop nav */
+.nav-links{list-style:none;display:flex;gap:1.8rem;align-items:center;}
+.nav-links a{color:var(--tx);text-decoration:none;font-size:.78rem;font-weight:500;letter-spacing:.03em;transition:color .2s;}
+.nav-links a:hover{color:var(--w);}
+.nav-cta{
+  background:var(--o)!important;color:var(--bk)!important;
+  padding:.48rem 1.1rem;border-radius:6px;font-weight:700!important;
+  animation:blink 2.5s ease-in-out infinite;
+  min-height:var(--touch);display:inline-flex!important;align-items:center!important;
+}
+.nav-cta:hover{background:var(--y)!important;animation:none!important;}
+
+/* [B3] Mobile: hambúrguer */
+.nav-menu-btn{
+  display:none;background:none;border:1px solid var(--b2);
+  color:var(--tx);padding:.5rem .75rem;border-radius:6px;
+  font-size:1.1rem;line-height:1;
+  min-width:var(--touch);min-height:var(--touch);
+  cursor:pointer;
+}
+.nav-mobile{
+  display:none;background:rgba(8,8,8,.99);
+  border-bottom:1px solid var(--b1);
+  padding:1rem 1.25rem;flex-direction:column;gap:.25rem;
+  /* [B3] Itens com altura generosa para touch */
+}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{
+  color:var(--tx);text-decoration:none;font-size:.92rem;font-weight:500;
+  padding:.75rem 0;border-bottom:1px solid var(--b1);transition:color .2s;
+  min-height:var(--touch);display:flex;align-items:center;
+}
+.nav-mobile a:last-child{border:none;}
+.nav-mobile a:hover,.nav-mobile a:active{color:var(--o);}
+.nav-mobile .mob-cta{
+  background:var(--o);color:var(--bk)!important;
+  border-radius:10px;padding:.85rem 1rem!important;
+  border:none!important;text-align:center;font-weight:700;
+  justify-content:center;font-size:.95rem;margin-top:.5rem;
+}
+
+@media(max-width:820px){
+  .nav-links{display:none;}
+  .nav-menu-btn{display:flex;align-items:center;justify-content:center;}
+}
+
+/* ══════════════
+   HERO
+   ══════════════ */
+.hero{
+  min-height:100svh; /* [B3] svh para mobile sem barra de endereço */
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5.5rem 1.25rem 3rem;
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--b1) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--b1) 1px,transparent 1px);
+  background-size:60px 60px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 70% at 30% 50%,black 5%,transparent 70%);
+  opacity:.13;pointer-events:none;
+}
+.hero-orb{
+  position:absolute;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,92,0,.14) 0%,transparent 68%);
+  top:-80px;right:-120px;animation:glow 9s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.hero-orb-2{
+  position:absolute;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,208,0,.06) 0%,transparent 68%);
+  bottom:60px;left:-40px;pointer-events:none;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:var(--card);border:1px solid var(--b2);
+  padding:.3rem .9rem;border-radius:100px;
+  margin-bottom:1.2rem;font-size:.58rem;
+  font-family:'JetBrains Mono',monospace;color:var(--tx);letter-spacing:.1em;
+  position:relative;z-index:1;animation:fadeUp .5s .1s both;
+  width:fit-content;
+}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:pulse 2s infinite;flex-shrink:0;}
+
+h1{
+  font-family:'Bebas Neue',sans-serif;
+  /* [B3] Tamanho maior no mobile, menor no desktop para caber bem */
+  font-size:clamp(4rem,14vw,9rem);
+  line-height:.88;letter-spacing:-.02em;
+  margin-bottom:1.4rem;max-width:900px;
+  position:relative;z-index:1;animation:fadeUp .5s .2s both;
+}
+.line-o{color:var(--o);}
+.line-m{color:var(--mu);}
+
+.hero-sub{
+  font-size:clamp(.95rem,3vw,1.05rem);line-height:1.8;
+  color:var(--tx);max-width:520px;margin-bottom:2rem;
+  position:relative;z-index:1;animation:fadeUp .5s .3s both;
+}
+.hero-sub strong{color:var(--w);}
+
+/* [B3] Botões empilhados no mobile */
+.hero-btns{
+  display:flex;gap:.7rem;flex-wrap:wrap;
+  margin-bottom:2rem;position:relative;z-index:1;
+  animation:fadeUp .5s .4s both;
+}
+.btn-p{
+  background:var(--o);color:var(--bk);
+  padding:.9rem 1.6rem;border-radius:10px;
+  text-decoration:none;font-weight:700;font-size:.95rem;
+  letter-spacing:.03em;transition:all .25s;
+  display:inline-flex;align-items:center;gap:.5rem;
+  animation:blink 2.5s ease-in-out infinite;
+  min-height:var(--touch);
+}
+.btn-p:hover,.btn-p:active{background:var(--y);transform:translateY(-2px);animation:none;}
+.btn-g{
+  color:var(--tx);padding:.9rem 1.6rem;border-radius:10px;
+  text-decoration:none;font-size:.9rem;border:1px solid var(--b2);
+  transition:all .2s;display:inline-flex;align-items:center;gap:.5rem;
+  min-height:var(--touch);
+}
+.btn-g:hover,.btn-g:active{border-color:var(--o);color:var(--w);}
+
+.hero-stats{
+  display:flex;gap:2rem;flex-wrap:wrap;
+  position:relative;z-index:1;animation:fadeUp .5s .5s both;
+  padding-top:1.4rem;border-top:1px solid var(--b1);
+}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--o);line-height:1;}
+.stat-l{font-size:.6rem;color:var(--mu);text-transform:uppercase;letter-spacing:.12em;margin-top:.2rem;}
+
+/* ══ GARANTIAS RÁPIDAS ══ */
+/* [B3] 2 colunas no mobile, 6 no desktop */
+.gars-quick{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:.45rem;padding:1.25rem;
+}
+@media(min-width:480px){.gars-quick{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:700px){.gars-quick{grid-template-columns:repeat(6,1fr);}}
+.gq{background:var(--card);border:1px solid var(--b2);border-radius:9px;padding:.8rem .5rem;text-align:center;}
+.gq-ico{font-size:1.3rem;margin-bottom:.3rem;}
+.gq-l{font-size:.62rem;color:var(--tx);line-height:1.3;}
+
+/* ══ TICKER ══ */
+.ticker{background:var(--o);padding:.7rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;animation:tick 32s linear infinite;}
+.ti{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.12em;color:var(--bk);padding:0 2rem;}
+.tdot{color:rgba(0,0,0,.25);}
+
+/* ══ SEÇÕES GERAIS ══ */
+.sec-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--o);
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.sec-tag::after{content:'';flex:1;height:1px;background:var(--b1);}
+/* [B3] Padding de seção menor no mobile */
+section{padding:3.5rem 1.25rem;}
+@media(min-width:700px){section{padding:4.5rem 1.5rem;}}
+.sec-h{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,7vw,3.8rem);
+  line-height:.95;margin-bottom:.5rem;
+}
+.sec-h .o{color:var(--o);}
+
+/* ══ PROBLEMA ══ */
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1.2rem;}
+@media(min-width:700px){.prob-grid{grid-template-columns:repeat(4,1fr);}}
+.prob-card{background:var(--card);border:1px solid var(--b2);border-radius:12px;padding:1.1rem;}
+.prob-n{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--o);margin-bottom:.5rem;}
+.prob-ico{font-size:1.4rem;margin-bottom:.4rem;}
+.prob-h{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;margin-bottom:.3rem;}
+.prob-p{font-size:.75rem;color:var(--tx);line-height:1.5;}
+
+/* ══ COMO FUNCIONA ══ */
+.how-bg{background:var(--dk);}
+.steps{display:flex;flex-direction:column;gap:.5rem;margin-top:1.2rem;}
+.step{
+  background:var(--card);border:1px solid var(--b2);border-radius:12px;
+  padding:1rem 1.1rem;display:flex;gap:.9rem;align-items:flex-start;
+}
+.step-n{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:rgba(255,92,0,.2);line-height:1;flex-shrink:0;width:26px;}
+.step-ico{font-size:1.3rem;flex-shrink:0;margin-top:.1rem;}
+.step-h{font-weight:700;font-size:.88rem;margin-bottom:.2rem;}
+.step-p{font-size:.76rem;color:var(--tx);line-height:1.55;}
+
+/* ── Selos de confiança ── */
+.selos-row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.5rem;}
+.selo{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--card);border:1px solid var(--b2);
+  padding:.55rem 1rem;border-radius:9px;
+  font-size:.68rem;font-family:'JetBrains Mono',monospace;
+  color:var(--tx);letter-spacing:.04em;
+}
+.selo-ico{font-size:1rem;}
+.selo-mp{border-color:rgba(0,158,227,.3);color:var(--mp);}
+.selo-g90{border-color:rgba(0,196,106,.3);color:var(--gr);}
+
+/* ══════════════════════════════════════════
+   [B2] COMO A IA FAZ O ORÇAMENTO
+   ══════════════════════════════════════════ */
+.ia-bg{background:var(--bk);position:relative;overflow:hidden;}
+.ia-bg::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,92,0,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Pipeline visual */
+.ia-pipeline{
+  display:flex;flex-direction:column;gap:.5rem;
+  margin-top:1.5rem;position:relative;z-index:1;
+}
+@media(min-width:760px){
+  .ia-pipeline{flex-direction:row;align-items:stretch;gap:0;}
+}
+
+.ia-step{
+  flex:1;background:var(--card);border:1px solid var(--b2);
+  border-radius:12px;padding:1.2rem 1rem;
+  position:relative;text-align:center;
+  transition:border-color .25s;
+}
+.ia-step:hover{border-color:rgba(255,92,0,.4);}
+
+/* Seta entre steps — mobile: abaixo, desktop: direita */
+.ia-step:not(:last-child)::after{
+  content:'↓';
+  position:absolute;
+  bottom:-1.15rem;left:50%;
+  transform:translateX(-50%);
+  font-size:1rem;color:rgba(255,92,0,.4);
+  z-index:2;background:var(--bk);
+  padding:0 .3rem;line-height:1;
+}
+@media(min-width:760px){
+  .ia-step:not(:last-child)::after{
+    content:'→';
+    bottom:auto;top:50%;left:auto;right:-.75rem;
+    transform:translateY(-50%);
+    padding:.2rem 0;
+  }
+  .ia-step{border-radius:0;}
+  .ia-step:first-child{border-radius:12px 0 0 12px;}
+  .ia-step:last-child{border-radius:0 12px 12px 0;}
+}
+
+.ia-step-ico{
+  font-size:1.8rem;margin-bottom:.6rem;
+  display:block;
+}
+.ia-step-n{
+  font-family:'JetBrains Mono',monospace;font-size:.52rem;
+  color:var(--o);letter-spacing:.12em;margin-bottom:.4rem;display:block;
+}
+.ia-step-h{
+  font-family:'Bebas Neue',sans-serif;font-size:1.05rem;
+  color:var(--w);margin-bottom:.35rem;
+}
+.ia-step-p{font-size:.72rem;color:var(--tx);line-height:1.55;}
+
+/* Caixas de dados que a IA analisa */
+.ia-data-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;
+  margin-top:1.4rem;position:relative;z-index:1;
+}
+@media(min-width:600px){.ia-data-grid{grid-template-columns:repeat(4,1fr);}}
+.ia-data-card{
+  background:var(--card);border:1px solid var(--b1);border-radius:10px;
+  padding:.9rem .8rem;text-align:center;
+}
+.ia-data-ico{font-size:1.2rem;margin-bottom:.35rem;}
+.ia-data-h{font-size:.68rem;font-weight:700;color:var(--w);margin-bottom:.2rem;}
+.ia-data-p{font-size:.62rem;color:var(--mu);line-height:1.4;}
+
+/* Box resultado final da IA */
+.ia-result{
+  margin-top:1.2rem;
+  background:linear-gradient(135deg,rgba(255,92,0,.08),rgba(255,208,0,.04));
+  border:1px solid rgba(255,92,0,.3);
+  border-radius:12px;padding:1.2rem 1.4rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  position:relative;z-index:1;
+}
+.ia-result-ico{font-size:2rem;flex-shrink:0;}
+.ia-result-txt{flex:1;min-width:200px;}
+.ia-result-h{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--y);margin-bottom:.25rem;}
+.ia-result-p{font-size:.75rem;color:var(--tx);line-height:1.6;}
+.ia-result-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  background:rgba(255,208,0,.12);border:1px solid rgba(255,208,0,.3);
+  color:var(--y);padding:.3rem .7rem;border-radius:20px;letter-spacing:.08em;
+  white-space:nowrap;
+}
+
+/* ══ POR QUE ESCOLHER ══ */
+.ben-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.2rem;}
+@media(min-width:700px){.ben-grid{grid-template-columns:repeat(4,1fr);}}
+.ben-card{
+  background:var(--card);border:1px solid var(--b2);
+  border-radius:12px;padding:1.3rem 1.1rem;
+  position:relative;overflow:hidden;transition:border-color .2s;
+}
+.ben-card:hover{border-color:rgba(255,92,0,.4);}
+.ben-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--o);opacity:.5;}
+.ben-ico{font-size:1.8rem;margin-bottom:.6rem;}
+.ben-h{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;color:var(--w);margin-bottom:.3rem;}
+.ben-p{font-size:.75rem;color:var(--tx);line-height:1.55;}
+
+/* ══ HUB — 3 cards ══ */
+.hub-bg{background:var(--dk);}
+/* [B3] Coluna única no mobile, 3 no desktop */
+.hub-grid{display:flex;flex-direction:column;gap:.7rem;margin-top:1.2rem;}
+@media(min-width:700px){
+  .hub-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+}
+.hub-card{
+  background:var(--card);border:1px solid var(--b1);border-radius:14px;
+  /* [B3] Padding generoso para touch */
+  padding:1.4rem 1.2rem;
+  text-decoration:none;transition:all .25s;display:block;
+  position:relative;overflow:hidden;
+}
+.hub-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--b1);transition:background .2s;}
+.hub-card:hover,.hub-card.dest{border-color:rgba(255,92,0,.4);}
+.hub-card:hover::before,.hub-card.dest::before{background:var(--o);}
+.hub-card:active{transform:scale(.99);}
+.hub-badge{
+  position:absolute;top:.8rem;right:.8rem;
+  background:var(--o);color:var(--bk);
+  font-size:.52rem;font-weight:800;
+  padding:.2rem .6rem;border-radius:20px;letter-spacing:.06em;
+}
+.hub-ico{font-size:1.8rem;margin-bottom:.65rem;}
+.hub-h{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--w);margin-bottom:.3rem;}
+.hub-p{font-size:.76rem;color:var(--mu);line-height:1.5;margin-bottom:.8rem;}
+.hub-lnk{font-size:.78rem;color:var(--o);font-weight:600;}
+
+/* ══ AVALIAÇÕES ══ */
+.aval-grid{display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem;}
+@media(min-width:700px){
+  .aval-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+}
+.aval-card{background:var(--card);border:1px solid var(--b2);border-radius:12px;padding:1.2rem;}
+.aval-stars{color:var(--y);font-size:.9rem;margin-bottom:.5rem;}
+.aval-txt{font-size:.82rem;color:var(--tx);line-height:1.7;margin-bottom:.65rem;font-style:italic;}
+.aval-nome{font-size:.74rem;color:var(--w);font-weight:600;}
+.aval-svc{font-size:.65rem;color:var(--o);}
+
+/* ══ CTA FINAL ══ */
+.cta-sec{
+  padding:5rem 1.25rem;text-align:center;
+  background:linear-gradient(to bottom,var(--bk),#080808);
+  position:relative;overflow:hidden;
+}
+.cta-sec::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 100%,rgba(255,92,0,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-sec h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.8rem,9vw,5.5rem);
+  line-height:.92;margin-bottom:1.2rem;position:relative;z-index:1;
+}
+.cta-sec p{
+  color:var(--tx);font-size:.94rem;
+  margin-bottom:.75rem;max-width:480px;
+  margin-left:auto;margin-right:auto;
+  line-height:1.7;position:relative;z-index:1;
+}
+.cta-sub2{font-size:.78rem;color:var(--mu);margin-bottom:2rem!important;}
+/* [B3] Botões full-width no mobile */
+.cta-btns{
+  display:flex;gap:.7rem;justify-content:center;
+  flex-wrap:wrap;position:relative;z-index:1;
+}
+@media(max-width:520px){
+  .cta-btns{flex-direction:column;align-items:stretch;}
+  .cta-btns .btn-p,.cta-btns .btn-g{justify-content:center;text-align:center;}
+}
+.founder-tag{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:linear-gradient(90deg,rgba(255,208,0,.12),rgba(255,92,0,.12),rgba(255,208,0,.12));
+  background-size:200% auto;
+  border:1px solid rgba(255,208,0,.3);
+  padding:.32rem 1.1rem;border-radius:100px;
+  margin-bottom:1.5rem;font-size:.6rem;
+  font-family:'JetBrains Mono',monospace;color:var(--y);letter-spacing:.12em;
+  animation:shimmer 3s linear infinite;
+  position:relative;z-index:1;
+  width:fit-content;margin-left:auto;margin-right:auto;
+}
+
+/* ══ FOOTER ══ */
+footer{
+  padding:2rem 1.25rem;border-top:1px solid var(--b1);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:.7rem;color:var(--mu);}
+.footer-links{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap;}
+.footer-links a{color:var(--mu);text-decoration:none;font-size:.75rem;transition:color .2s;}
+.footer-links a:hover{color:var(--o);}
+.footer-pro-link{
+  font-size:.65rem;color:var(--mu)!important;opacity:.5;
+  border-left:1px solid var(--b2);padding-left:1.1rem;
+}
+.footer-pro-link:hover{opacity:1!important;color:var(--o)!important;}
+
+/* ══ REVEAL ══ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ══ RESPONSIVO GLOBAL ══ */
+@media(max-width:600px){
+  footer{flex-direction:column;text-align:center;}
+  .footer-pro-link{border-left:none;padding-left:0;}
+  .hero-stats{gap:1.4rem;}
+  /* [B3] Botões do hero empilhados */
+  .hero-btns{flex-direction:column;}
+  .hero-btns .btn-p,.hero-btns .btn-g{justify-content:center;}
+  /* [B3] Pipeline IA em coluna */
+  .ia-step:not(:last-child)::after{bottom:-1.2rem;}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ══ NAV ══ -->
+<!-- [B1] MetaObra -->
+<nav id="nav">
+  <a href="#" class="logo">Meta<em>Obra</em><span class="logo-tag">DF</span></a>
+  <ul class="nav-links">
+    <li><a href="#problema">O Problema</a></li>
+    <li><a href="#como">Como Funciona</a></li>
+    <li><a href="#ia">IA no Orçamento</a></li>
+    <li><a href="#porque">Por que Nós</a></li>
+    <li><a href="#acesso">Acessar</a></li>
+    <li><a href="https://conecta-captacao.netlify.app/" target="_blank" class="nav-cta">Garantir Minha Vaga →</a></li>
+  </ul>
+  <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- MENU MOBILE -->
+<div class="nav-mobile" id="navMobile">
+  <a href="#problema" onclick="closeMenu()">O Problema</a>
+  <a href="#como" onclick="closeMenu()">Como Funciona</a>
+  <a href="#ia" onclick="closeMenu()">IA no Orçamento</a>
+  <a href="#porque" onclick="closeMenu()">Por que Nós</a>
+  <a href="#acesso" onclick="closeMenu()">Acessar</a>
+  <a href="https://conecta-captacao.netlify.app/" target="_blank" class="mob-cta" onclick="closeMenu()">⭐ Garantir Minha Vaga →</a>
+  <a href="https://conectaobra-plataforma.netlify.app/" target="_blank" onclick="closeMenu()">🔧 Solicitar Serviço</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb-2"></div>
+  <div class="badge"><span class="bdot"></span>Pré-lançamento · Apenas no DF · 2026</div>
+  <h1>
+    <span>Sua obra.</span><br>
+    <span class="line-o">Resolvida.</span><br>
+    <span class="line-m">Agora.</span>
+  </h1>
+  <p class="hero-sub">
+    A MetaObra conecta você a <strong>profissionais verificados no DF</strong> com <strong>orçamento por Inteligência Artificial</strong>, pagamento retido até sua aprovação e garantia de 90 dias.
+  </p>
+  <div class="hero-btns">
+    <a href="https://conecta-captacao.netlify.app/" target="_blank" class="btn-p">🏠 Resolver Minha Obra Agora →</a>
+    <a href="#como" class="btn-g">Ver como funciona →</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-n">Orçamento</div>
+      <div class="stat-l">por Inteligência Artificial</div>
+    </div>
+    <div>
+      <div class="stat-n">Pioneiro</div>
+      <div class="stat-l">Primeiro no DF</div>
+    </div>
+    <div>
+      <div class="stat-n">90 dias</div>
+      <div class="stat-l">Garantia</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TICKER ══ -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ti">VOCÊ DESCREVE A OBRA</span><span class="tdot">✦</span>
+    <span class="ti">IA ORÇA EM MINUTOS</span><span class="tdot">✦</span>
+    <span class="ti">PROFISSIONAL VERIFICADO EXECUTA</span><span class="tdot">✦</span>
+    <span class="ti">PAGAMENTO SÓ LIBERA QUANDO VOCÊ APROVA</span><span class="tdot">✦</span>
+    <span class="ti">GARANTIA DE 90 DIAS</span><span class="tdot">✦</span>
+    <span class="ti">APENAS NO DF</span><span class="tdot">✦</span>
+  </div>
+</div>
+
+<!-- ══ GARANTIAS RÁPIDAS ══ -->
+<div class="gars-quick">
+  <div class="gq"><div class="gq-ico">🛡️</div><div class="gq-l">Garantia 90 dias</div></div>
+  <div class="gq"><div class="gq-ico">💰</div><div class="gq-l">Preço fechado</div></div>
+  <div class="gq"><div class="gq-ico">🦺</div><div class="gq-l">EPI obrigatório</div></div>
+  <div class="gq"><div class="gq-ico">📸</div><div class="gq-l">Foto antes/depois</div></div>
+  <div class="gq"><div class="gq-ico">🕐</div><div class="gq-l">Pontualidade</div></div>
+  <div class="gq"><div class="gq-ico">✅</div><div class="gq-l">Você aprova</div></div>
+</div>
+
+<!-- ══ PROBLEMA ══ -->
+<section id="problema">
+  <div class="sec-tag">O Problema</div>
+  <div class="sec-h reveal">O mercado de obras é um <span class="o">caos</span> que ninguém resolveu.</div>
+  <p class="reveal" style="font-size:.88rem;color:var(--tx);line-height:1.7;margin:.5rem 0 0;max-width:520px;">Preço que muda no meio da reforma, profissional que some, obra que nunca termina. Você merece melhor que isso.</p>
+  <div class="prob-grid reveal">
+    <div class="prob-card">
+      <div class="prob-n">01</div><div class="prob-ico">🔍</div>
+      <div class="prob-h">Quem é esse cara?</div>
+      <p class="prob-p">Você não sabe nada de quem vai entrar na sua casa. Sem histórico, sem verificação, sem segurança.</p>
+    </div>
+    <div class="prob-card">
+      <div class="prob-n">02</div><div class="prob-ico">🌀</div>
+      <div class="prob-h">Preço Surpresa</div>
+      <p class="prob-p">Combinou um valor, virou outro. Cada orçamento é um mistério que só se resolve quando a obra termina.</p>
+    </div>
+    <div class="prob-card">
+      <div class="prob-n">03</div><div class="prob-ico">💸</div>
+      <div class="prob-h">Dinheiro Sumido</div>
+      <p class="prob-p">Pagou metade adiantado. A obra parou. O profissional sumiu. História que você conhece de alguém.</p>
+    </div>
+    <div class="prob-card">
+      <div class="prob-n">04</div><div class="prob-ico">😤</div>
+      <div class="prob-h">Sem Garantia</div>
+      <p class="prob-p">Choveu, vazou de novo. Ligou pro profissional. Telefone fora de área. Você que se vire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMO FUNCIONA ══ -->
+<section class="how-bg" id="como">
+  <div class="sec-tag">A Solução</div>
+  <div class="sec-h reveal">Simples como pedir um <span class="o">Uber.</span></div>
+  <p class="reveal" style="font-size:.85rem;color:var(--tx);line-height:1.7;margin:.5rem 0 0;max-width:480px;">Cinco etapas. Preço fechado. Você no controle do começo ao fim.</p>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-n">01</div><div class="step-ico">💬</div>
+      <div>
+        <div class="step-h">Você Descreve o Problema</div>
+        <p class="step-p">Manda texto, foto ou vídeo pelo app. Pode ser do celular mesmo, sem complicação.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div><div class="step-ico">🧠</div>
+      <div>
+        <div class="step-h">IA Gera Orçamento Grátis em Minutos</div>
+        <p class="step-p">Preço justo e <strong style="color:var(--w)">100% fechado</strong>. O que foi combinado é o que você paga. Sem surpresa.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div><div class="step-ico">✅</div>
+      <div>
+        <div class="step-h">Você Aprova e Paga com Segurança</div>
+        <p class="step-p">Pagamento via <strong style="color:var(--w)">Mercado Pago</strong>. O dinheiro fica retido — não vai pro profissional enquanto você não aprovar.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">04</div><div class="step-ico">🔨</div>
+      <div>
+        <div class="step-h">Profissional Verificado Executa</div>
+        <p class="step-p">Com identidade conferida, EPI obrigatório e padrão MetaObra. Foto antes e depois da obra.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">05</div><div class="step-ico">⭐</div>
+      <div>
+        <div class="step-h">Você Avalia, Aprova e Libera</div>
+        <p class="step-p">Só libera o pagamento quando o serviço estiver do jeito que você queria. Garantia de <strong style="color:var(--w)">90 dias</strong> incluída.</p>
+      </div>
+    </div>
+  </div>
+  <div class="selos-row reveal">
+    <div class="selo selo-mp"><span class="selo-ico">🔒</span> Pagamento Seguro via Mercado Pago</div>
+    <div class="selo selo-g90"><span class="selo-ico">🛡️</span> Garantia de 90 Dias</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     [B2] COMO A IA FAZ SEU ORÇAMENTO
+     ══════════════════════════════════════════════ -->
+<section class="ia-bg" id="ia">
+  <div class="sec-tag">Tecnologia</div>
+  <div class="sec-h reveal">Como a IA faz o seu <span class="o">orçamento?</span></div>
+  <p class="reveal" style="font-size:.85rem;color:var(--tx);line-height:1.7;margin:.5rem 0 1.4rem;max-width:540px;">
+    Não é mágica. É uma IA treinada com dados reais do mercado de construção civil no DF que analisa cada detalhe da sua demanda para gerar um preço justo em minutos.
+  </p>
+
+  <!-- Pipeline das etapas da IA -->
+  <div class="ia-pipeline reveal">
+    <div class="ia-step">
+      <span class="ia-step-ico">📱</span>
+      <span class="ia-step-n">ENTRADA</span>
+      <div class="ia-step-h">Você envia a demanda</div>
+      <p class="ia-step-p">Texto, foto ou vídeo. A IA identifica o tipo de serviço, a complexidade e o ambiente da obra.</p>
+    </div>
+    <div class="ia-step">
+      <span class="ia-step-ico">🔬</span>
+      <span class="ia-step-n">ANÁLISE</span>
+      <div class="ia-step-h">IA interpreta e classifica</div>
+      <p class="ia-step-p">Reconhece o serviço, estima área, materiais necessários e nível de dificuldade técnica.</p>
+    </div>
+    <div class="ia-step">
+      <span class="ia-step-ico">📊</span>
+      <span class="ia-step-n">CÁLCULO</span>
+      <div class="ia-step-h">Cruza com base de dados do DF</div>
+      <p class="ia-step-p">Compara com centenas de orçamentos reais executados no Distrito Federal para calibrar o preço.</p>
+    </div>
+    <div class="ia-step">
+      <span class="ia-step-ico">📋</span>
+      <span class="ia-step-n">RESULTADO</span>
+      <div class="ia-step-h">Orçamento fechado e detalhado</div>
+      <p class="ia-step-p">Você recebe um valor fixo com escopo definido. Sem surpresa no meio e sem renegociação no final.</p>
+    </div>
+  </div>
+
+  <!-- O que a IA leva em conta -->
+  <p class="reveal" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--o);letter-spacing:.14em;text-transform:uppercase;margin:2rem 0 .8rem;">O que a IA analisa</p>
+  <div class="ia-data-grid reveal">
+    <div class="ia-data-card">
+      <div class="ia-data-ico">📐</div>
+      <div class="ia-data-h">Metragem e escopo</div>
+      <p class="ia-data-p">Tamanho do ambiente, extensão do serviço e itens envolvidos</p>
+    </div>
+    <div class="ia-data-card">
+      <div class="ia-data-ico">🧱</div>
+      <div class="ia-data-h">Materiais do DF</div>
+      <p class="ia-data-p">Preços atualizados de insumos disponíveis no mercado local</p>
+    </div>
+    <div class="ia-data-card">
+      <div class="ia-data-ico">👷</div>
+      <div class="ia-data-h">Mão de obra regional</div>
+      <p class="ia-data-p">Referências de valor de mercado por tipo de serviço e especialidade</p>
+    </div>
+    <div class="ia-data-card">
+      <div class="ia-data-ico">📍</div>
+      <div class="ia-data-h">Localização no DF</div>
+      <p class="ia-data-p">Variações de custo por região administrativa do Distrito Federal</p>
+    </div>
+  </div>
+
+  <!-- Resultado final destacado -->
+  <div class="ia-result reveal">
+    <div class="ia-result-ico">⚡</div>
+    <div class="ia-result-txt">
+      <div class="ia-result-h">Orçamento gerado em menos de 3 minutos</div>
+      <p class="ia-result-p">Sem ligação, sem esperar resposta no WhatsApp, sem depender de agenda de profissional. Você descreve agora e já sabe o preço — antes de se comprometer com qualquer coisa.</p>
+    </div>
+    <div class="ia-result-tag">✦ GRÁTIS E SEM COMPROMISSO</div>
+  </div>
+</section>
+
+<!-- ══ POR QUE ESCOLHER ══ -->
+<section id="porque" style="background:var(--dk)">
+  <div class="sec-tag">Por que Escolher</div>
+  <div class="sec-h reveal">Por que a <span class="o">MetaObra?</span></div>
+  <p class="reveal" style="font-size:.85rem;color:var(--tx);line-height:1.7;margin:.5rem 0 0;max-width:500px;">Quatro razões que nenhuma plataforma de obra no DF oferece ao mesmo tempo.</p>
+  <div class="ben-grid reveal">
+    <div class="ben-card">
+      <div class="ben-ico">💰</div>
+      <div class="ben-h">Preço Fechado</div>
+      <p class="ben-p">O orçamento gerado pela IA é o valor final. Sem "acréscimos no caminho", sem renegociação depois que a obra já começou.</p>
+    </div>
+    <div class="ben-card">
+      <div class="ben-ico">🔒</div>
+      <div class="ben-h">Pagamento Retido até Sua Aprovação</div>
+      <p class="ben-p">Seu dinheiro fica seguro no Mercado Pago. O profissional só recebe quando você conferir e aprovar o serviço.</p>
+    </div>
+    <div class="ben-card">
+      <div class="ben-ico">🛡️</div>
+      <div class="ben-h">Garantia de 90 Dias</div>
+      <p class="ben-p">Deu problema depois? A plataforma cobre. 90 dias de garantia em todos os serviços executados via MetaObra.</p>
+    </div>
+    <div class="ben-card">
+      <div class="ben-ico">✅</div>
+      <div class="ben-h">Profissionais Verificados</div>
+      <p class="ben-p">Identidade conferida, histórico de serviços e avaliações reais. Você sabe exatamente quem vai chegar na sua obra.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AVALIAÇÕES ══ -->
+<section>
+  <div class="sec-tag">Quem já usou diz</div>
+  <div class="sec-h reveal">Resultados <span class="o">reais.</span></div>
+  <p class="reveal" style="font-size:.85rem;color:var(--tx);line-height:1.7;margin:.5rem 0 0;max-width:480px;">Clientes do DF que resolveram sua obra com preço justo e sem surpresa.</p>
+  <div class="aval-grid reveal">
+    <div class="aval-card">
+      <div class="aval-stars">★★★★★</div>
+      <p class="aval-txt">"Chamei para um vazamento urgente e o profissional chegou no mesmo dia. Resolveu em 2h e ainda limpou tudo. Nota 10!"</p>
+      <div class="aval-nome">Ana Paula M.</div>
+      <div class="aval-svc">Hidráulica · Asa Norte</div>
+    </div>
+    <div class="aval-card">
+      <div class="aval-stars">★★★★★</div>
+      <p class="aval-txt">"Preço fechado antes de começar, sem surpresa no final. Profissional pontual e deixou tudo impecável."</p>
+      <div class="aval-nome">Carlos S.</div>
+      <div class="aval-svc">Drywall · Águas Claras</div>
+    </div>
+    <div class="aval-card">
+      <div class="aval-stars">★★★★☆</div>
+      <p class="aval-txt">"Pagamento só liberado quando eu aprovo — isso faz toda diferença. Finalmente uma plataforma séria no DF."</p>
+      <div class="aval-nome">Fernanda L.</div>
+      <div class="aval-svc">Pintura · Taguatinga</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HUB DE ACESSO ══ -->
+<section class="hub-bg" id="acesso">
+  <div class="sec-tag">Acesse a plataforma</div>
+  <div class="sec-h reveal">Por onde você <span class="o">quer entrar?</span></div>
+  <p style="color:var(--tx);font-size:.85rem;margin:.5rem 0 0;">Escolha a sua situação. Cada caminho foi feito para você.</p>
+  <div class="hub-grid reveal">
+    <a href="https://conecta-captacao.netlify.app/" target="_blank" class="hub-card">
+      <div class="hub-ico">👤</div>
+      <div class="hub-h">Sou Cliente</div>
+      <div class="hub-p">Cadastre-se agora e garanta prioridade e desconto no lançamento</div>
+      <div class="hub-lnk">Garantir minha vaga →</div>
+    </a>
+    <a href="https://conectaobra-plataforma.netlify.app/" target="_blank" class="hub-card dest">
+      <div class="hub-badge">PRINCIPAL</div>
+      <div class="hub-ico">🔧</div>
+      <div class="hub-h">Solicitar Serviço</div>
+      <div class="hub-p">Gere orçamento com IA e contrate com pagamento seguro</div>
+      <div class="hub-lnk">Gerar orçamento grátis →</div>
+    </a>
+    <a href="https://conectaobra-profissional.netlify.app/" target="_blank" class="hub-card">
+      <div class="hub-ico">🦺</div>
+      <div class="hub-h">Sou Profissional</div>
+      <div class="hub-p">Receba chamados verificados e aumente sua renda no DF</div>
+      <div class="hub-lnk">Quero ser parceiro →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ══ CTA FINAL ══ -->
+<section class="cta-sec" id="cta">
+  <div class="founder-tag">⭐ CLIENTES FUNDADORES · VAGAS LIMITADAS</div>
+  <h2>A Oportunidade<br><span style="color:var(--o)">é Agora.</span></h2>
+  <p>Faça parte dos <strong style="color:var(--w)">Clientes Fundadores</strong> e aproveite os descontos especiais antes do lançamento oficial.</p>
+  <p class="cta-sub2">Apenas no Distrito Federal · Pré-lançamento 2026 · Vagas encerrando</p>
+  <div class="cta-btns">
+    <a href="https://conecta-captacao.netlify.app/" target="_blank" class="btn-p">⭐ Garantir Vaga como Fundador →</a>
+    <a href="https://conectaobra-plataforma.netlify.app/" target="_blank" class="btn-g">🔧 Gerar Orçamento Grátis →</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<!-- [B1] MetaObra; link discreto para profissionais mantido -->
+<footer>
+  <a href="#" class="logo">Meta<em>Obra</em></a>
+  <div class="footer-copy">© 2026 MetaObra · O iFood da Construção Civil · Brasília, DF</div>
+  <div class="footer-links">
+    <a href="#" style="opacity:.35">Instagram</a>
+    <a href="https://tiktok.com/@metaobra" target="_blank">TikTok</a>
+    <a href="#" style="opacity:.35">WhatsApp</a>
+    <a href="https://conectaobra-profissional.netlify.app/" target="_blank" class="footer-pro-link">Sou profissional da construção? Cadastre-se aqui →</a>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════
+   [B4] CURSOR — versão definitiva
+   • Posicionamento por transform (GPU, sem reflow)
+   • z-index 99999 — acima de tudo
+   • Sem mix-blend-mode (causava sumiço)
+   • Inicializado fora do viewport (-999)
+   • Sem transição de posição, só de escala/cor
+   ════════════════════════════════════════════════ */
+(function(){
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if(isTouch) return;
+
+  const dot  = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+
+  // Posição inicial fora da tela
+  let mx = -999, my = -999;
+  let rx = -999, ry = -999;
+
+  // Atualiza posição do dot imediatamente (sem lag)
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    dot.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%))`;
+  }, { passive: true });
+
+  // Ring com lag suave via rAF
+  function animRing(){
+    rx += (mx - rx) * .13;
+    ry += (my - ry) * .13;
+    ring.style.transform = `translate(calc(${rx}px - 50%), calc(${ry}px - 50%))`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Hover: dot cresce e muda de cor; ring some
+  document.addEventListener('mouseover', e => {
+    if(e.target.closest('a, button')){
+      dot.style.scale  = '2';
+      dot.style.background = 'var(--y)';
+      ring.style.opacity = '0';
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    if(e.target.closest('a, button')){
+      dot.style.scale  = '1';
+      dot.style.background = 'var(--o)';
+      ring.style.opacity = '1';
+    }
+  });
+
+  // Esconde ao sair da janela
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity  = '0';
+    ring.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity  = '1';
+    ring.style.opacity = '1';
+  });
+})();
+
+/* ── Nav scroll ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () =>
+  nav.classList.toggle('scrolled', window.scrollY > 50), { passive:true });
+
+/* ── Menu mobile ── */
+function toggleMenu(){
+  const m = document.getElementById('navMobile');
+  m.classList.toggle('open');
+  document.getElementById('menuBtn').textContent = m.classList.contains('open') ? '✕' : '☰';
+}
+function closeMenu(){
+  document.getElementById('navMobile').classList.remove('open');
+  document.getElementById('menuBtn').textContent = '☰';
+}
+
+/* ── Fechar menu ao clicar fora ── */
+document.addEventListener('click', e => {
+  if(!e.target.closest('nav') && !e.target.closest('#navMobile')){
+    document.getElementById('navMobile').classList.remove('open');
+    document.getElementById('menuBtn').textContent = '☰';
+  }
+});
+
+/* ── Reveal on scroll ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold:.08 });
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+/* ── Ticker duplication ── */
+const t = document.getElementById('ticker');
+t.innerHTML += t.innerHTML;
+</script>
+</body>
+</html>

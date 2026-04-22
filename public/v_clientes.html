@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#FF5C00">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MetaObra">
+<meta name="description" content="O iFood da Construção Civil. Profissionais verificados no DF com garantia de 90 dias.">
+<link rel="manifest" href="manifest.json">
+<title>MetaObra — Pré-lançamento · Brasília DF</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* AJUSTE: scroll-padding-top para evitar conteúdo escondido atrás do header fixo */
+html{scroll-behavior:smooth;scroll-padding-top:72px;}
+:root{--o:#FF5C00;--y:#FFD000;--bk:#080808;--dk:#0F0F0F;--card:#141414;--b1:#2A2A2A;--b2:#383838;--w:#F2EDE6;--tx:#8A8070;--mu:#555;--gr:#00C46A;--sol:#FFD000;--odim:rgba(255,92,0,.1);}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;caret-color:auto;}
+body{background:var(--bk);color:var(--w);font-family:'Syne',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--o);border-radius:2px}
+input,select,button,textarea{font-family:'Syne',sans-serif!important;font-size:16px!important;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.5)}50%{box-shadow:0 0 0 12px rgba(255,92,0,0)}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes glow{from{transform:scale(1)}to{transform:scale(1.07) translate(12px,-12px)}}
+@keyframes pop{0%{transform:scale(.3);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes blink-btn{0%,100%{box-shadow:0 0 0 0 rgba(255,92,0,.4);background:var(--o);}50%{box-shadow:0 0 20px 6px rgba(255,92,0,.35);background:#FF7A2E;}}
+@keyframes blink-tag{0%,100%{opacity:1;}50%{opacity:.5;}}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.4;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+
+/* AJUSTE: Cabeçalho fixo (sticky) com blur e sombra */
+nav{
+  position:sticky;top:0;left:0;right:0;z-index:5000;
+  background:rgba(8,8,8,.97);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--b1);
+  box-shadow:0 2px 12px rgba(0,0,0,.35);
+  padding:.9rem 1.4rem;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  width:100%;
+}
+/* AJUSTE: Área do logo com imagem + fallback texto */
+.logo-link{display:flex;align-items:center;text-decoration:none;gap:.1rem;}
+.logo-img{max-height:38px;width:auto;margin-right:12px;vertical-align:middle;filter:drop-shadow(0 1px 2px rgba(0,0,0,.05));}
+.logo-img-fallback{display:none;}
+/* Fallback: se logo-img não carregar, mostrar texto */
+.logo-img[data-error="true"]+.logo-img-fallback,.logo-img-hidden+.logo-img-fallback{display:inline;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.05em;color:var(--w);text-decoration:none;display:flex;align-items:center;}
+.logo em{color:var(--o);font-style:normal;}
+.logo-tag{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--o);margin-left:.4rem;letter-spacing:.1em;vertical-align:middle;background:var(--odim);border:1px solid rgba(255,92,0,.3);padding:.1rem .35rem;border-radius:3px;}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-social{display:flex;align-items:center;justify-content:center;gap:1.2rem;}
+.nav-link{color:var(--tx);text-decoration:none;font-size:.72rem;transition:color .2s;}
+.nav-link:hover{color:var(--o);}
+
+/* Ticker — agora sem margin-top pois nav é sticky */
+.ticker{background:var(--o);padding:.65rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;animation:ticker 26s linear infinite;}
+.ti{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.12em;color:var(--bk);padding:0 2rem;}
+.tdot{color:rgba(0,0,0,.25);}
+.hero{padding:1.8rem 1.2rem 2.5rem;position:relative;overflow:hidden;}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--b1) 1px,transparent 1px),linear-gradient(90deg,var(--b1) 1px,transparent 1px);background-size:55px 55px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 30%,black 5%,transparent 70%);opacity:.15;pointer-events:none;z-index:0;}
+.orb{position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(255,92,0,.15) 0%,transparent 68%);top:-60px;right:-60px;animation:glow 9s ease-in-out infinite alternate;pointer-events:none;z-index:0;}
+.badge{display:inline-flex;align-items:center;gap:.45rem;background:var(--card);border:1px solid var(--b2);padding:.28rem .85rem;border-radius:100px;margin-bottom:1.1rem;font-size:.6rem;font-family:'JetBrains Mono',monospace;color:var(--tx);letter-spacing:.1em;position:relative;z-index:1;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:pulse 2s infinite;flex-shrink:0;}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,10vw,5rem);line-height:.9;letter-spacing:-.01em;margin-bottom:1rem;position:relative;z-index:1;}
+h1 .o{color:var(--o);}
+h1 .m{color:var(--mu);}
+.hdesc{font-size:.88rem;line-height:1.75;color:var(--tx);margin-bottom:1.5rem;position:relative;z-index:1;}
+.hdesc strong{color:var(--w);}
+.chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:1.5rem;position:relative;z-index:1;}
+.chip{background:var(--card);border:1px solid var(--b2);padding:.22rem .55rem;border-radius:100px;font-size:.68rem;color:var(--tx);}
+.form-section{padding:0 1.2rem 2rem;}
+.pc{background:var(--card);border:1px solid var(--b1);border-radius:10px;padding:1rem 1.2rem;margin-bottom:.9rem;}
+.pr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;}
+.plbl{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--tx);letter-spacing:.15em;text-transform:uppercase;}
+.waitlist-label{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.55rem;}
+.waitlist-text{font-size:.72rem;color:var(--w);font-weight:700;}
+.beta-badge{font-family:'JetBrains Mono',monospace;font-size:.55rem;background:rgba(255,92,0,.15);border:1px solid rgba(255,92,0,.4);color:var(--o);padding:.15rem .45rem;border-radius:3px;letter-spacing:.1em;display:inline-flex;align-items:center;gap:.25rem;}
+.pn{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--o);line-height:1;}
+.pn span{font-size:.9rem;color:var(--mu);}
+.bar{background:var(--dk);border-radius:100px;height:7px;overflow:hidden;border:1px solid var(--b2);}
+.barfill{height:100%;background:linear-gradient(90deg,var(--o),var(--y));border-radius:100px;box-shadow:0 0 8px rgba(255,92,0,.4);transition:width 1.2s ease;}
+.bfoot{display:flex;justify-content:space-between;margin-top:.35rem;font-size:.62rem;}
+.bpct{color:var(--gr);}
+.brest{color:var(--mu);}
+.fcard{background:var(--card);border:1px solid var(--b1);border-radius:14px;padding:1.4rem 1.2rem;}
+.ftag{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--o);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.4rem;font-weight:700;animation:blink-tag 1.5s ease-in-out infinite;}
+.fhead{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;line-height:1;margin-bottom:.25rem;}
+.fdesc-badge{background:rgba(255,92,0,.1);border:1px solid rgba(255,92,0,.25);border-radius:5px;padding:.5rem .9rem;font-size:.78rem;color:var(--o);font-weight:700;text-align:center;margin-bottom:.9rem;}
+.fsub{font-size:.78rem;color:var(--tx);margin-bottom:1.1rem;line-height:1.5;}
+.field{margin-bottom:.85rem;}
+.field label{display:block;font-size:.62rem;font-weight:700;color:var(--tx);margin-bottom:.28rem;letter-spacing:.12em;text-transform:uppercase;}
+.field input,.field select{width:100%;background:var(--dk);border:1px solid var(--b2);border-radius:8px;padding:.75rem 1rem;color:var(--w);font-size:1rem!important;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--o);}
+.field input::placeholder{color:var(--mu);}
+.field input.input-valid{border-color:var(--gr)!important;box-shadow:0 0 0 2px rgba(0,196,106,.12);}
+.field input.input-invalid{border-color:#FF3B3B!important;box-shadow:0 0 0 2px rgba(255,59,59,.1);}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:.38rem;}
+.sbtn{padding:.6rem .55rem;border-radius:7px;border:1px solid var(--b2);background:var(--dk);color:var(--tx);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:.3rem;-webkit-tap-highlight-color:transparent;text-decoration:none;}
+.sbtn.sel{border-color:var(--o)!important;color:var(--o)!important;background:rgba(255,92,0,.22)!important;box-shadow:inset 0 0 0 1.5px var(--o);}
+.sbtn[data-id="hidraulica"]{border-color:#1E6FA0;color:#4DB8FF;background:rgba(29,111,160,.1);}
+.sbtn[data-id="eletrica"]{border-color:#B8A000;color:#FFD700;background:rgba(184,160,0,.1);}
+.sbtn[data-id="pintura"]{border-color:#9B3A9B;color:#DA70D6;background:rgba(155,58,155,.1);}
+.sbtn[data-id="piso"]{border-color:#A06020;color:#DEB887;background:rgba(160,96,32,.1);}
+.sbtn[data-id="drywall"]{border-color:#2E7D32;color:#66BB6A;background:rgba(46,125,50,.1);}
+.sbtn[data-id="desentupimento"]{border-color:#007A5E;color:#00C49A;background:rgba(0,122,94,.1);}
+.sbtn[data-id="reforma"]{border-color:#8B0000;color:#FF6B6B;background:rgba(139,0,0,.1);}
+.sbtn[data-id="outro"]{border-color:#444;color:#AAA;background:rgba(80,80,80,.1);}
+/* AJUSTE: estilo do botão Solar — destaque dourado, largura total */
+.sbtn[data-id="solar"]{border-color:#C9A800;color:#FFD000;background:rgba(255,208,0,.1);font-weight:700;grid-column:1/-1;justify-content:center;letter-spacing:.03em;}
+.sbtn[data-id="solar"]:hover{background:rgba(255,208,0,.2);border-color:#FFD000;}
+.errmsg{color:#FF3B3B;font-size:.68rem;margin-top:.22rem;}
+.ai-tooltip-wrap{position:relative;display:inline-flex;align-items:center;}
+.ai-info-btn{background:none;border:none;cursor:pointer;color:var(--tx);font-size:.85rem;padding:0 .2rem;line-height:1;transition:color .2s;}
+.ai-info-btn:hover{color:var(--o);}
+.ai-tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1C1C1C;border:1px solid var(--b2);border-radius:8px;padding:.65rem .85rem;font-size:.7rem;color:var(--tx);line-height:1.6;width:240px;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.6);}
+.ai-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1C1C1C;}
+.ai-info-btn:focus+.ai-tooltip,.ai-tooltip-wrap:hover .ai-tooltip{display:block;}
+.lgpd-field{margin-bottom:.9rem;margin-top:.4rem;}
+.lgpd-label{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer;font-size:.72rem;color:var(--tx);line-height:1.6;}
+.lgpd-label input[type="checkbox"]{flex-shrink:0;width:18px;height:18px;accent-color:var(--o);cursor:pointer;margin-top:.1rem;}
+.lgpd-label a{color:var(--o);text-decoration:underline;}
+.lgpd-label strong{color:var(--w);}
+.bsub{width:100%;padding:.92rem;background:var(--o);color:var(--bk);border:none;border-radius:10px;font-weight:800;font-size:1rem;cursor:pointer;margin-top:.4rem;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:.5rem;animation:blink-btn 2s ease-in-out infinite;}
+.bsub:hover:not(:disabled){animation:none;background:var(--y);}
+.bsub:disabled{opacity:.4;cursor:not-allowed;animation:none;}
+.ffoot{text-align:center;font-size:.63rem;color:var(--mu);line-height:1.5;margin-top:.6rem;}
+.spinner{width:18px;height:18px;border:2px solid rgba(0,0,0,.3);border-top-color:var(--bk);border-radius:50%;animation:spin .6s linear infinite;}
+.success{background:var(--card);border:1px solid var(--gr);border-radius:14px;padding:2rem 1.4rem;text-align:center;animation:pop .5s ease;}
+.si{font-size:3.5rem;display:block;margin-bottom:.8rem;}
+.st{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gr);margin-bottom:.35rem;}
+.sd{color:var(--tx);font-size:.82rem;line-height:1.7;margin-bottom:.9rem;}
+.success-id{font-family:'JetBrains Mono',monospace;background:var(--dk);border:1px solid var(--b2);padding:.4rem 1rem;border-radius:4px;display:inline-block;color:var(--o);font-size:.85rem;letter-spacing:.15em;margin-bottom:.9rem;}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.92rem;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.95rem;cursor:pointer;text-decoration:none;margin-bottom:.5rem;}
+.plat-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.8rem;background:var(--card);border:1.5px solid var(--o);color:var(--o);border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;text-decoration:none;}
+.proximos{background:rgba(0,196,106,.07);border:1px solid rgba(0,196,106,.2);border-radius:10px;padding:1rem 1.1rem;text-align:left;margin-top:.8rem;}
+.proximos-title{font-size:.62rem;color:var(--gr);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+.proximos-item{font-size:.78rem;color:var(--tx);line-height:1.9;}
+.gars-section{padding:2rem 1.2rem;background:var(--dk);}
+.sec-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--o);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;}
+.sec-tag::after{content:'';flex:1;height:1px;background:var(--b1);}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,2.5rem);line-height:1;margin-bottom:1.2rem;}
+.sec-h .o{color:var(--o);}
+.gars-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.gar-card{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:.9rem;display:flex;gap:.7rem;align-items:flex-start;}
+.gar-ico{font-size:1.3rem;flex-shrink:0;}
+.gar-h{font-weight:700;font-size:.82rem;margin-bottom:.15rem;}
+.gar-p{font-size:.68rem;color:var(--tx);line-height:1.4;}
+.como-section{padding:2rem 1.2rem;}
+.steps{display:flex;flex-direction:column;gap:.5rem;}
+.step{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:.9rem 1rem;display:flex;gap:.8rem;align-items:flex-start;}
+.step-n{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:rgba(255,92,0,.25);line-height:1;flex-shrink:0;width:26px;}
+.step-ico{font-size:1.3rem;flex-shrink:0;}
+.step-h{font-weight:700;font-size:.85rem;margin-bottom:.18rem;display:flex;align-items:center;gap:.4rem;}
+.step-p{font-size:.73rem;color:var(--tx);line-height:1.5;}
+.aval-section{padding:2rem 1.2rem;background:var(--dk);}
+.aval-grid{display:flex;flex-direction:column;gap:.6rem;}
+.aval-card{background:var(--card);border:1px solid var(--b2);border-radius:10px;padding:1rem 1.1rem;}
+.aval-stars{color:var(--y);font-size:.9rem;letter-spacing:.05em;margin-bottom:.5rem;}
+.aval-txt{font-size:.8rem;color:var(--tx);line-height:1.7;margin-bottom:.6rem;font-style:italic;}
+.aval-footer{display:flex;align-items:center;gap:.7rem;}
+.aval-avatar{width:34px;height:34px;border-radius:50%;background:var(--odim);border:1.5px solid rgba(255,92,0,.3);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:var(--o);flex-shrink:0;letter-spacing:.05em;}
+.aval-nome{font-size:.72rem;color:var(--w);font-weight:600;}
+.aval-svc{font-size:.65rem;color:var(--o);}
+.beta-real-badge{font-family:'JetBrains Mono',monospace;font-size:.5rem;background:rgba(0,196,106,.1);border:1px solid rgba(0,196,106,.3);color:var(--gr);padding:.1rem .35rem;border-radius:3px;letter-spacing:.08em;white-space:nowrap;display:inline-flex;align-items:center;gap:.2rem;}
+.stats-section{padding:1.5rem 1.2rem;border-top:1px solid var(--b1);display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;text-align:center;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--o);line-height:1;}
+.stat-l{font-size:.58rem;color:var(--mu);text-transform:uppercase;letter-spacing:.1em;}
+.privacy-section{padding:1.8rem 1.2rem;border-top:1px solid var(--b1);background:var(--dk);}
+.privacy-section h2{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--o);margin-bottom:.6rem;}
+.privacy-section p{font-size:.7rem;color:var(--tx);line-height:1.8;margin-bottom:.5rem;}
+footer{padding:1.5rem 1.2rem;border-top:1px solid var(--b1);text-align:center;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:.4rem;}
+.footer-logo em{color:var(--o);font-style:normal;}
+.footer-copy{font-size:.65rem;color:var(--mu);margin-bottom:.6rem;}
+.footer-links{display:flex;justify-content:center;gap:1.2rem;}
+.footer-links a{color:var(--tx);text-decoration:none;font-size:.72rem;transition:color .2s;}
+.footer-links a:hover{color:var(--o);}
+.pwa-banner{position:fixed;bottom:1rem;left:1rem;right:1rem;background:var(--card);border:1px solid rgba(255,92,0,.3);border-radius:12px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.9rem;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.5);animation:fadeUp .4s ease;}
+.pwa-ico{font-size:2rem;flex-shrink:0;}
+.pwa-txt{flex:1;}
+.pwa-h{font-weight:700;font-size:.85rem;margin-bottom:.15rem;}
+.pwa-p{font-size:.7rem;color:var(--tx);}
+.pwa-btn{background:var(--o);color:var(--bk);border:none;border-radius:7px;padding:.5rem .9rem;font-weight:700;font-size:.78rem;cursor:pointer;white-space:nowrap;}
+.pwa-close{background:none;border:none;color:var(--mu);cursor:pointer;font-size:1rem;flex-shrink:0;}
+.adm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;display:none;align-items:center;justify-content:center;padding:1.2rem;}
+.adm-box{background:var(--card);border:1px solid var(--b1);border-radius:14px;padding:1.8rem;width:100%;max-width:380px;animation:pop .3s ease;}
+.adm-leads{max-height:55vh;overflow-y:auto;display:flex;flex-direction:column;gap:.5rem;margin-top:.9rem;}
+.adm-lead{background:var(--dk);border:1px solid var(--b2);border-radius:8px;padding:.75rem .9rem;font-size:.78rem;}
+.adm-lead-name{font-weight:700;margin-bottom:.15rem;}
+.adm-lead-phone{font-family:'JetBrains Mono',monospace;color:var(--o);font-size:.72rem;}
+.adm-lead-info{color:var(--tx);font-size:.7rem;margin-top:.15rem;}
+.ia-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:800;display:none;align-items:center;justify-content:center;padding:1.2rem;}
+.ia-modal-overlay.open{display:flex;}
+.ia-modal{background:var(--card);border:1px solid rgba(255,92,0,.35);border-radius:14px;padding:1.6rem;width:100%;max-width:360px;animation:pop .3s ease;}
+.ia-modal-h{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--o);margin-bottom:.6rem;}
+.ia-modal-p{font-size:.8rem;color:var(--tx);line-height:1.7;margin-bottom:1rem;}
+.ia-modal-close{width:100%;padding:.72rem;background:var(--o);color:var(--bk);border:none;border-radius:8px;font-weight:800;cursor:pointer;font-size:.9rem;}
+@media(min-width:768px){
+  nav{padding:1rem 2.5rem;}
+  .hero{display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:5rem 3rem 3rem;max-width:1200px;margin:0 auto;}
+  .form-section{max-width:600px;margin:0 auto;padding:2rem 1.5rem;}
+  .gars-section,.como-section,.aval-section,.privacy-section{padding:3rem 2rem;max-width:1000px;margin:0 auto;}
+  .aval-grid{display:grid;grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+
+<div class="pwa-banner" id="pwaBanner" style="display:none;" role="complementary" aria-label="Instalar aplicativo">
+  <span class="pwa-ico" aria-hidden="true">📱</span>
+  <div class="pwa-txt">
+    <div class="pwa-h">Instalar MetaObra</div>
+    <div class="pwa-p">Adicione à tela inicial como um app</div>
+  </div>
+  <button class="pwa-btn" id="pwaBtn">Instalar</button>
+  <button class="pwa-close" onclick="document.getElementById('pwaBanner').style.display='none'" aria-label="Fechar banner">✕</button>
+</div>
+
+<div class="adm-overlay" id="admOverlay" role="dialog" aria-modal="true" aria-label="Painel Administrativo">
+  <div class="adm-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;">Painel <span style="color:var(--o)">ADM</span></div>
+      <button onclick="closeAdmin()" style="background:none;border:1px solid var(--b2);color:var(--tx);padding:.3rem .7rem;border-radius:5px;cursor:pointer;font-size:.75rem;">Fechar</button>
+    </div>
+    <div id="admContent">
+      <div class="field"><label>Senha</label>
+        <div style="position:relative">
+          <input type="password" id="admPwd" placeholder="••••••••••••" autocomplete="new-password" onkeydown="if(event.key==='Enter')admLogin()" style="width:100%;background:var(--dk);border:1px solid var(--b2);border-radius:7px;padding:.75rem 3rem .75rem 1rem;color:var(--w);outline:none;">
+          <button onclick="toggleAdmPwd()" style="position:absolute;right:.7rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;" id="admEye" aria-label="Mostrar/ocultar senha">👁️</button>
+        </div>
+      </div>
+      <div style="color:#FF3B3B;font-size:.68rem;margin-bottom:.5rem;" id="admErr" role="alert"></div>
+      <button onclick="admLogin()" style="width:100%;padding:.85rem;background:var(--o);color:var(--bk);border:none;border-radius:8px;font-weight:800;cursor:pointer;">Entrar →</button>
+    </div>
+  </div>
+</div>
+
+<div class="ia-modal-overlay" id="iaModal" onclick="closeIaModal(event)" role="dialog" aria-modal="true" aria-label="Como funciona o orçamento por IA">
+  <div class="ia-modal">
+    <div class="ia-modal-h">🧠 Como funciona o orçamento por IA?</div>
+    <p class="ia-modal-p">
+      O valor estimado é gerado automaticamente pela nossa IA com base na descrição do serviço, no tipo de imóvel e na <strong>tabela de referência de preços do DF</strong> (atualizada mensalmente).<br><br>
+      ⚠️ O orçamento inicial é uma <strong>estimativa orientativa</strong>. O valor final é sempre <strong>validado presencialmente pelo profissional</strong> antes do início da execução — você aprova antes de pagar qualquer coisa.
+    </p>
+    <button class="ia-modal-close" onclick="closeIaModal()">Entendi →</button>
+  </div>
+</div>
+
+<!-- AJUSTE: Cabeçalho fixo com logo SVG + fallback texto -->
+<header>
+  <nav aria-label="Navegação principal">
+    <div style="display:flex;align-items:center;">
+      <!-- AJUSTE: Logo imagem com fallback em texto estilizado -->
+      <a href="/" class="logo-link" aria-label="MetaObra - Página Inicial">
+        <img src="logo-metaobra.svg" alt="Logo MetaObra" class="logo-img" id="logoImg"
+          onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex';">
+      </a>
+      <div class="logo" id="logoFallback" aria-label="MetaObra DF">Meta<em>Obra</em><span class="logo-tag">DF</span></div>
+    </div>
+    <nav class="nav-social" aria-label="Redes sociais">
+      <a href="https://tiktok.com/@conectaobra" target="_blank" rel="noopener noreferrer" class="nav-link">TikTok</a>
+      <a href="https://instagram.com/metaobra.oficial" target="_blank" rel="noopener noreferrer" class="nav-link">Instagram</a>
+      <a href="https://wa.me/5561985986566" target="_blank" rel="noopener noreferrer" class="nav-link">WhatsApp</a>
+    </nav>
+  </nav>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="tickerEl">
+    <span class="ti">LANÇAMENTO EM BRASÍLIA</span><span class="tdot">✦</span>
+    <span class="ti">RÁPIDO</span><span class="tdot">✦</span>
+    <span class="ti">GARANTIDO</span><span class="tdot">✦</span>
+    <span class="ti">PROFISSIONAIS VERIFICADOS</span><span class="tdot">✦</span>
+    <span class="ti">PAGAMENTO SEGURO</span><span class="tdot">✦</span>
+    <span class="ti">PRÉ-LANÇAMENTO</span><span class="tdot">✦</span>
+  </div>
+</div>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<main>
+
+  <section class="form-section" style="padding-top:1.5rem;" aria-label="Formulário de cadastro">
+
+    <div class="pc" role="status" aria-label="Vagas disponíveis">
+      <div class="waitlist-label">
+        <span class="waitlist-text">📋 Lista de Espera · Vagas Fundadores</span>
+        <span class="beta-badge" aria-label="Beta fechado">🔒 Beta Fechado</span>
+      </div>
+      <div class="pr">
+        <span class="plbl">Vagas prioritárias</span>
+        <span class="pn" id="progNum">42 <span>/ 200</span></span>
+      </div>
+      <div class="bar" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="200" aria-label="42 de 200 vagas preenchidas">
+        <div class="barfill" id="barFill" style="width:21%"></div>
+      </div>
+      <div class="bfoot">
+        <span class="bpct" id="progPct">21% preenchido</span>
+        <span class="brest" id="progRest">158 vagas restantes</span>
+      </div>
+    </div>
+
+    <div class="fcard" id="formCard">
+      <div class="ftag" aria-hidden="true">🔥 Lançamento em Brasília · DF</div>
+      <div class="fhead">Garanta sua vaga agora</div>
+      <div class="fdesc-badge">🎁 Cadastrados agora ganham 10% a 15% de desconto no lançamento!</div>
+      <p class="fsub">Profissionais verificados no DF com garantia de 90 dias.</p>
+
+      <div class="field">
+        <label for="inName">Nome completo <abbr title="obrigatório">*</abbr></label>
+        <input type="text" id="inName" name="name" placeholder="Seu nome completo" autocomplete="name" required aria-required="true" aria-describedby="errName">
+        <div class="errmsg" id="errName" role="alert" aria-live="polite"></div>
+      </div>
+
+      <div class="field">
+        <label for="inPhone">WhatsApp <abbr title="obrigatório">*</abbr></label>
+        <input type="tel" id="inPhone" name="phone" placeholder="(61) 99999-9999" autocomplete="tel" required aria-required="true" pattern="\(\d{2}\) \d{4,5}-\d{4}" aria-describedby="errPhone phoneHint">
+        <div style="font-size:.6rem;color:var(--mu);margin-top:.18rem;" id="phoneHint">Formato: (XX) XXXXX-XXXX</div>
+        <div class="errmsg" id="errPhone" role="alert" aria-live="polite"></div>
+      </div>
+
+      <div class="field">
+        <label for="inRegion">Região no DF <abbr title="obrigatório">*</abbr></label>
+        <select id="inRegion" name="region" required aria-required="true" aria-describedby="errRegion">
+          <option value="">Selecione...</option>
+          <option>Asa Norte</option><option>Asa Sul</option><option>Lago Norte</option><option>Lago Sul</option>
+          <option>Águas Claras</option><option>Taguatinga</option><option>Ceilândia</option><option>Samambaia</option>
+          <option>Gama</option><option>Sobradinho</option><option>Planaltina</option><option>Guará</option>
+          <option>Cruzeiro</option><option>Sudoeste/Octogonal</option><option>Park Way</option><option>Vicente Pires</option>
+          <option>Riacho Fundo</option><option>Recanto das Emas</option><option>Santa Maria</option><option>São Sebastião</option>
+          <option>Núcleo Bandeirante</option><option>Jardim Botânico</option><option>Outro — DF</option>
+        </select>
+        <div class="errmsg" id="errRegion" role="alert" aria-live="polite"></div>
+      </div>
+
+      <div class="field">
+        <label>Qual serviço você precisa? <abbr title="obrigatório">*</abbr> <span class="errmsg" id="errSvc" style="display:inline;margin:0" role="alert" aria-live="polite"></span></label>
+        <div class="sgrid" role="group" aria-label="Selecione os serviços desejados">
+          <button type="button" class="sbtn" data-id="hidraulica" onclick="toggleSvc(this)" aria-pressed="false">🔧 Hidráulica</button>
+          <button type="button" class="sbtn" data-id="eletrica" onclick="toggleSvc(this)" aria-pressed="false">⚡ Elétrica</button>
+          <button type="button" class="sbtn" data-id="pintura" onclick="toggleSvc(this)" aria-pressed="false">🎨 Pintura</button>
+          <button type="button" class="sbtn" data-id="piso" onclick="toggleSvc(this)" aria-pressed="false">🏠 Piso</button>
+          <button type="button" class="sbtn" data-id="drywall" onclick="toggleSvc(this)" aria-pressed="false">🧱 Drywall</button>
+          <button type="button" class="sbtn" data-id="desentupimento" onclick="toggleSvc(this)" aria-pressed="false">🚿 Desentupimento</button>
+          <button type="button" class="sbtn" data-id="reforma" onclick="toggleSvc(this)" aria-pressed="false">🏗️ Reformas</button>
+          <button type="button" class="sbtn" data-id="outro" onclick="toggleSvc(this)" aria-pressed="false">🛠️ Outro</button>
+          <!-- AJUSTE: opção Solar Fotovoltaica adicionada após Reformas, largura total -->
+          <a class="sbtn" data-id="solar" href="v_solar.html" target="_blank" rel="noopener noreferrer" role="button" aria-label="Saiba mais sobre Instalação Solar Fotovoltaica">☀️ Instalação Solar (Fotovoltaica)</a>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="inUrgency">Quando pretende resolver?</label>
+        <select id="inUrgency" name="urgency">
+          <option value="">Selecione...</option>
+          <option value="urgente">🔴 Urgente — hoje ou amanhã</option>
+          <option value="semana">🟡 Esta semana</option>
+          <option value="mes">🟢 Este mês</option>
+          <option value="pesquisando">⚪ Só estou pesquisando</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="inDific">Maior dificuldade ao contratar? (opcional)</label>
+        <input type="text" id="inDific" name="dificuldade" placeholder="Ex: não aparecem, cobram caro...">
+      </div>
+
+      <div class="lgpd-field">
+        <label class="lgpd-label" for="lgpdCheck">
+          <input type="checkbox" id="lgpdCheck" name="lgpd" required aria-required="true" aria-describedby="errLgpd" onchange="updateSubmitBtn()">
+          <span>Li e concordo com a <a href="#politica-privacidade" aria-label="Política de Privacidade">Política de Privacidade</a> e <strong>autorizo contato via WhatsApp</strong> pela MetaObra.</span>
+        </label>
+        <div class="errmsg" id="errLgpd" role="alert" aria-live="polite"></div>
+      </div>
+
+      <button type="button" class="bsub" id="btnSub" onclick="submitForm()" disabled aria-disabled="true">🚀 Garantir Minha Vaga →</button>
+      <div class="ffoot">🔒 Dados protegidos · Sem spam · Confirmação por WhatsApp</div>
+    </div>
+
+    <div class="success" id="successCard" style="display:none" role="alert" aria-live="polite">
+      <span class="si" aria-hidden="true">🎉</span>
+      <div class="st">Vaga Garantida!</div>
+      <p class="sd">Você está na lista prioritária da MetaObra!</p>
+      <div class="success-id" id="successId" aria-label="Código do cadastro">#CO-000000</div>
+      <a id="waBtn" href="#" target="_blank" rel="noopener noreferrer" class="wa-btn" aria-label="Confirmar cadastro pelo WhatsApp">💬 Confirmar pelo WhatsApp →</a>
+      <a href="https://conectaobra-plataforma.netlify.app/" target="_blank" rel="noopener noreferrer" class="plat-btn" aria-label="Acessar a plataforma MetaObra">🔧 Acessar a Plataforma →</a>
+      <div class="proximos" aria-label="Próximos passos">
+        <div class="proximos-title">📋 Próximos passos</div>
+        <div class="proximos-item">
+          ✅ Cadastro confirmado<br/>
+          📲 Nossa equipe entrará em contato<br/>
+          🎁 Desconto garantido no lançamento<br/>
+          🚀 Acesso prioritário à plataforma
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero" style="padding-top:0;min-height:auto;" aria-label="Apresentação MetaObra">
+    <div class="hero-l">
+      <div class="badge"><span class="bdot" aria-hidden="true"></span>Pré-lançamento · Lançamento em Brasília</div>
+      <h1>Você já usa<br/><span class="o">iFood, Uber</span><br/><span class="m">e Airbnb.</span><br/>O que faltava<br/><span class="o">chegou.</span></h1>
+      <p class="hdesc">Cansado de procurar alguém para um reparo simples? <strong>A MetaObra resolve com profissionais verificados no DF — garantia de 90 dias inclusa.</strong></p>
+      <div class="chips" aria-label="Serviços disponíveis">
+        <span class="chip">🔧 Hidráulica</span>
+        <span class="chip">⚡ Elétrica</span>
+        <span class="chip">🎨 Pintura</span>
+        <span class="chip">🏠 Piso</span>
+        <span class="chip">🧱 Drywall</span>
+        <span class="chip">🚿 Desentupimento</span>
+        <span class="chip">🏗️ Reformas</span>
+        <span class="chip">☀️ Solar</span>
+      </div>
+    </div>
+    <div class="hero-r" style="display:none" id="heroStats" aria-label="Estatísticas">
+      <div class="stats-section" style="padding:0;border:none;">
+        <div><div class="stat-n">200</div><div class="stat-l">Meta de vagas</div></div>
+        <div><div class="stat-n">DF</div><div class="stat-l">Lançamento em Brasília</div></div>
+        <div><div class="stat-n">90</div><div class="stat-l">Dias garantia</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gars-section" aria-label="Garantias MetaObra">
+    <div class="sec-tag" aria-hidden="true">Padrão de qualidade</div>
+    <h2 class="sec-h">Por que a <span class="o">MetaObra?</span></h2>
+    <div class="gars-grid">
+      <div class="gar-card"><div class="gar-ico" aria-hidden="true">🛡️</div><div><div class="gar-h">Garantia 90 dias</div><p class="gar-p">Problema voltou? A gente resolve sem custo.</p></div></div>
+      <div class="gar-card"><div class="gar-ico" aria-hidden="true">💰</div><div><div class="gar-h">Preço fechado</div><p class="gar-p">Orçamento aprovado antes. Sem surpresa no final.</p></div></div>
+      <div class="gar-card"><div class="gar-ico" aria-hidden="true">🦺</div><div><div class="gar-h">EPI obrigatório</div><p class="gar-p">Segurança em todo atendimento. Sem exceção.</p></div></div>
+      <div class="gar-card"><div class="gar-ico" aria-hidden="true">📸</div><div><div class="gar-h">Foto antes/depois</div><p class="gar-p">Registro fotográfico em todo serviço.</p></div></div>
+      <div class="gar-card"><div class="gar-ico" aria-hidden="true">🕐</div><div><div class="gar-h">Pontualidade</div><p class="gar-p">Horário combinado é horário cumprido.</p></div></div>
+      <div class="gar-card"><div class="gar-ico" aria-hidden="true">✅</div><div><div class="gar-h">Você aprova</div><p class="gar-p">Pagamento liberado só após sua aprovação.</p></div></div>
+    </div>
+  </section>
+
+  <section class="como-section" aria-label="Como funciona a MetaObra">
+    <div class="sec-tag" aria-hidden="true">Como funciona</div>
+    <h2 class="sec-h">Simples como pedir um <span class="o">Uber.</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n" aria-hidden="true">01</div>
+        <div class="step-ico" aria-hidden="true">💬</div>
+        <div>
+          <div class="step-h">Você descreve o problema</div>
+          <p class="step-p">Texto, foto ou vídeo — do jeito que preferir.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" aria-hidden="true">02</div>
+        <div class="step-ico" aria-hidden="true">🧠</div>
+        <div>
+          <div class="step-h">
+            IA gera o orçamento
+            <span class="ai-tooltip-wrap">
+              <button class="ai-info-btn" type="button" onclick="openIaModal()" aria-label="Saiba mais sobre como a IA gera o orçamento" tabindex="0">ℹ️</button>
+              <span class="ai-tooltip" role="tooltip">Orçamento estimado via IA com base em referência do DF. O profissional valida o valor presencialmente antes de iniciar.</span>
+            </span>
+          </div>
+          <p class="step-p">Preço justo e fechado em minutos. Sem surpresa.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" aria-hidden="true">03</div>
+        <div class="step-ico" aria-hidden="true">✅</div>
+        <div>
+          <div class="step-h">Você aprova e paga</div>
+          <p class="step-p">Pagamento seguro via Mercado Pago. Retido até a conclusão.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" aria-hidden="true">04</div>
+        <div class="step-ico" aria-hidden="true">🔨</div>
+        <div>
+          <div class="step-h">Profissional executa</div>
+          <p class="step-p">Verificado, com EPI e padrão MetaObra.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n" aria-hidden="true">05</div>
+        <div class="step-ico" aria-hidden="true">⭐</div>
+        <div>
+          <div class="step-h">Você avalia e libera</div>
+          <p class="step-p">Aprova o serviço, avalia e o pagamento é liberado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aval-section" aria-label="Avaliações de clientes">
+    <div class="sec-tag" aria-hidden="true">O que dizem</div>
+    <h2 class="sec-h">Clientes <span class="o">satisfeitos.</span></h2>
+    <div class="aval-grid">
+      <article class="aval-card">
+        <div class="aval-stars" aria-label="5 estrelas">★★★★★</div>
+        <blockquote class="aval-txt">"Chamei para um vazamento urgente e o profissional chegou no mesmo dia. Resolveu em 2h e ainda limpou tudo. Nota 10!"</blockquote>
+        <div class="aval-footer">
+          <div class="aval-avatar" aria-hidden="true">AP</div>
+          <div>
+            <div class="aval-nome">Ana Paula M.</div>
+            <div class="aval-svc">Hidráulica · Asa Norte</div>
+            <div style="margin-top:.2rem;"><span class="beta-real-badge">✅ Beta Real · DF</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="aval-card">
+        <div class="aval-stars" aria-label="5 estrelas">★★★★★</div>
+        <blockquote class="aval-txt">"Preço fechado antes de começar, sem surpresa no final. Profissional pontual e deixou tudo impecável."</blockquote>
+        <div class="aval-footer">
+          <div class="aval-avatar" aria-hidden="true">CS</div>
+          <div>
+            <div class="aval-nome">Carlos S.</div>
+            <div class="aval-svc">Drywall · Águas Claras</div>
+            <div style="margin-top:.2rem;"><span class="beta-real-badge">✅ Beta Real · DF</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="aval-card">
+        <div class="aval-stars" aria-label="4 estrelas">★★★★☆</div>
+        <blockquote class="aval-txt">"Pagamento só liberado quando eu aprovo — isso faz toda diferença! Finalmente uma plataforma séria no DF."</blockquote>
+        <div class="aval-footer">
+          <div class="aval-avatar" aria-hidden="true">FL</div>
+          <div>
+            <div class="aval-nome">Fernanda L.</div>
+            <div class="aval-svc">Pintura · Taguatinga</div>
+            <div style="margin-top:.2rem;"><span class="beta-real-badge">✅ Beta Real · DF</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="privacy-section" id="politica-privacidade" aria-label="Política de Privacidade">
+    <h2>Política de Privacidade</h2>
+    <p>A <strong>MetaObra</strong> coleta apenas os dados necessários para conectar você a profissionais verificados no DF: nome, WhatsApp, região e tipo de serviço.</p>
+    <p>Seus dados são utilizados exclusivamente para comunicação sobre o pré-lançamento e o agendamento de serviços. Não vendemos, repassamos ou compartilhamos suas informações com terceiros para fins publicitários.</p>
+    <p>Em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018)</strong>, você pode solicitar a exclusão dos seus dados a qualquer momento enviando mensagem para nosso WhatsApp: <a href="https://wa.me/5561985986566" style="color:var(--o);" target="_blank" rel="noopener noreferrer">(61) 98598-6566</a>.</p>
+    <p style="font-size:.65rem;color:var(--mu);">Última atualização: Abril de 2026</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-logo">Meta<em>Obra</em></div>
+  <div class="footer-copy">© 2026 MetaObra · Brasília, Distrito Federal</div>
+  <nav class="footer-links" aria-label="Redes sociais">
+    <a href="https://tiktok.com/@conectaobra" target="_blank" rel="noopener noreferrer">TikTok</a>
+    <a href="https://instagram.com/metaobra.oficial" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://wa.me/5561985986566" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </nav>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyAefv4XC9BYZ1gPDD8ITF419bBskHI2Iik",
+  authDomain: "conectaobra-bsb.firebaseapp.com",
+  projectId: "conectaobra-bsb",
+  storageBucket: "conectaobra-bsb.firebasestorage.app",
+  messagingSenderId: "1034783709360",
+  appId: "1:1034783709360:web:36931b3d8d5e1ca1f58375"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+window.fbAdd = async(col, data) => { try { return await addDoc(collection(db, col), {...data, createdAt: new Date().toISOString()}); } catch(e) { return null; }};
+window.fbList = async(col) => { try { const s = await getDocs(collection(db, col)); return s.docs.map(d=>({...d.data(),_id:d.id})); } catch(e) { return []; }};
+window.firebaseOK = true;
+</script>
+
+<script>
+const WA = "5561985986566";
+const SEED_COUNT = 42;
+let selectedSvcs = [];
+
+function ls(k){try{return JSON.parse(localStorage.getItem('co_'+k)||'null');}catch{return null;}}
+function ss(k,v){try{localStorage.setItem('co_'+k,JSON.stringify(v));}catch{}}
+
+document.getElementById('tickerEl').innerHTML += document.getElementById('tickerEl').innerHTML;
+
+if(window.innerWidth >= 768) document.getElementById('heroStats').style.display = 'block';
+
+function loadProg(){
+  const leads = ls('leads') || [];
+  const n = SEED_COUNT + leads.length;
+  const total = 200;
+  const pct = Math.min(Math.round((n / total) * 100), 100);
+  const remaining = Math.max(total - n, 0);
+  document.getElementById('progNum').innerHTML = n + ' <span>/ 200</span>';
+  document.getElementById('barFill').style.width = pct + '%';
+  document.getElementById('barFill').parentElement.setAttribute('aria-valuenow', n);
+  document.getElementById('progPct').textContent = pct + '% preenchido';
+  document.getElementById('progRest').textContent = remaining + ' vagas restantes';
+}
+loadProg();
+
+function toggleSvc(btn){
+  const id = btn.dataset.id;
+  if(selectedSvcs.includes(id)){
+    selectedSvcs = selectedSvcs.filter(x => x !== id);
+    btn.classList.remove('sel');
+    btn.setAttribute('aria-pressed','false');
+  } else {
+    selectedSvcs.push(id);
+    btn.classList.add('sel');
+    btn.setAttribute('aria-pressed','true');
+  }
+  document.getElementById('errSvc').textContent = '';
+}
+
+function updateSubmitBtn(){
+  const checked = document.getElementById('lgpdCheck').checked;
+  const btn = document.getElementById('btnSub');
+  btn.disabled = !checked;
+  btn.setAttribute('aria-disabled', String(!checked));
+  if(checked) document.getElementById('errLgpd').textContent = '';
+}
+
+document.getElementById('inPhone').addEventListener('input', function(){
+  let raw = this.value.replace(/\D/g,'').slice(0, 11);
+  let masked = raw;
+  if(raw.length > 2) masked = '(' + raw.slice(0,2) + ') ' + raw.slice(2);
+  if(raw.length > 7) masked = '(' + raw.slice(0,2) + ') ' + raw.slice(2,7) + '-' + raw.slice(7);
+  this.value = masked;
+  const digits = raw.length;
+  if(digits === 0){
+    this.classList.remove('input-valid','input-invalid');
+    document.getElementById('errPhone').textContent = '';
+  } else if(digits >= 10){
+    this.classList.add('input-valid'); this.classList.remove('input-invalid');
+    document.getElementById('errPhone').textContent = '';
+  } else {
+    this.classList.add('input-invalid'); this.classList.remove('input-valid');
+    document.getElementById('errPhone').textContent = '⚠ Digite ao menos 10 dígitos';
+  }
+});
+
+async function submitForm(){
+  const name = document.getElementById('inName').value.trim();
+  const phone = document.getElementById('inPhone').value.trim();
+  const region = document.getElementById('inRegion').value;
+  const urgency = document.getElementById('inUrgency').value;
+  const dific = document.getElementById('inDific').value.trim();
+  const lgpd = document.getElementById('lgpdCheck').checked;
+  let ok = true;
+  ['errName','errPhone','errRegion'].forEach(id => document.getElementById(id).textContent = '');
+  document.getElementById('errSvc').textContent = '';
+  document.getElementById('errLgpd').textContent = '';
+  if(!name){ document.getElementById('errName').textContent = '⚠ Informe seu nome'; ok = false; }
+  if(!phone || phone.replace(/\D/g,'').length < 10){ document.getElementById('errPhone').textContent = '⚠ WhatsApp inválido (mínimo 10 dígitos)'; ok = false; }
+  if(!region){ document.getElementById('errRegion').textContent = '⚠ Selecione sua região'; ok = false; }
+  if(!selectedSvcs.length){ document.getElementById('errSvc').textContent = ' — Selecione ao menos um'; ok = false; }
+  if(!lgpd){ document.getElementById('errLgpd').textContent = '⚠ Você precisa aceitar a Política de Privacidade para continuar.'; ok = false; }
+  if(!ok) return;
+  const btn = document.getElementById('btnSub');
+  btn.disabled = true; btn.setAttribute('aria-disabled','true');
+  btn.innerHTML = '<div class="spinner" aria-hidden="true"></div> Enviando...';
+  const leads = ls('leads') || [];
+  if(leads.find(l => l.phone.replace(/\D/g,'') === phone.replace(/\D/g,''))){
+    document.getElementById('errPhone').textContent = '✓ Número já cadastrado!';
+    btn.disabled = false; btn.setAttribute('aria-disabled','false');
+    btn.innerHTML = '🚀 Garantir Minha Vaga →';
+    return;
+  }
+  const id = '#CO-' + Math.floor(100000 + Math.random() * 900000);
+  const lead = { id, name, phone, region, services: selectedSvcs, urgency, dificuldade: dific, lgpdConsent: true, createdAt: new Date().toISOString() };
+  leads.unshift(lead);
+  ss('leads', leads);
+  if(window.fbAdd) window.fbAdd('leads', lead);
+  const urgVal = document.getElementById('inUrgency').options[document.getElementById('inUrgency').selectedIndex]?.text || 'não informada';
+  const msgDono = encodeURIComponent('🔔 *NOVO CADASTRO — MetaObra*\n\n👤 Nome: *' + name + '*\n📱 WhatsApp: ' + phone + '\n📍 Região: ' + region + '\n🔧 Serviços: ' + selectedSvcs.join(', ') + '\n⏱ Urgência: ' + urgVal + '\n✅ LGPD: Consentimento registrado\n🆔 ' + id + '\n📅 ' + new Date().toLocaleString('pt-BR'));
+  window.open('https://wa.me/' + WA + '?text=' + msgDono, '_blank');
+  const phoneClean = phone.replace(/\D/g,'');
+  const msgCliente = encodeURIComponent('Olá *' + name + '*! 👋\n\nSeu cadastro na *MetaObra* foi confirmado! ✅\n\n🆔 Código: ' + id + '\n📍 Região: ' + region + '\n🔧 Serviço: ' + selectedSvcs.join(', ') + '\n\nEm breve nossa equipe entrará em contato. 🚀\n\n🛡️ Garantia de 90 dias inclusa\n💰 Preço fechado antes de começar\n\n_MetaObra · O iFood da Construção Civil · DF_');
+  document.getElementById('waBtn').href = 'https://wa.me/' + phoneClean + '?text=' + msgCliente;
+  document.getElementById('successId').textContent = id;
+  document.getElementById('formCard').style.display = 'none';
+  document.getElementById('successCard').style.display = 'block';
+  document.getElementById('successCard').scrollIntoView({behavior:'smooth', block:'center'});
+  loadProg();
+}
+
+function openAdmin(){document.getElementById('admOverlay').style.display='flex';}
+function closeAdmin(){document.getElementById('admOverlay').style.display='none'; document.getElementById('admPwd').value=''; document.getElementById('admErr').textContent='';}
+function toggleAdmPwd(){
+  const inp=document.getElementById('admPwd');
+  const eye=document.getElementById('admEye');
+  inp.type=inp.type==='password'?'text':'password';
+  eye.textContent=inp.type==='password'?'👁️':'🙈';
+}
+async function admLogin(){
+  const pwd = document.getElementById('admPwd').value;
+  if(pwd !== 'metaobra2025'){document.getElementById('admErr').textContent='⚠ Senha incorreta';return;}
+  let leads = [];
+  if(window.fbList){
+    const fbLeads = await window.fbList('leads');
+    if(fbLeads.length > 0){ leads = fbLeads; ss('leads', leads); }
+  }
+  if(!leads.length) leads = ls('leads')||[];
+  const box = document.getElementById('admContent');
+  if(!leads.length){ box.innerHTML = '<div style="text-align:center;padding:2rem;color:#888">Nenhum lead ainda.</div>'; return; }
+  const hoje = new Date().toDateString();
+  const hoje_count = leads.filter(l=>new Date(l.createdAt).toDateString()===hoje).length;
+  const semana = new Date(Date.now()-7*24*3600*1000);
+  const sem_count = leads.filter(l=>new Date(l.createdAt)>=semana).length;
+  box.innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem;text-align:center;">
+    <div style="background:var(--dk);border-radius:7px;padding:.7rem;"><div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--o)">${leads.length}</div><div style="font-size:.58rem;color:#888">Total</div></div>
+    <div style="background:var(--dk);border-radius:7px;padding:.7rem;"><div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gr)">${hoje_count}</div><div style="font-size:.58rem;color:#888">Hoje</div></div>
+    <div style="background:var(--dk);border-radius:7px;padding:.7rem;"><div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--y)">${sem_count}</div><div style="font-size:.58rem;color:#888">Semana</div></div>
+  </div>
+  <button onclick="exportCSV()" style="width:100%;padding:.6rem;background:#00C46A;color:#080808;border:none;border-radius:7px;font-weight:700;cursor:pointer;margin-bottom:.8rem;">📥 Exportar CSV</button>
+  <div class="adm-leads">${leads.map(l=>`<div class="adm-lead"><div class="adm-lead-name">${l.name}</div><div class="adm-lead-phone">${l.phone}</div><div class="adm-lead-info">📍 ${l.region||''} · ${l.urgency||''}</div><div class="adm-lead-info">${(l.services||[]).join(', ')}</div><div class="adm-lead-info" style="color:#555">${new Date(l.createdAt).toLocaleDateString('pt-BR')}</div></div>`).join('')}</div>`;
+}
+function exportCSV(){
+  const leads = ls('leads')||[];
+  const h = 'Nome,WhatsApp,Região,Serviços,Urgência,Dificuldade,LGPD,Data\n';
+  const r = leads.map(l=>`"${l.name}","${l.phone}","${l.region||''}","${(l.services||[]).join('|')}","${l.urgency||''}","${l.dificuldade||''}","${l.lgpdConsent?'Sim':'Não'}","${new Date(l.createdAt).toLocaleString('pt-BR')}"`).join('\n');
+  const blob = new Blob([h+r],{type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='leads_metaobra.csv'; a.click();
+}
+
+function openIaModal(){document.getElementById('iaModal').classList.add('open');}
+function closeIaModal(e){
+  if(!e || e.target===document.getElementById('iaModal')) document.getElementById('iaModal').classList.remove('open');
+}
+
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('pwaBanner').style.display = 'flex';
+});
+document.getElementById('pwaBtn').addEventListener('click', ()=>{
+  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;}
+  document.getElementById('pwaBanner').style.display='none';
+});
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase());
+if(isIOS && !window.navigator.standalone){
+  document.getElementById('pwaBanner').style.display='flex';
+  document.querySelector('.pwa-p').textContent='Toque em compartilhar e depois "Adicionar à Tela de Início"';
+  document.getElementById('pwaBtn').style.display='none';
+}
+
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
+</body>
+</html>
