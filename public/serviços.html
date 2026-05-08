@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Prima da Maya — MetaObra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F4F0;--surf:#fff;--surf2:#F0EDE8;--bdr:#E2DDD8;
+  --tx:#1A1410;--tx2:#6B6560;--tx3:#9E9894;
+  --acc:#D94F1E;--acc2:#E87B3E;--accL:#FEF0E8;--accB:#F5C4AB;
+  --dark:#1A1410;--dark2:#2A1F1A;
+  --ok:#2D7A4F;--okB:#EBF7F1;--okBdr:#A7F3D0;
+  --warn:#B45309;--warnB:#FEF3C7;
+  --blue:#1D5FA8;--blueB:#EBF2FC;--blueBdr:#C3D9F5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;overflow:hidden}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--tx);height:100%;display:flex;flex-direction:column;overflow:hidden;position:fixed;width:100%}
+
+/* HEADER */
+.hdr{background:var(--dark);display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 18px;flex-shrink:0;gap:8px;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-i{width:28px;height:28px;background:var(--acc);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;color:#fff;font-size:12px}
+.logo-t{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:#fff}
+.logo-t span{color:var(--acc2)}
+.hdr-mid{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:5px 12px}
+.dot{width:7px;height:7px;background:#34D399;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hdr-lbl{font-size:12px;font-weight:600;color:rgba(255,255,255,.88)}
+.hdr-btns{display:flex;gap:6px}
+.hbtn{padding:5px 11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);border-radius:100px;color:rgba(255,255,255,.8);font-size:11.5px;font-weight:500;cursor:pointer;transition:.15s;font-family:inherit}
+.hbtn:hover{background:rgba(255,255,255,.15)}
+.hbtn.active{background:var(--acc);border-color:var(--acc);color:#fff}
+
+/* LAYOUT */
+.body{display:flex;flex:1;min-height:0;overflow:hidden}
+
+/* REGION BAR */
+.rbar{background:var(--surf);border-bottom:1px solid var(--bdr);padding:8px 16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex-shrink:0}
+.rlbl{font-size:10.5px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.rsel{padding:5px 8px;border:1px solid var(--bdr);border-radius:7px;font-size:12px;font-family:inherit;background:var(--bg);color:var(--tx);cursor:pointer;font-weight:500}
+.rtag{font-size:11px;color:var(--tx3);background:var(--surf2);border-radius:5px;padding:3px 8px}
+.rtag strong{color:var(--acc)}
+.fbadges{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.fb{font-size:10px;background:var(--warnB);color:var(--warn);border:1px solid #FCD34D;border-radius:5px;padding:2px 7px;cursor:pointer;font-weight:600;transition:.14s;white-space:nowrap}
+.fb.on{background:var(--warn);color:#fff;border-color:var(--warn)}
+@media(max-width:600px){.fbadges{display:none}}
+
+/* CHAT */
+.chat{display:flex;flex-direction:column;flex:1;min-width:0;min-height:0;overflow:hidden}
+.msgs{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;padding:18px 16px 24px;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+.msgs::-webkit-scrollbar{width:3px}
+.msgs::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+
+/* WELCOME */
+.welcome{background:linear-gradient(135deg,var(--dark) 0%,#2D2420 100%);border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden}
+.welcome::before{content:'';position:absolute;top:-20px;right:-20px;width:140px;height:140px;background:var(--acc);border-radius:50%;opacity:.07}
+.w-ava{width:42px;height:42px;background:var(--acc);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:17px;color:#fff;margin-bottom:10px}
+.welcome h2{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}
+.welcome p{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.55;margin-bottom:10px}
+.hiw{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.hiw-s{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:7px 10px;display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.8)}
+.hiw-n{width:18px;height:18px;background:var(--acc);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:10px;color:#fff;flex-shrink:0}
+.wchips{display:flex;flex-wrap:wrap;gap:6px}
+.wchip{padding:5px 11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:100px;font-size:11px;font-weight:500;color:rgba(255,255,255,.85);cursor:pointer;transition:.14s}
+.wchip:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+
+/* MESSAGES */
+.msg{display:flex;gap:8px;animation:fup .25s ease both}
+@keyframes fup{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.mav{width:30px;height:30px;min-width:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Sora',sans-serif}
+.msg.minerva .mav{background:var(--dark);color:var(--acc)}
+.msg.user .mav{background:var(--acc);color:#fff}
+.mbub{max-width:86%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.6;word-break:break-word;overflow-wrap:break-word}
+.msg.minerva .mbub{background:var(--surf);border:1px solid var(--bdr);border-bottom-left-radius:3px}
+.msg.user .mbub{background:var(--dark);color:#fff;border-bottom-right-radius:3px}
+.mbub p{margin-bottom:6px}
+.mbub p:last-child{margin-bottom:0}
+.mbub ul{margin:4px 0 4px 14px}
+.mbub li{margin-bottom:3px}
+.mbub strong{font-weight:600}
+
+/* TYPING */
+.typing{display:flex;align-items:center;gap:4px;padding:10px 13px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;border-bottom-left-radius:3px;width:fit-content}
+.td{width:6px;height:6px;background:var(--tx3);border-radius:50%;animation:tb 1.2s ease infinite}
+.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
+@keyframes tb{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+
+/* SUGGESTIONS */
+.sugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sug{padding:5px 10px;background:var(--blueB);border:1px solid var(--blueBdr);color:var(--blue);border-radius:100px;font-size:11.5px;font-weight:500;cursor:pointer;transition:.13s}
+.sug:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* PRICE CARD */
+.pcard{border:2px solid var(--accB);border-radius:13px;overflow:hidden;margin-top:8px;max-width:100%;box-sizing:border-box}
+.pcard-hdr{background:var(--dark);padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pcard-hdr-left{display:flex;flex-direction:column;gap:2px}
+.pcard-svc{font-family:'Sora',sans-serif;font-weight:700;font-size:13px;color:#fff}
+.pcard-var{font-size:11px;color:rgba(255,255,255,.5)}
+.pcard-price{font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:#fff;text-align:right;line-height:1}
+.pcard-lbl{font-size:9px;color:rgba(255,255,255,.4);text-align:right;margin-top:2px}
+.pcard-body{background:var(--surf);padding:11px 13px;display:flex;flex-direction:column;gap:9px}
+.scope-title{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.scope-items{display:flex;flex-direction:column;gap:4px}
+.si{display:flex;align-items:flex-start;gap:6px;font-size:12px;line-height:1.4;color:var(--tx2)}
+.pcard-warn{background:var(--warnB);border:1px solid #FDE68A;border-radius:8px;padding:9px 11px;font-size:11.5px;color:#92400E;line-height:1.45}
+.pcard-warn strong{color:var(--warn)}
+.addl-list{margin-top:5px;display:flex;flex-direction:column;gap:3px}
+.addl-i{display:flex;align-items:flex-start;gap:5px;font-size:11.5px;color:#92400E}
+.pcard-ftr{background:var(--surf2);border-top:1px solid var(--bdr);padding:11px 13px}
+.book-btn{width:100%;padding:12px;background:var(--acc);border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:13.5px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:.16s}
+.book-btn:hover{background:#C44018;transform:translateY(-1px);box-shadow:0 4px 14px rgba(217,79,30,.3)}
+.book-btn:disabled{background:var(--ok);cursor:default;transform:none;box-shadow:none}
+.wrong-link{text-align:center;margin-top:7px;font-size:11px;color:var(--tx3);cursor:pointer;transition:.13s}
+.wrong-link:hover{color:var(--acc)}
+
+/* AREA CALC CARD */
+.acc-card{background:var(--blueB);border:1px solid var(--blueBdr);border-radius:10px;padding:11px 13px;margin-top:7px}
+.acc-title{font-size:10.5px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.acc-fields{display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap;margin-bottom:7px}
+.acc-grp{display:flex;flex-direction:column;gap:3px}
+.acc-lbl{font-size:10.5px;font-weight:600;color:var(--blue)}
+.acc-inp{width:78px;padding:6px 8px;border:1.5px solid var(--blueBdr);border-radius:7px;font-size:12px;font-family:inherit;background:#fff;color:var(--tx)}
+.acc-inp:focus{outline:none;border-color:var(--blue)}
+.acc-x{font-size:12px;color:var(--tx3);padding-bottom:2px;align-self:flex-end}
+.acc-btn{padding:6px 13px;background:var(--blue);border:none;border-radius:7px;font-size:12px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;align-self:flex-end}
+.acc-btn:hover{background:#1549A0}
+.acc-res{background:#fff;border:1px solid var(--blueBdr);border-radius:6px;padding:8px 10px;font-size:12.5px;display:none}
+.acc-res.show{display:block}
+
+/* CONFIRMED */
+.conf-card{background:var(--okB);border:2px solid var(--okBdr);border-radius:12px;padding:14px;margin-top:8px}
+.conf-icon{font-size:26px;margin-bottom:7px}
+.conf-title{font-family:'Sora',sans-serif;font-weight:700;font-size:13.5px;color:var(--ok);margin-bottom:3px}
+.conf-sub{font-size:12px;color:var(--tx2);line-height:1.5;margin-bottom:9px}
+.conf-row{display:flex;justify-content:space-between;font-size:11.5px;color:var(--tx2);padding:3.5px 0;border-bottom:1px solid var(--okBdr)}
+.conf-row:last-child{border-bottom:none}
+.conf-row strong{color:var(--tx)}
+
+/* ADDITIONAL */
+.addl-card{background:var(--warnB);border:2px solid #FDE68A;border-radius:12px;padding:12px;margin-top:8px}
+.addl-hdr{font-family:'Sora',sans-serif;font-weight:700;font-size:12.5px;color:var(--warn);margin-bottom:5px}
+.addl-body{font-size:12px;color:#92400E;line-height:1.45;margin-bottom:9px}
+.addl-itens{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+.addl-item{background:#fff;border:1px solid #FDE68A;border-radius:7px;padding:7px 9px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.addl-item-price{font-family:'Sora',sans-serif;font-weight:700;color:var(--warn)}
+.addl-btns{display:flex;gap:7px}
+.btn-apr{flex:1;padding:9px;background:var(--ok);border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;color:#fff;cursor:pointer}
+.btn-apr:hover{background:#25673F}
+.btn-ref{flex:1;padding:9px;background:transparent;border:1.5px solid #FDE68A;border-radius:8px;font-family:'Sora',sans-serif;font-size:12.5px;font-weight:600;color:var(--warn);cursor:pointer}
+.btn-ref:hover{background:#FEF3C7}
+
+/* MISC TAGS */
+.tok{display:inline-flex;align-items:center;background:var(--okB);color:var(--ok);border-radius:5px;padding:1px 7px;font-size:11px;font-weight:600}
+.twarn{display:inline-flex;align-items:center;background:var(--warnB);color:var(--warn);border-radius:5px;padding:1px 7px;font-size:11px;font-weight:600}
+.talert{display:inline-flex;align-items:center;background:#FFF1F1;color:#DC2626;border-radius:5px;padding:2px 8px;font-size:12px;font-weight:700;border:1px solid #FECACA}
+.svc-card{background:var(--surf2);border:1px solid var(--bdr);border-radius:9px;padding:10px;margin-top:6px}
+.svc-title{font-family:'Sora',sans-serif;font-weight:700;font-size:11.5px;margin-bottom:6px}
+.srow{display:flex;justify-content:space-between;font-size:11px;color:var(--tx2);padding:3px 0;border-bottom:1px solid var(--bdr)}
+.srow:last-child{border-bottom:none}
+.srow strong{color:var(--tx)}
+
+/* INPUT */
+.inp-area{background:var(--surf);border-top:1px solid var(--bdr);padding:11px 14px;padding-bottom:max(11px,env(safe-area-inset-bottom,11px));flex-shrink:0;position:relative;z-index:400}
+.inp-row{display:flex;align-items:flex-end;gap:8px;background:var(--bg);border:1.5px solid var(--bdr);border-radius:12px;padding:8px 8px 8px 13px;transition:.16s}
+.inp-row:focus-within{border-color:var(--acc)}
+#uinput{flex:1;border:none;background:transparent;font-family:inherit;font-size:16px;color:var(--tx);resize:none;outline:none;max-height:100px;min-height:20px;line-height:1.45}
+#uinput::placeholder{color:var(--tx3)}
+.sbtn{width:44px;height:44px;min-width:44px;background:var(--acc);border:none;border-radius:10px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+.sbtn:hover{background:#C44018}
+.inp-hint{font-size:10px;color:var(--tx3);text-align:center;margin-top:6px}
+
+/* CALCULATOR */
+.cpanel{width:0;overflow:hidden;background:var(--surf);border-left:1px solid var(--bdr);transition:width .3s ease;display:flex;flex-direction:column;flex-shrink:0}
+.cpanel.open{width:350px;min-width:350px}
+.cinner{width:350px;height:100%;display:flex;flex-direction:column;overflow-y:auto}
+.cinner::-webkit-scrollbar{width:3px}
+.cinner::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+.c-hdr{padding:14px 16px 11px;border-bottom:1px solid var(--bdr);background:var(--dark);color:#fff;flex-shrink:0}
+.c-hdr h3{font-family:'Sora',sans-serif;font-size:13.5px;font-weight:700;margin-bottom:2px}
+.c-hdr p{font-size:10.5px;color:rgba(255,255,255,.45)}
+.ctabs{display:flex;background:var(--surf2);border-bottom:1px solid var(--bdr);flex-shrink:0;overflow-x:auto;scrollbar-width:none}
+.ctabs::-webkit-scrollbar{display:none}
+.ctab{padding:8px 12px;font-size:11px;font-weight:600;color:var(--tx3);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.13s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit}
+.ctab.active{color:var(--acc);border-bottom-color:var(--acc);background:var(--surf)}
+.ccont{padding:14px 15px;flex:1}
+.csec{display:none}.csec.active{display:block}
+.fg{margin-bottom:11px}
+.fl{display:block;font-size:10.5px;font-weight:600;color:var(--tx2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.frow{display:flex;gap:6px}
+.fi{width:100%;padding:7px 9px;border:1.5px solid var(--bdr);border-radius:7px;font-size:12px;font-family:inherit;background:var(--bg);color:var(--tx);transition:.13s}
+.fi:focus{outline:none;border-color:var(--acc)}
+.fs{width:100%;padding:7px 9px;border:1.5px solid var(--bdr);border-radius:7px;font-size:12px;font-family:inherit;background:var(--bg);color:var(--tx);cursor:pointer}
+.fh{font-size:10px;color:var(--tx3);margin-top:3px}
+.cadd{width:100%;padding:7px;background:var(--surf2);border:1.5px dashed var(--bdr);border-radius:7px;font-size:11px;font-weight:600;color:var(--tx2);cursor:pointer;font-family:inherit;transition:.13s}
+.cadd:hover{border-color:var(--acc);color:var(--acc);background:var(--accL)}
+.cbtn{width:100%;padding:10px;background:var(--acc);border:none;border-radius:8px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:'Sora',sans-serif;margin-top:6px;transition:.15s}
+.cbtn:hover{background:#C44018}
+.cbtn.sec{background:var(--dark2);margin-top:5px;font-size:11.5px}
+.cbtn.sec:hover{background:#3D3028}
+.cres{background:var(--dark);border-radius:10px;padding:13px;margin-top:12px;color:#fff}
+.cres-t{font-family:'Sora',sans-serif;font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.crow{display:flex;justify-content:space-between;padding:5.5px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:11.5px}
+.crow:last-child{border-bottom:none}
+.crow span:first-child{color:rgba(255,255,255,.55)}
+.crow span:last-child{font-weight:600}
+.chigh{background:var(--acc);border-radius:7px;padding:10px;margin-top:7px;text-align:center}
+.chigh .big{font-size:19px;font-weight:800;font-family:'Sora',sans-serif}
+.chigh .lbl{font-size:9.5px;opacity:.72;margin-top:2px}
+.rlist{display:flex;flex-direction:column;gap:6px;margin-bottom:7px}
+.ritem{background:var(--bg);border:1px solid var(--bdr);border-radius:7px;padding:7px 9px;display:flex;justify-content:space-between;align-items:center}
+.rrm{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:14px;line-height:1;padding:0 0 0 5px}
+.rrm:hover{color:var(--acc)}
+.ibox{background:var(--blueB);border:1px solid var(--blueBdr);border-radius:7px;padding:8px 10px;font-size:11px;color:var(--blue);line-height:1.45;margin-bottom:9px}
+
+@media(max-width:700px){
+  /* Calculadora — tela cheia no mobile */
+  .cpanel.open{width:100%;min-width:100%;position:fixed;top:54px;right:0;height:calc(100vh - 54px);z-index:50}
+  .cinner{width:100%}
+
+  /* Header */
+  .hdr{padding:0 12px;gap:5px}
+  .logo-t{display:none}
+  .hdr-mid{padding:4px 10px}
+  .hdr-lbl{font-size:11px}
+  .hbtn{padding:5px 9px;font-size:11px}
+
+  /* Barra de região */
+  .rbar{padding:7px 12px;gap:6px}
+  .rtag{display:none}
+  .rsel{font-size:11.5px;max-width:160px}
+
+  /* Mensagens */
+  .msgs{padding:12px 10px;gap:10px}
+  .mbub{max-width:94%;font-size:12.5px;padding:9px 11px}
+
+  /* Welcome */
+  .welcome{padding:16px}
+  .w-ava{width:36px;height:36px;font-size:15px;margin-bottom:8px}
+  .welcome h2{font-size:15px}
+  .welcome p{font-size:12px}
+  .hiw{flex-direction:column;gap:5px}
+  .hiw-s{font-size:10.5px;padding:6px 9px}
+  .wchip{font-size:10.5px;padding:5px 10px}
+
+  /* Chips de sugestão */
+  .sug{font-size:11px;padding:5px 9px}
+
+  /* Price card — empilha no mobile */
+  .pcard-hdr{flex-direction:column;align-items:flex-start;gap:5px}
+  .pcard-price{font-size:20px}
+  .pcard-lbl{text-align:left}
+  .pcard-body{padding:10px 11px}
+  .pcard-ftr{padding:10px 11px}
+  .book-btn{font-size:13px;padding:11px}
+  .si{font-size:11.5px}
+  .pcard-warn{font-size:11px}
+
+  /* Card de área inline */
+  .acc-fields{flex-wrap:wrap}
+  .acc-inp{width:72px}
+
+  /* Input de texto */
+  .inp-area{padding:9px 10px}
+  #uinput{font-size:13px}
+  .inp-hint{font-size:9.5px}
+
+  /* Confirmação e adicionais */
+  .conf-card{padding:12px}
+  .conf-title{font-size:13px}
+  .conf-sub,.conf-row{font-size:11.5px}
+  .addl-card{padding:10px}
+  .addl-item{font-size:11.5px;flex-wrap:wrap;gap:4px}
+  .btn-apr,.btn-ref{font-size:12px;padding:8px}
+
+  /* Calculadora */
+  .ccont{padding:12px 12px}
+  .cres{padding:11px}
+  .crow{font-size:11px}
+  .chigh .big{font-size:17px}
+  .ritem{padding:6px 8px}
+
+
+/* ── GRADE DE CATEGORIAS ── */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.cat-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.16s;font-family:inherit}
+.cat-btn:hover,.cat-btn.sel{background:var(--acc);border-color:var(--acc)}
+.cat-btn .cico{font-size:20px;line-height:1}
+.cat-btn .clbl{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.85);text-align:center;line-height:1.2}
+.cat-btn.sel .clbl{color:#fff}
+.cat-confirm{width:100%;margin-top:10px;padding:11px;background:var(--acc);border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:.16s;display:none}
+.cat-confirm.show{display:block}
+.cat-confirm:hover{background:#C44018}
+.cat-hint{font-size:11px;color:rgba(255,255,255,.5);margin-top:6px;text-align:center}
+
+/* ── CARRINHO LATERAL ── */
+.cart-bar{position:fixed;bottom:0;left:0;right:0;background:var(--dark);border-top:2px solid var(--acc);padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:300;transform:translateY(100%);transition:.25s ease;box-shadow:0 -4px 20px rgba(0,0,0,.25)}
+.cart-bar.show{transform:translateY(0)}
+.cart-info{display:flex;flex-direction:column;gap:2px}
+.cart-count{font-size:11px;color:rgba(255,255,255,.5);font-weight:500}
+.cart-items-preview{font-size:11px;color:rgba(255,255,255,.45);max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-checkout-btn{padding:11px 20px;background:var(--acc);border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:#fff;cursor:pointer;white-space:nowrap;transition:.15s;flex-shrink:0}
+.cart-checkout-btn:hover{background:#C44018}
+.cart-view-btn{padding:9px 13px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:10px;font-size:12px;font-weight:500;color:rgba(255,255,255,.8);cursor:pointer;white-space:nowrap;font-family:inherit}
+.cart-view-btn:hover{background:rgba(255,255,255,.18)}
+
+/* ── CHECKOUT FINAL ── */
+.checkout-card{border:2px solid var(--acc-bdr);border-radius:14px;overflow:hidden;margin-top:8px}
+.checkout-hdr{background:var(--dark);padding:14px 16px;display:flex;align-items:center;gap:10px}
+.checkout-hdr-icon{font-size:22px}
+.checkout-hdr-text h3{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:#fff}
+.checkout-hdr-text p{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+.checkout-items{background:var(--surf);padding:0}
+.ci-row{display:flex;justify-content:space-between;align-items:flex-start;padding:11px 14px;border-bottom:1px solid var(--bdr);gap:8px}
+.ci-row:last-child{border-bottom:none}
+.ci-info{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.ci-name{font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-scope{font-size:11px;color:var(--tx3)}
+.ci-oid{font-size:10px;color:var(--tx3)}
+.ci-price{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--acc);white-space:nowrap;flex-shrink:0}
+.checkout-total{background:var(--dark);padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.checkout-total-lbl{font-size:12px;color:rgba(255,255,255,.5);font-weight:500}
+.checkout-total-val{font-family:'Sora',sans-serif;font-size:24px;font-weight:800;color:#fff}
+.checkout-pay-btn{width:100%;padding:14px;background:var(--acc);border:none;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.16s}
+.checkout-pay-btn:hover{background:#C44018}
+.checkout-pay-btn:disabled{background:var(--ok);cursor:default}
+.checkout-note{background:var(--surf);padding:10px 14px;font-size:11.5px;color:var(--tx3);line-height:1.5;border-top:1px solid var(--bdr)}
+@media(max-width:700px){
+  .cat-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .cat-btn{padding:8px 4px}
+  .cat-btn .cico{font-size:18px}
+  .cat-btn .clbl{font-size:9.5px}
+  .cart-bar{padding:9px 13px}
+  .cart-total{font-size:16px}
+  .checkout-total-val{font-size:20px}
+}
+
+  /* Send button — touch friendly */
+  .sbtn{width:48px;height:48px;min-width:48px;border-radius:10px}
+  /* Input font size — prevents iOS zoom */
+  #uinput{font-size:16px;min-height:24px}
+  /* Input area always visible */
+  .inp-area{padding:10px 12px;min-height:64px;flex-shrink:0 !important}
+  /* Cart bar */
+  .cart-bar{padding:10px 14px}
+  .cart-checkout-btn{padding:10px 14px;font-size:13px}
+  /* Price card footer */
+  .book-btn{min-height:48px;font-size:14px}
+  /* Category grid touch targets */
+  .cat-btn{min-height:64px}
+  /* Suggestion chips */
+  .sug{min-height:36px;display:inline-flex;align-items:center}
+  /* Prevent tap highlight + touch delay */
+  button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  /* Layout mobile */
+  .body{flex:1;min-height:0}
+  .chat{flex:1;min-height:0;overflow:hidden}
+  .msgs{flex:1;min-height:0;overflow-y:scroll;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:16px}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">
+    <div class="logo-i">P</div>
+    <div class="logo-t">meta<span>obra</span></div>
+  </div>
+  <div class="hdr-mid">
+    <div class="dot"></div>
+    <span class="hdr-lbl">Prima da Maya</span>
+  </div>
+  <div class="hdr-btns">
+    <button class="hbtn" onclick="resetChat()">↺ Novo</button>
+    <button class="hbtn" id="calcToggle" onclick="toggleCalc()">📐 Calcular</button>
+  </div>
+</header>
+
+<div class="body">
+  <div class="chat" id="chatWrap">
+    <div class="rbar">
+      <span class="rlbl">📍</span>
+      <select class="rsel" id="regSel" onchange="upRegion()">
+        <option value="1.00" data-city="Águas Claras/DF">Águas Claras/DF</option>
+        <option value="1.10" data-city="Brasília/DF">Brasília/DF (Plano Piloto)</option>
+        <option value="0.95" data-city="Taguatinga/DF">Taguatinga/DF</option>
+        <option value="0.90" data-city="Ceilândia/DF">Ceilândia/DF</option>
+        <option value="0.95" data-city="Goiânia/GO">Goiânia/GO</option>
+        <option value="0.85" data-city="Anápolis/GO">Anápolis/GO</option>
+        <option value="1.60" data-city="São Paulo/SP">São Paulo/SP</option>
+        <option value="1.40" data-city="ABC Paulista/SP">ABC Paulista/SP</option>
+        <option value="1.70" data-city="Rio de Janeiro/RJ Sul">Rio de Janeiro/RJ (Zona Sul)</option>
+        <option value="1.45" data-city="Rio de Janeiro/RJ">Rio de Janeiro/RJ</option>
+        <option value="1.10" data-city="Belo Horizonte/MG">Belo Horizonte/MG</option>
+        <option value="1.10" data-city="Curitiba/PR">Curitiba/PR</option>
+        <option value="1.10" data-city="Porto Alegre/RS">Porto Alegre/RS</option>
+        <option value="1.20" data-city="Florianópolis/SC">Florianópolis/SC</option>
+        <option value="1.00" data-city="Salvador/BA">Salvador/BA</option>
+        <option value="0.95" data-city="Fortaleza/CE">Fortaleza/CE</option>
+        <option value="1.00" data-city="Recife/PE">Recife/PE</option>
+        <option value="1.00" data-city="Manaus/AM">Manaus/AM</option>
+      </select>
+      <div class="rtag" id="rtag">Base: <strong>Águas Claras/DF</strong> ×1.00</div>
+      <div class="fbadges">
+        <span class="fb" id="furg" onclick="tgF('urg')" title="Urgência &lt;24h: +30%">⚡ Urgência</span>
+        <span class="fb" id="fwkd" onclick="tgF('wkd')" title="Fds/feriado: +25%">📅 Fds</span>
+        <span class="fb" id="fnot" onclick="tgF('not')" title="Noturno após 18h: +40%">🌙 Noturno</span>
+        <span class="fb" id="facc" onclick="tgF('acc')" title="Difícil acesso: +15%">🏗️ Acesso</span>
+      </div>
+    </div>
+
+    <div class="msgs" id="msgs">
+      <div class="welcome" id="welcome">
+        <div class="w-ava">P</div>
+        <h2>Olá! Sou Prima da Maya 👋</h2>
+        <p>Me conta o que você precisa e te apresento o <strong>preço fixo</strong> — sem visita de orçamento.</p>
+        <div class="hiw">
+          <div class="hiw-s"><div class="hiw-n">1</div>Me conta o problema</div>
+          <div class="hiw-s"><div class="hiw-n">2</div>Veja o preço e confirme</div>
+          <div class="hiw-s"><div class="hiw-n">3</div>Profissional resolve</div>
+        </div>
+        <div class="cat-hint">Selecione um ou mais serviços que você precisa:</div>
+        <div class="cat-grid" id="catGrid">
+          <button class="cat-btn" data-q="Preciso trocar torneira" onclick="toggleCat(this)"><span class="cico">💧</span><span class="clbl">Hidráulica</span></button>
+          <button class="cat-btn" data-q="Entupimento" onclick="toggleCat(this)"><span class="cico">🔧</span><span class="clbl">Desentupimento</span></button>
+          <button class="cat-btn" data-q="Problema elétrico" onclick="toggleCat(this)"><span class="cico">⚡</span><span class="clbl">Elétrica</span></button>
+          <button class="cat-btn" data-q="Pintura de paredes" onclick="toggleCat(this)"><span class="cico">🖌️</span><span class="clbl">Pintura</span></button>
+          <button class="cat-btn" data-q="Instalar piso" onclick="toggleCat(this)"><span class="cico">🏠</span><span class="clbl">Pisos</span></button>
+          <button class="cat-btn" data-q="Divisória drywall" onclick="toggleCat(this)"><span class="cico">🧱</span><span class="clbl">Drywall / Gesso</span></button>
+          <button class="cat-btn" data-q="Reforma de banheiro" onclick="toggleCat(this)"><span class="cico">🛁</span><span class="clbl">Reformas</span></button>
+          <button class="cat-btn" data-q="Aplicar massa corrida" onclick="toggleCat(this)"><span class="cico">⬜</span><span class="clbl">Massa / Reboco</span></button>
+          <button class="cat-btn" data-q="Impermeabilizar" onclick="toggleCat(this)"><span class="cico">🏗️</span><span class="clbl">Impermeabiliz.</span></button>
+          <button class="cat-btn" data-q="Instalar ar condicionado" onclick="toggleCat(this)"><span class="cico">❄️</span><span class="clbl">Ar-condicionado</span></button>
+          <button class="cat-btn" data-q="Energia solar" onclick="toggleCat(this)"><span class="cico">☀️</span><span class="clbl">Energia Solar</span></button>
+          <button class="cat-btn" data-q="Instalar lustre" onclick="toggleCat(this)"><span class="cico">💡</span><span class="clbl">Iluminação</span></button>
+        </div>
+        <button class="cat-confirm" id="catConfirm" onclick="confirmCats()">Ver preços dos serviços selecionados →</button>
+      </div>
+    </div>
+
+    <div class="inp-area">
+      <div class="inp-row">
+        <textarea id="uinput" placeholder="Descreva o que você precisa…" rows="1"
+          onkeydown="hkey(event)" oninput="ares(this)"
+          autocomplete="off" autocorrect="off" spellcheck="false"
+          style="touch-action:manipulation"></textarea>
+        <button class="sbtn" id="sendBtn" onclick="sendMsg()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+      <p class="inp-hint">Preço fixo pelo escopo declarado. Adicionais somente com sua aprovação prévia.</p>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="cpanel" id="cpanel">
+    <div class="cinner">
+      <div class="c-hdr">
+        <h3>📐 Calculadora de Metragem</h3>
+        <p>Para serviços cobrados por m² — gera preço fixo</p>
+      </div>
+      <div class="ctabs">
+        <button class="ctab active" onclick="cTab('pintura',this)">🖌️ Pintura</button>
+        <button class="ctab" onclick="cTab('piso',this)">🏠 Piso</button>
+        <button class="ctab" onclick="cTab('drywall',this)">🧱 Drywall</button>
+        <button class="ctab" onclick="cTab('gesso',this)">⬜ Gesso</button>
+      </div>
+      <div class="ccont">
+
+        <div class="csec active" id="calc-pintura">
+          <div class="ibox">Calcule a área exata para gerar o preço fixo. <strong>Descontos de escala</strong> aplicados automaticamente: −5% acima de 30m², −10% acima de 60m², −15% acima de 100m², −20% acima de 150m², −25% acima de 250m².</div>
+          <div class="fg"><label class="fl">Tipo</label>
+            <select class="fs" id="pTipo">
+              <option value="22">Repintura (R$22/m²)</option>
+              <option value="36">Pintura completa + massa (R$36/m²)</option>
+              <option value="26">Teto liso (R$26/m²)</option>
+              <option value="42">Teto com reparos (R$42/m²)</option>
+              <option value="35">Portão/grade (R$35/m²)</option>
+            </select></div>
+          <div class="fg"><label class="fl">Paredes — Comprimento × Altura (m)</label>
+            <div class="rlist" id="pintList"></div>
+            <button class="cadd" onclick="addRow('pint')">+ Adicionar parede</button></div>
+          <div class="fg"><div class="frow">
+            <div style="flex:1"><label class="fl">Janelas</label><input class="fi" type="number" id="pJan" value="0" min="0"><p class="fh">~1,5m² cada</p></div>
+            <div style="flex:1"><label class="fl">Portas</label><input class="fi" type="number" id="pPor" value="0" min="0"><p class="fh">~2,1m² cada</p></div>
+          </div></div>
+          <div class="fg"><label class="fl">Demãos</label>
+            <select class="fs" id="pDem"><option value="1">1 demão</option><option value="2" selected>2 demãos</option><option value="3">3 demãos</option></select></div>
+          <button class="cbtn" onclick="cPintura()">Calcular preço</button>
+          <div id="pintRes"></div>
+        </div>
+
+        <div class="csec" id="calc-piso">
+          <div class="ibox">Calcule a área total para gerar o preço fixo de mão de obra.</div>
+          <div class="fg"><label class="fl">Tipo de piso</label>
+            <select class="fs" id="pisoTipo">
+              <option value="75">Cerâmica 33×33 (R$75/m²)</option>
+              <option value="102">Porcelanato 60×60 (R$102/m²)</option>
+              <option value="132">Porcelanato 90×90+ (R$132/m²)</option>
+              <option value="51">Laminado click (R$51/m²)</option>
+              <option value="65">Vinílico colado (R$65/m²)</option>
+              <option value="82">SPC rígido (R$82/m²)</option>
+              <option value="27">Rejuntamento (R$27/m²)</option>
+            </select></div>
+          <div class="fg"><label class="fl">Ambientes — Comprimento × Largura (m)</label>
+            <div class="rlist" id="pisoList"></div>
+            <button class="cadd" onclick="addRow('piso')">+ Adicionar ambiente</button></div>
+          <div class="fg"><label class="fl">Descontar (m²)</label>
+            <input class="fi" type="number" id="pisoDesc" value="0" min="0"><p class="fh">Móveis fixos, pilares...</p></div>
+          <div class="fg"><label class="fl">Quebra</label>
+            <select class="fs" id="pisoQbr">
+              <option value="0.05">5% — regular</option><option value="0.10" selected>10% — padrão</option>
+              <option value="0.15">15% — recortes</option><option value="0.20">20% — irregular</option>
+            </select></div>
+          <button class="cbtn" onclick="cPiso()">Calcular preço</button>
+          <div id="pisoRes"></div>
+        </div>
+
+        <div class="csec" id="calc-drywall">
+          <div class="ibox">Calcule m² ou ml para gerar o preço fixo de mão de obra.</div>
+          <div class="fg"><label class="fl">Tipo</label>
+            <select class="fs" id="dTipo" onchange="dryF()">
+              <option value="87">Divisória simples (R$87/m²)</option>
+              <option value="125">Divisória com porta (R$125/m²)</option>
+              <option value="152">Divisória acústica (R$152/m²)</option>
+              <option value="75">Forro plano (R$75/m²)</option>
+              <option value="102">Forro com spots (R$102/m²)</option>
+              <option value="75s">Sanca aberta (R$75/ml)</option>
+              <option value="105s">Sanca fechada (R$105/ml)</option>
+              <option value="130s">Sanca invertida (R$130/ml)</option>
+            </select></div>
+          <div class="fg"><label class="fl" id="dCL">Comprimento (m)</label>
+            <input class="fi" type="number" id="dComp" step="0.1" min="0" placeholder="ex: 6.5"></div>
+          <div class="fg" id="dAG"><label class="fl" id="dAL">Altura (m)</label>
+            <input class="fi" type="number" id="dAlt" step="0.1" min="0" placeholder="ex: 2.8"></div>
+          <div class="fg" id="dPG"><label class="fl">Nº de portas</label>
+            <input class="fi" type="number" id="dPort" value="0" min="0"><p class="fh">Desconta ~1,68m² cada</p></div>
+          <button class="cbtn" onclick="cDrywall()">Calcular preço</button>
+          <div id="dryRes"></div>
+        </div>
+
+        <div class="csec" id="calc-gesso">
+          <div class="ibox">Calcule a área para massa corrida ou gesso liso.</div>
+          <div class="fg"><label class="fl">Tipo</label>
+            <select class="fs" id="gTipo">
+              <option value="27">Massa corrida geral (R$27/m²)</option>
+              <option value="17">Massa pontual (R$17/m²)</option>
+              <option value="45">Gesso liso parede (R$45/m²)</option>
+              <option value="55">Gesso liso teto (R$55/m²)</option>
+            </select></div>
+          <div class="fg"><label class="fl">Paredes — Comprimento × Altura (m)</label>
+            <div class="rlist" id="gessoList"></div>
+            <button class="cadd" onclick="addRow('gesso')">+ Adicionar parede</button></div>
+          <div class="fg"><label class="fl">Área de teto (m²)</label>
+            <input class="fi" type="number" id="gTeto" value="0" step="0.5" min="0"></div>
+          <div class="fg"><div class="frow">
+            <div style="flex:1"><label class="fl">Janelas</label><input class="fi" type="number" id="gJan" value="0" min="0"></div>
+            <div style="flex:1"><label class="fl">Portas</label><input class="fi" type="number" id="gPor" value="0" min="0"></div>
+          </div></div>
+          <button class="cbtn" onclick="cGesso()">Calcular preço</button>
+          <div id="gessoRes"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+// ESTADO GLOBAL
+// ──────────────────────────────────────────────
+let rMult = 1.0, rCity = 'Águas Claras/DF';
+let factors = { urg:false, wkd:false, not:false, acc:false };
+let calcOpen = false;
+
+// Máquina de estados da conversa
+const ST = {
+  step: 'idle',       // idle | choose_variant | booked
+  svcId: null,
+  pendingVariants: []
+};
+
+// ══════════════════════════════════════════════════════
+// CARRINHO — UMA OS POR SESSÃO
+// Todos os serviços vão para a mesma ordem, mesmo profissional
+// (ou equipe). A plataforma filtra profissionais multidisciplinares.
+// ══════════════════════════════════════════════════════
+const CART = {
+  services: [],   // { svcNome, varLabel, price, cat }
+  sessionOid: null,
+  get total() { return this.services.reduce((s,i) => s + i.price, 0); },
+  get count() { return this.services.length; },
+  ensureOid() {
+    if (!this.sessionOid) this.sessionOid = '#MO-' + orderNum++;
+    return this.sessionOid;
+  },
+  reset() { this.services = []; this.sessionOid = null; }
+};
+
+function cartAdd(svc) {
+  CART.services.push(svc);
+  CART.ensureOid();
+  updateCartBar();
+}
+
+function updateCartBar() {
+  const n = CART.count;
+  if (n === 0) {
+    document.getElementById('cartBar').classList.remove('show');
+    const chatWrap = document.getElementById('chatWrap');
+    if (chatWrap) chatWrap.style.paddingBottom = '';
+    return;
+  }
+  document.getElementById('cartBar').classList.add('show');
+  document.getElementById('cartCount').textContent = n + ' serviço' + (n > 1 ? 's' : '') + ' confirmado' + (n > 1 ? 's' : '');
+  document.getElementById('cartPreview').textContent = CART.services.map(i => i.svcNome).join(' · ');
+  // Empurrar chat para cima da cart-bar fixa no mobile
+  const chatWrap = document.getElementById('chatWrap');
+  if (chatWrap) chatWrap.style.paddingBottom = '64px';
+}
+
+function showCheckout() {
+  if (CART.count === 0) return;
+  const oid = CART.ensureOid();
+  const total = CART.total;
+  const uid = 'chk-' + Date.now();
+
+  const cats = [...new Set(CART.services.map(s => s.cat).filter(Boolean))];
+  const profNote = cats.length > 1
+    ? `<div style="background:var(--blueB);border:1px solid var(--blueBdr);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--blue);margin-bottom:0">
+        🔗 <strong>Profissional multidisciplinar</strong> — a plataforma despachará um profissional habilitado em ${cats.join(', ')} (ou equipe). Uma única visita.
+      </div>`
+    : '';
+
+  // Desconto de conjunto
+  const n_svcs = CART.services.length;
+  const bundleDiscount = n_svcs >= 4 ? 0.10 : n_svcs >= 2 ? 0.05 : 0;
+  const totalBruto = CART.total;
+  const desconto = Math.round(totalBruto * bundleDiscount);
+  const totalFinal = totalBruto - desconto;
+
+  const itemsHTML = CART.services.map((it, i) => `
+    <div class="ci-row">
+      <div class="ci-info" style="flex:1">
+        <div class="ci-name">${i+1}. ${it.svcNome}</div>
+        <div class="ci-scope">${it.varLabel}</div>
+      </div>
+    </div>`).join('');
+
+  const html = `
+<div class="checkout-card" id="${uid}">
+  <div class="checkout-hdr">
+    <div class="checkout-hdr-icon">🧾</div>
+    <div class="checkout-hdr-text">
+      <h3>Resumo do pedido</h3>
+      <p>${CART.count} serviço${CART.count > 1 ? 's' : ''} · Ordem ${oid}</p>
+    </div>
+  </div>
+  ${profNote ? '<div style="padding:10px 14px 0">' + profNote + '</div>' : ''}
+  <div class="checkout-items">${itemsHTML}</div>
+  <div class="checkout-total">
+    <div class="checkout-total-lbl">TOTAL A PAGAR</div>
+    <div class="checkout-total-val">R$ ${totalFinal.toLocaleString('pt-BR')}</div>
+  </div>
+  ${desconto > 0 ? `<div style="display:flex;justify-content:space-between;padding:8px 14px;font-size:12px;color:var(--tx2);background:var(--surf);border-top:1px solid var(--bdr)"><span>Subtotal</span><span>R$ ${totalBruto.toLocaleString('pt-BR')}</span></div><div style="display:flex;justify-content:space-between;padding:4px 14px 8px;font-size:12px;color:var(--ok);font-weight:600;background:var(--surf)"><span>🎁 Desconto conjunto (${Math.round(bundleDiscount*100)}%)</span><span>-R$ ${desconto.toLocaleString('pt-BR')}</span></div>` : ''}
+  <button class="checkout-pay-btn" id="paybtn-${uid}" onclick="finalizarPedido('${uid}','${oid}',${totalFinal})">
+    🔒 Confirmar e pagar R$ ${totalFinal.toLocaleString('pt-BR')}
+  </button>
+  <div class="checkout-note">
+    Uma visita, um pagamento. Adicionais somente com sua aprovação prévia.
+  </div>
+</div>`;
+
+  addMsg('minerva', html, true);
+  setTimeout(() => { const m = document.getElementById('msgs'); if (m) m.scrollTop = m.scrollHeight; }, 100);
+}
+
+function finalizarPedido(uid, oid, total) {
+  const btn = document.getElementById('paybtn-' + uid);
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  btn.innerHTML = '✅ Pedido confirmado!';
+
+  const n = CART.count;
+  const svcs = CART.services.map(s => s.svcNome).join(', ');
+  CART.reset();
+  updateCartBar();
+
+  addMsg('minerva', `
+<div class="conf-card">
+  <div class="conf-icon">🎉</div>
+  <div class="conf-title">Pedido finalizado com sucesso!</div>
+  <div class="conf-sub">Estamos localizando o profissional mais próximo habilitado para todos os serviços. Você será notificado assim que ele aceitar.</div>
+  <div class="conf-row"><span>Ordem</span><strong>${oid}</strong></div>
+  <div class="conf-row"><span>Serviços</span><strong>${n}</strong></div>
+  <div class="conf-row"><span>Total pago</span><strong>R$ ${Number(total).toLocaleString('pt-BR')}</strong></div>
+</div>
+<p style="margin-top:9px;font-size:12px;color:var(--tx2)">💡 O profissional pode solicitar adicionais via app — somente com sua aprovação prévia.</p>
+<div class="sugs" style="margin-top:8px">
+  <span class="sug" onclick="sq('Preciso de outro servico')">➕ Novo pedido</span>
+  <span class="sug" onclick="simulateAddl('${oid}')">🔧 Simular adicional</span>
+</div>`, true);
+}
+
+// Fila de múltiplos serviços
+const SQ = {
+  queue: [],   // svcIds pendentes
+  done: [],    // svcIds concluídos
+  active: false
+};
+
+// Armazenamento de ordens
+let orders = [];
+let orderNum = 1001;
+
+// Registros de variante ativa por card (para bookService)
+const activeCards = {};   // vId → { svcNome, varLabel, price }
+
+function fMult() {
+  let m = 1;
+  if (factors.urg) m *= 1.30;
+  if (factors.wkd) m *= 1.25;
+  if (factors.not) m *= 1.40;
+  if (factors.acc) m *= 1.15;
+  return m;
+}
+function applyAll(base) { return Math.round(base * rMult * fMult()); }
+
+// Desconto de escala por volume (economia operacional em obras maiores)
+// Referências: ABRAPP 2025, GPM Pinturas, mercado civil 2026
+// Faixas calibradas para serviços de área (pintura, piso, drywall, gesso)
+const SCALE_TIERS = [
+  { maxM2:  30, factor: 1.00, label: null },
+  { maxM2:  60, factor: 0.95, label: '-5% escala' },
+  { maxM2: 100, factor: 0.90, label: '-10% escala' },
+  { maxM2: 150, factor: 0.85, label: '-15% escala' },
+  { maxM2: 250, factor: 0.80, label: '-20% escala' },
+  { maxM2: Infinity, factor: 0.75, label: '-25% escala' },
+];
+function scaleFactor(m2) {
+  const t = SCALE_TIERS.find(t => m2 <= t.maxM2);
+  return t ? t.factor : 0.75;
+}
+function scaleLabel(m2) {
+  const t = SCALE_TIERS.find(t => m2 <= t.maxM2);
+  return t ? t.label : '-25% escala';
+}
+function applyAllScaled(basePerM2, area) {
+  return Math.round(basePerM2 * area * rMult * fMult() * scaleFactor(area));
+}
+function tgF(k) {
+  factors[k] = !factors[k];
+  document.getElementById('f' + k).classList.toggle('on', factors[k]);
+}
+
+// ──────────────────────────────────────────────
+// BASE DE CONHECIMENTO — SERVIÇOS
+// ──────────────────────────────────────────────
+const SVC = {
+  'troca-torneira': {
+    nome: 'Troca de torneira', cat: 'Hidráulica', icon: '💧',
+    qs: ['Qual o tipo? Simples (bica) ou misturador/gourmet?'],
+    variants: [
+      { id: 'torn-s', label: 'Torneira simples', price: 120,
+        inc: ['Substituição da torneira existente','Vedação e teste de vazamento','Até 60 min'],
+        exc: ['Torneira nova (fornecida pelo cliente)','Sifão, se danificado'],
+        addl: ['Cano oxidado → troca do trecho','Quebra de azulejo para acesso'] },
+      { id: 'torn-g', label: 'Misturador / torneira gourmet', price: 175,
+        inc: ['Instalação de misturador ou torneira filtro','Conexões e adaptadores padrão','Até 90 min'],
+        exc: ['Misturador/torneira (fornecido pelo cliente)'],
+        addl: ['Adaptação especial de cano incompatível','Quebra de azulejo para mangueira'] }
+    ]
+  },
+  'vazamento-cano': {
+    nome: 'Reparo de vazamento', cat: 'Hidráulica', icon: '💧',
+    qs: ['O cano é aparente (exposto) ou embutido na parede?'],
+    variants: [
+      { id: 'vaz-pvc', label: 'Cano PVC aparente — reparo pontual', price: 210,
+        inc: ['Reparo de trecho até 50cm','Materiais de vedação PVC','Teste de pressão','Até 2h'],
+        exc: ['Trecho PVC acima de 50cm → gera adicional'],
+        addl: ['Cano oxidado → troca de trecho maior','Múltiplos pontos de vazamento'] },
+      { id: 'vaz-ferro', label: 'Cano ferro/cobre aparente', price: 350,
+        inc: ['Diagnóstico e reparo no ponto','Materiais para ferro ou cobre','Até 2,5h'],
+        exc: ['Substituição de trecho acima de 30cm'],
+        addl: ['Corrosão extensa → substituição de trecho','Cano embutido identificado'] },
+      { id: 'vaz-emb', label: 'Cano embutido (necessita abrir parede)', price: 580,
+        inc: ['Localização do vazamento','Abertura e fechamento de até 1 ponto','Reparo no cano','Arremate básico'],
+        exc: ['Reposição de azulejo/porcelanato','Pintura da área aberta'],
+        addl: ['Mais de 1 ponto de abertura necessário','Cano de ferro embutido'] }
+    ]
+  },
+  'valvula-descarga': {
+    nome: 'Troca de válvula de descarga', cat: 'Hidráulica', icon: '💧',
+    qs: ['É caixa acoplada (junto ao vaso) ou caixa de coluna (na parede)?'],
+    variants: [
+      { id: 'desc-ac', label: 'Caixa acoplada', price: 165,
+        inc: ['Substituição completa do mecanismo','Regulagem do nível','Teste funcional'],
+        exc: ['Peça nova (fornecida pelo cliente)'],
+        addl: ['Vaso trincado → troca','Cano de entrada com vazamento separado'] },
+      { id: 'desc-col', label: 'Caixa de coluna (parede)', price: 235,
+        inc: ['Substituição da válvula','Regulagem e teste','Até 90 min'],
+        exc: ['Válvula nova (fornecida pelo cliente)'],
+        addl: ['Abertura de parede para acesso','Cano de alimentação oxidado'] }
+    ]
+  },
+  'chuveiro': {
+    nome: 'Instalação de chuveiro', cat: 'Hidráulica', icon: '💧',
+    qs: ['É troca no mesmo ponto ou instalação em local novo?'],
+    variants: [
+      { id: 'chu-t', label: 'Troca no mesmo ponto', price: 145,
+        inc: ['Retirada do antigo','Instalação do novo (fornecido)','Verificação elétrica e hidráulica'],
+        exc: ['Chuveiro novo'],
+        addl: ['Fiação inadequada para potência → elétrico adicional'] },
+      { id: 'chu-n', label: 'Instalação em ponto novo', price: 310,
+        inc: ['Derivação hidráulica do ponto próximo','Instalação da base','Conexão e teste','Até 3h'],
+        exc: ['Chuveiro','Serviço elétrico (cobrado à parte)'],
+        addl: ['Embutir cano em parede','Instalação elétrica dedicada'] }
+    ]
+  },
+  'desentup-pia': {
+    nome: 'Desentupimento de pia/lavatório', cat: 'Desentupimento', icon: '🔧',
+    qs: ['O entupimento é no sifão/ralo ou mais fundo no cano?'],
+    variants: [
+      { id: 'dsp-r', label: 'Sifão ou ralo superficial', price: 130,
+        inc: ['Limpeza manual de sifão e ralo','Até 30 min'],
+        exc: [],
+        addl: ['Entupimento profundo → serpentina adicional','Mais de 1 ponto'] },
+      { id: 'dsp-c', label: 'Cano de queda ou entupimento profundo', price: 290,
+        inc: ['Desentupimento com serpentina mecânica','1 ponto tratado','Até 2h'],
+        exc: [],
+        addl: ['Pontos adicionais cobrados à parte'] }
+    ]
+  },
+  'desentup-geral': {
+    nome: 'Desentupimento', cat: 'Desentupimento', icon: '🔧',
+    qs: ['Qual ponto está entupido?'],
+    variants: [
+      { id: 'dg-pia',    label: 'Pia / lavatório / ralo',  _redirect: 'desentup-pia' },
+      { id: 'dg-vaso',   label: 'Vaso sanitário',           _redirect: 'desentup-vaso' },
+      { id: 'dg-coluna', label: 'Coluna / esgoto externo',  _redirect: 'desentup-coluna' },
+      { id: 'dg-gordura',label: 'Caixa de gordura',         _redirect: 'desentup-gordura' },
+    ]
+  },
+  'desentup-gordura': {
+    nome: 'Limpeza de caixa de gordura', cat: 'Desentupimento', icon: '🔧',
+    qs: ['A caixa é residencial (doméstica) ou comercial?'],
+    variants: [
+      { id: 'dgord-res', label: 'Residencial (até 40L)', price: 270,
+        inc: ['Abertura, limpeza e descarte do material','Lavagem da caixa','Até 1,5h'],
+        exc: [],
+        addl: ['Volume acima do esperado — adicional por excesso'] },
+      { id: 'dgord-com', label: 'Comercial (acima de 40L ou múltiplas)', price: 480,
+        inc: ['Limpeza completa de até 2 caixas','Descarte correto','Até 3h'],
+        exc: [],
+        addl: ['Mais de 2 caixas — adicional por caixa'] }
+    ]
+  },
+  'desentup-vaso': {
+    nome: 'Desentupimento de vaso', cat: 'Desentupimento', icon: '🔧',
+    qs: ['Caiu algum objeto sólido no vaso?'],
+    variants: [
+      { id: 'dsv-m', label: 'Desentupimento manual (papel/resíduos)', price: 165,
+        inc: ['Ventosa e desentupidor manual','Até 1h'],
+        exc: [],
+        addl: ['Objeto sólido no sifão → desmontagem'] },
+      { id: 'dsv-s', label: 'Com serpentina (entupimento persistente)', price: 295,
+        inc: ['Serpentina mecânica','Limpeza do ramal','Até 2h'],
+        exc: [],
+        addl: ['Remoção do vaso para acesso ao objeto'] }
+    ]
+  },
+  'desentup-coluna': {
+    nome: 'Desentupimento de coluna/esgoto externo', cat: 'Desentupimento', icon: '🔧',
+    qs: ['Há caixa de inspeção acessível?'],
+    variants: [
+      { id: 'dsc-i', label: 'Com caixa de inspeção acessível', price: 450,
+        inc: ['Desentupimento via caixa','Cabo mecânico/hidrojato','Até 3h'],
+        exc: [],
+        addl: ['Câmera de inspeção para localizar obstrução'] },
+      { id: 'dsc-s', label: 'Sem caixa ou difícil acesso', price: 780,
+        inc: ['Localização da obstrução','Acesso de emergência','Desentupimento e reteste','Até 5h'],
+        exc: ['Reposição de calçada ou revestimento aberto'],
+        addl: ['Múltiplos pontos de obstrução'] }
+    ]
+  },
+  'tomada-interruptor': {
+    nome: 'Troca de tomada/interruptor', cat: 'Elétrica', icon: '⚡',
+    qs: ['É troca no ponto existente ou instalação de ponto novo?'],
+    variants: [
+      { id: 'tom-t', label: 'Troca simples (ponto já existe)', price: 85,
+        inc: ['Retirada da peça antiga','Instalação da nova (fornecida)','Teste','Até 30 min'],
+        exc: ['Tomada/interruptor (fornecido pelo cliente)'],
+        addl: ['Fiação sem terra → adequação','Caixa elétrica danificada'] },
+      { id: 'tom-n', label: 'Instalação de ponto novo (com fiação)', price: 225,
+        inc: ['Passagem de fiação até 5m','Instalação de caixa e peça','Teste','Até 2h'],
+        exc: ['Tomada/interruptor'],
+        addl: ['Fiação acima de 5m → R$25/metro adicional','Quebra de alvenaria'] }
+    ]
+  },
+  'lustre-plafon': {
+    nome: 'Instalação de lustre/plafon', cat: 'Elétrica', icon: '⚡',
+    qs: ['O lustre é leve (até 5kg) ou pesado? O teto é de gesso ou laje?'],
+    variants: [
+      { id: 'lus-l', label: 'Plafon/lustre leve até 5kg (ponto existe)', price: 115,
+        inc: ['Instalação na caixa existente','Conexão e fixação','Até 45 min'],
+        exc: ['Luminária (fornecida pelo cliente)'],
+        addl: ['Sem ponto elétrico → instalação cobrada à parte','Lustre pesado acima de 5kg'] },
+      { id: 'lus-p', label: 'Lustre pesado acima de 5kg', price: 195,
+        inc: ['Fixação estrutural na laje ou viga','Instalação e conexão elétrica','Até 1,5h'],
+        exc: ['Luminária'],
+        addl: ['Sem ponto elétrico no local','Reforço estrutural em forro de gesso'] }
+    ]
+  },
+  'disjuntor': {
+    nome: 'Troca de disjuntor', cat: 'Elétrica', icon: '⚡',
+    qs: ['É disjuntor simples, DR (diferencial residual) ou DPS (protetor de surto)?'],
+    variants: [
+      { id: 'disj-s', label: 'Disjuntor simples (mesmo tamanho)', price: 145,
+        inc: ['Retirada do antigo','Instalação do novo','Teste e identificação no quadro','Até 45 min'],
+        exc: ['Disjuntor (fornecido pelo cliente ou cotado à parte)'],
+        addl: ['Quadro subdimensionado → adequação'] },
+      { id: 'disj-dr', label: 'DR / DPS / disjuntor especial', price: 235,
+        inc: ['Instalação de DR ou DPS','Ajuste de circuitos','Teste diferencial','Até 1h'],
+        exc: ['Peça DR/DPS'],
+        addl: ['Fiação sem aterramento → adequação necessária'] }
+    ]
+  },
+  'ar-condicionado': {
+    nome: 'Instalação elétrica de ar-condicionado', cat: 'Elétrica', icon: '⚡',
+    qs: ['Qual a potência do aparelho? (até 12.000 BTU ou maior?)','Já existe o ponto elétrico 220V?'],
+    variants: [
+      { id: 'ac-12', label: 'Split até 12.000 BTU — ponto 220V existente', price: 320,
+        inc: ['Instalação interna e externa','Interligação até 5m','Carga de gás se necessário','Teste funcional'],
+        exc: ['Aparelho de AC','Suporte externo'],
+        addl: ['Distância acima de 5m → R$40/metro adicional','Sem ponto 220V → elétrico cobrado à parte'] },
+      { id: 'ac-g', label: 'Split acima de 12.000 BTU', price: 480,
+        inc: ['Instalação de alta capacidade','Interligação até 8m','Carga de gás e teste'],
+        exc: ['Aparelho e suporte'],
+        addl: ['Distância acima de 8m','Instalação elétrica do circuito dedicado'] }
+    ]
+  },
+  'pintura-parede': {
+    nome: 'Pintura de parede interna', cat: 'Pintura', icon: '🖌️',
+    qs: ['Qual a área aproximada em m²? É repintura ou pintura completa (com massa)?'],
+    variants: [
+      { id: 'pint-r', label: 'Repintura (sem massa geral)', ppm2: 22,
+        inc: ['Selador','2 demãos de tinta','Proteção de piso e rodapé'],
+        exc: ['Tinta (fornecida pelo cliente)','Reparos acima de 5 furos'],
+        addl: ['Acima de 5 furos → R$15/unidade','Mofo/manchas profundas → produto fungicida adicional'] },
+      { id: 'pint-c', label: 'Pintura completa com massa corrida', ppm2: 36,
+        inc: ['Massa corrida (2 demãos)','Selador','Tinta (2 demãos)','Proteção de piso'],
+        exc: ['Tinta (fornecida pelo cliente)'],
+        addl: ['Fissuras estruturais → tratamento específico','Remoção de textura antiga'] }
+    ]
+  },
+  'pintura-teto': {
+    nome: 'Pintura de teto', cat: 'Pintura', icon: '🖌️',
+    qs: ['Qual a área do teto (m²)? O teto tem manchas de umidade?'],
+    variants: [
+      { id: 'teto-l', label: 'Teto liso — repintura', ppm2: 26,
+        inc: ['Selador','2 demãos de tinta branca','Proteção de piso'],
+        exc: ['Tinta (fornecida pelo cliente)'],
+        addl: ['Manchas de infiltração persistente → tratamento adicional'] },
+      { id: 'teto-r', label: 'Teto com reparos (manchas/trincas)', ppm2: 42,
+        inc: ['Lixamento','Massa de reparo','Selador','2 demãos de tinta'],
+        exc: ['Tinta'],
+        addl: ['Infiltração ativa → impermeabilização cobrada à parte'] }
+    ]
+  },
+  'piso-ceramica': {
+    nome: 'Assentamento de cerâmica/porcelanato', cat: 'Piso', icon: '🏠',
+    qs: ['Qual o tipo de piso? (cerâmica 33×33, porcelanato 60×60 ou maior?)','O contrapiso está nivelado?'],
+    variants: [
+      { id: 'pcer33', label: 'Cerâmica 33×33', ppm2: 75,
+        inc: ['Assentamento com argamassa','Rejuntamento','Limpeza final'],
+        exc: ['Cerâmica e argamassa','Remoção de piso existente'],
+        addl: ['Contrapiso irregular → nivelamento R$18/m²','Remoção de piso antigo → R$30/m²'] },
+      { id: 'ppor60', label: 'Porcelanato 60×60', ppm2: 102,
+        inc: ['Assentamento com argamassa','Rejuntamento','Limpeza'],
+        exc: ['Material'],
+        addl: ['Contrapiso não nivelado','Remoção de piso antigo'] },
+      { id: 'ppor90', label: 'Porcelanato 90×90 ou maior', ppm2: 132,
+        inc: ['Assentamento especializado','Argamassa branca','Rejuntamento epóxi'],
+        exc: ['Material'],
+        addl: ['Remoção de piso anterior','Nivelamento extra'] }
+    ]
+  },
+  'piso-laminado': {
+    nome: 'Piso laminado/vinílico/SPC', cat: 'Piso', icon: '🏠',
+    qs: ['É laminado, vinílico colado ou SPC rígido?','O piso base está nivelado?'],
+    variants: [
+      { id: 'plam', label: 'Laminado click', ppm2: 51,
+        inc: ['Instalação com manta básica','Rodapé até 20ml','Limpeza'],
+        exc: ['Piso e manta'],
+        addl: ['Base irregular → nivelamento','Rodapé acima de 20ml → R$12/ml'] },
+      { id: 'pvin', label: 'Vinílico colado', ppm2: 65,
+        inc: ['Colagem com adesivo','Acabamento','Limpeza'],
+        exc: ['Piso vinílico e adesivo'],
+        addl: ['Superfície porosa → massa de nivelamento'] },
+      { id: 'pspc', label: 'SPC rígido click', ppm2: 82,
+        inc: ['Instalação click','Rodapé até 20ml','Limpeza'],
+        exc: ['Material SPC'],
+        addl: ['Rodapé acima de 20ml → R$12/ml'] }
+    ]
+  },
+  'divisoria-drywall': {
+    nome: 'Divisória de drywall', cat: 'Drywall', icon: '🧱',
+    qs: ['Qual o comprimento e altura? Vai ter porta? Precisa de isolamento acústico?'],
+    variants: [
+      { id: 'div-s', label: 'Divisória simples (sem porta)', ppm2: 87,
+        inc: ['Estrutura metálica','Placas drywall','Massa e fita','Lixado para pintura'],
+        exc: ['Tinta/pintura'],
+        addl: ['Passagem de fiação → R$40/ponto','Porta → R$180 adicional (excluindo a porta)'] },
+      { id: 'div-p', label: 'Divisória com abertura para porta', ppm2: 125,
+        inc: ['Estrutura com vão para porta','Montagem do marco','Arremate'],
+        exc: ['Porta e ferragens','Pintura'],
+        addl: ['Isolamento acústico → upgrade de variante'] },
+      { id: 'div-a', label: 'Divisória acústica', ppm2: 152,
+        inc: ['Dupla placa em 1 face','Lã de vidro no interior','Vedação perimetral'],
+        exc: ['Pintura'],
+        addl: ['Porta acústica: cotação específica'] }
+    ]
+  },
+  'forro-drywall': {
+    nome: 'Forro de drywall', cat: 'Drywall', icon: '🧱',
+    qs: ['Qual a área do forro? Vai ter spots embutidos?'],
+    variants: [
+      { id: 'for-s', label: 'Forro plano sem spots', ppm2: 75,
+        inc: ['Estrutura de perfis','Placas drywall','Massa e lixamento','Pronto para pintura'],
+        exc: ['Tinta','Spots/luminárias'],
+        addl: ['Spots → R$55/ponto adicional','Isolamento térmico → adicional'] },
+      { id: 'for-sp', label: 'Forro com spots embutidos', ppm2: 102,
+        inc: ['Forro completo','Abertura e acabamento para até 4 spots/10m²','Conexão elétrica dos spots'],
+        exc: ['Spots','Tinta'],
+        addl: ['Spots além da proporção','Isolamento térmico'] }
+    ]
+  },
+  'sanca-drywall': {
+    nome: 'Sanca de drywall', cat: 'Drywall', icon: '🧱',
+    qs: ['Qual o comprimento total? Sanca aberta (LED aparente), fechada ou invertida?'],
+    variants: [
+      { id: 'san-a', label: 'Sanca aberta (recesso LED)', ppm2: 75, unit: 'ml',
+        inc: ['Estrutura metálica + placa','Acabamento para fita LED','Massa e lixamento'],
+        exc: ['Fita LED','Tinta'],
+        addl: ['Curvas/cantos complexos → adicional'] },
+      { id: 'san-f', label: 'Sanca fechada', ppm2: 105, unit: 'ml',
+        inc: ['Sanca fechada com recesso oculto','Estrutura dupla','Arremate'],
+        exc: ['LED','Tinta'],
+        addl: ['Curvas: +30% no trecho curvo'] },
+      { id: 'san-i', label: 'Sanca invertida', ppm2: 130, unit: 'ml',
+        inc: ['Estrutura invertida','Caixote e acabamento fino','Lixamento'],
+        exc: ['LED','Tinta'],
+        addl: [] }
+    ]
+  },
+  'reparo-drywall': {
+    nome: 'Reparo em drywall', cat: 'Drywall', icon: '🧱',
+    qs: ['Qual o tamanho do dano? (furos pequenos, médio 15-30cm ou grande acima de 30cm)'],
+    variants: [
+      { id: 'rep-p', label: 'Furos pequenos / parafusos (até 5)', price: 115,
+        inc: ['Tampagem, massa e lixamento','Pronto para pintura','Até 1h'],
+        exc: ['Tinta'],
+        addl: ['Acima de 5 furos → R$12/unidade'] },
+      { id: 'rep-m', label: 'Dano médio (15–30cm)', price: 185,
+        inc: ['Peça nova de drywall','Massa e fita','Lixamento fino','Até 2h'],
+        exc: ['Tinta'],
+        addl: [] },
+      { id: 'rep-g', label: 'Dano grande (acima de 30cm)', price: 260,
+        inc: ['Substituição de área grande','Reforço de estrutura','Massa e acabamento'],
+        exc: ['Tinta','Repintura da parede'],
+        addl: ['Pintura da parede completa → cotada à parte'] }
+    ]
+  },
+  'reforma-banheiro': {
+    nome: 'Reforma de banheiro', cat: 'Reformas', icon: '🛁',
+    qs: ['Qual o tamanho do banheiro (m²)? Reforma parcial (piso+pintura) ou completa (piso+louças)?'],
+    variants: [
+      { id: 'ban-pa', label: 'Reforma parcial — piso + pintura', ppm2: 360,
+        inc: ['Assentamento de piso','Pintura de paredes (2 demãos)','Rejuntamento'],
+        exc: ['Material (piso, tinta, rejunte)','Louças (vaso, pia, box)'],
+        addl: ['Troca de louças → cotada à parte','Impermeabilização → adicional'] },
+      { id: 'ban-co', label: 'Reforma completa (piso + parede + louças)', ppm2: 660,
+        inc: ['Piso + revestimento parede','Troca de vaso, lavatório e box padrão','Pintura teto','Impermeabilização de box'],
+        exc: ['Materiais (piso, revestimento, tinta, louças)'],
+        addl: ['Mudança de ponto hidráulico → adicional','Mudança de ponto elétrico → adicional'] }
+    ]
+  },
+  'impermeabilizacao': {
+    nome: 'Impermeabilização', cat: 'Reformas', icon: '🏗️',
+    qs: ['Onde será feita a impermeabilização? (laje de cobertura, box de banheiro, varanda?)'],
+    variants: [
+      { id: 'imp-l', label: 'Laje de cobertura / laje plana', ppm2: 58,
+        inc: ['Limpeza da superfície','Manta asfáltica ou líquida (2 demãos)','Teste de estanqueidade'],
+        exc: ['Pintura de acabamento sobre manta'],
+        addl: ['Vegetação ou camada a remover'] },
+      { id: 'imp-b', label: 'Box de banheiro / área molhada', ppm2: 95,
+        inc: ['Manta cristalizante em paredes e piso','Cura e teste'],
+        exc: ['Revestimento cerâmico após impermeabilização'],
+        addl: ['Infiltração ativa: tratamento prévio'] }
+    ]
+  }
+};
+
+// Mapa de intenções → serviceId
+const INTENTS = [
+  // Hidráulica
+  { keys: ['torneira','misturador','pia gotejando','registro da pia','trocar sifao','sifao','sifão','trocar sifões','trocar sifoes'], id: 'troca-torneira' },
+  { keys: ['descarga','valvula descarga','caixa acoplada','vaso sanitario vazando'], id: 'valvula-descarga' },
+  { keys: ['chuveiro','ducha','banho frio','sem agua quente'], id: 'chuveiro' },
+  { keys: ['caixa de gordura','caixa gordura','gordura entupida','limpeza caixa','gordura','limpar caixa','desentupir caixa'], id: 'desentup-gordura' },
+  { keys: ['esgoto externo','coluna de esgoto','todos os ralos','retorno de esgoto'], id: 'desentup-coluna' },
+  { keys: ['vaso entupido','privada entupida','banheiro entupido','desentupir vaso','desentupir o vaso','vaso sanitario entupido','sanitario entupido','vaso sanitario','e do vaso','meu vaso'], id: 'desentup-vaso' },
+  { keys: ['pia entupida','ralo entupido','ralo da pia','sifao da pia','pia nao escoa','lavatório entupido','lavatório nao escoa'], id: 'desentup-pia' },
+  { keys: ['entupimento','entupido','desentupir','desentupimento'], id: 'desentup-geral' },
+  { keys: ['vazamento','cano estourou','cano furado','cano quebrou','cano com problema'], id: 'vazamento-cano' },
+  // Elétrica
+  { keys: ['ar-condicionado','ar condicionado','split','instalar ar','instalar ac'], id: 'ar-condicionado' },
+  { keys: ['tomada','interruptor','switch'], id: 'tomada-interruptor' },
+  { keys: ['lustre','luminaria','plafon','spot no teto','pendente','instalar lampada','instalar luminaria'], id: 'lustre-plafon' },
+  { keys: ['disjuntor','quadro eletrico','desarmando'], id: 'disjuntor' },
+  { keys: ['eletrico','eletrica','sem luz','luz apagou','problema eletrico','curto'], id: 'disjuntor' },
+  // Drywall
+  { keys: ['sanca'], id: 'sanca-drywall' },
+  { keys: ['forro drywall','forro rebaixado','forro de gesso acartonado'], id: 'forro-drywall' },
+  { keys: ['reparo drywall','buraco na parede seca','furo parede gesso','conserto drywall'], id: 'reparo-drywall' },
+  { keys: ['drywall','divisoria','parede seca','gesso acartonado'], id: 'divisoria-drywall' },
+  // Pintura
+  { keys: ['pintar teto','teto manchado','pintura teto','pintura do teto'], id: 'pintura-teto' },
+  { keys: ['pintura','pintar','repintura','paredes'], id: 'pintura-parede' },
+  // Piso
+  { keys: ['porcelanato','ceramica','azulejo chao','revestimento piso'], id: 'piso-ceramica' },
+  { keys: ['laminado','vinilico','spc','piso flutuante','piso click'], id: 'piso-laminado' },
+  { keys: ['piso novo','instalar piso','colocar piso','trocar piso'], id: 'piso-ceramica' },
+  // Reformas
+  { keys: ['reforma banheiro','reformar banheiro'], id: 'reforma-banheiro' },
+  { keys: ['impermeab','impermeabilizar','laje infiltrando','box vazando'], id: 'impermeabilizacao' },
+];
+
+const ALERTS = [
+  { keys: ['cheiro de gas','vazamento de gas'], msg: '🚨 **EMERGÊNCIA DE GÁS**\n\n1. Feche o registro de gás\n2. Não ligue nem desligue nenhum equipamento\n3. Abra janelas e saia do imóvel\n4. Ligue para os **Bombeiros: 193**\n\nNão retorne sem autorização profissional.' },
+  { keys: ['choque eletrico','levei choque','fio pelado','tomada faiscando'], msg: '🚨 **RISCO ELÉTRICO**\n\n1. Desligue o **disjuntor geral**\n2. Não toque em fios ou equipamentos\n3. Chame eletricista licenciado antes de religar' },
+  { keys: ['rachadura estrutural','laje rachando'], msg: '🚨 **POSSÍVEL PROBLEMA ESTRUTURAL**\n\nNão faça nenhuma intervenção sem laudo de engenheiro civil. Se houver estalido ou deslocamento visível, saia do imóvel.' },
+];
+
+// ──────────────────────────────────────────────
+// NORMALIZADOR
+// ──────────────────────────────────────────────
+function N(t) {
+  return (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]/g, ' ');
+}
+
+function detectDim(text) {
+  const m2 = text.match(/(\d+[\.,]?\d*)\s*m[²2]/i);
+  if (m2) return parseFloat(m2[1].replace(',', '.'));
+  const xy = text.match(/(\d+[\.,]?\d*)\s*(?:x|×|por)\s*(\d+[\.,]?\d*)/i);
+  if (xy) return parseFloat(xy[1].replace(',', '.')) * parseFloat(xy[2].replace(',', '.'));
+  return null;
+}
+
+// ──────────────────────────────────────────────
+// CONSTRUÇÃO DO PRICE CARD
+// ──────────────────────────────────────────────
+function mkPriceCard(svc, variant, finalPrice, areaInfo) {
+  // Armazenar dados sem passar via onclick
+  activeCards[variant.id] = { svcNome: svc.nome, varLabel: variant.label, price: finalPrice, svcCat: svc.cat };
+
+  const scaleBadge = areaInfo && areaInfo.scale
+    ? ` <span style="background:#EBF7F1;color:#2D7A4F;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700">${areaInfo.scale}</span>`
+    : '';
+  const priceLbl = areaInfo
+    ? 'R$' + areaInfo.rate + '/' + (variant.unit || 'm²') + ' × ' + areaInfo.area + (variant.unit || 'm²')
+    : 'preço fixo pelo escopo';
+
+  const incHTML = variant.inc.map(i => `<div class="si">✅ <span>${i}</span></div>`).join('');
+  const excHTML = variant.exc.length
+    ? `<div style="margin-top:2px"><div class="scope-title" style="margin-top:8px">Não incluso (fornecido pelo cliente)</div><div class="scope-items">${variant.exc.map(e => `<div class="si">❌ <span>${e}</span></div>`).join('')}</div></div>`
+    : '';
+  const addlHTML = variant.addl.length
+    ? `<div class="pcard-warn"><strong>⚡ Pode gerar adicional — somente com sua aprovação:</strong><div class="addl-list">${variant.addl.map(a => `<div class="addl-i">→ <span>${a}</span></div>`).join('')}</div></div>`
+    : '';
+
+  // Nota de área para serviços por m² (sem preço)
+  const areaNote = areaInfo
+    ? `<div style="font-size:11px;color:var(--tx3);margin-top:4px">${areaInfo.area} ${variant.unit||'m²'} · taxa R$ ${areaInfo.rate}/${variant.unit||'m²'}${areaInfo.scale?' · '+areaInfo.scale:''}</div>`
+    : '';
+
+  return `
+<div class="pcard" id="pcard-${variant.id}">
+  <div class="pcard-hdr">
+    <div class="pcard-hdr-left">
+      <div class="pcard-svc">${svc.icon} ${svc.nome}</div>
+      <div class="pcard-var">${variant.label}${scaleBadge}</div>
+    </div>
+  </div>
+  <div class="pcard-body">
+    <div>
+      <div class="scope-title">O que está incluso</div>
+      <div class="scope-items">${incHTML}</div>
+      ${areaNote}
+    </div>
+    ${excHTML}
+    ${addlHTML}
+  </div>
+  <div class="pcard-ftr">
+    <button class="book-btn" id="bookbtn-${variant.id}" onclick="bookService('${variant.id}')">
+      ✅ Confirmar este serviço
+    </button>
+    <div class="wrong-link" onclick="wrongScope()">✏️ Minha situação é diferente</div>
+  </div>
+</div>`;
+}
+
+// Card de entrada de dimensões
+function mkAreaCard(svcId, variantId) {
+  const uid = svcId + '-' + variantId;
+  return `
+<div class="acc-card" id="acc-${uid}">
+  <div class="acc-title">📐 Informe as dimensões</div>
+  <div class="acc-fields">
+    <div class="acc-grp"><div class="acc-lbl">Comprimento (m)</div>
+      <input class="acc-inp" type="number" id="acC-${uid}" step="0.1" min="0" placeholder="ex: 4.0"></div>
+    <div class="acc-x">×</div>
+    <div class="acc-grp"><div class="acc-lbl">Largura/Altura (m)</div>
+      <input class="acc-inp" type="number" id="acL-${uid}" step="0.1" min="0" placeholder="ex: 3.0"></div>
+    <button class="acc-btn" onclick="calcFromCard('${svcId}','${variantId}')">Calcular</button>
+  </div>
+  <div class="acc-res" id="acR-${uid}"></div>
+</div>`;
+}
+
+function calcFromCard(svcId, variantId) {
+  const uid = svcId + '-' + variantId;
+  const c = parseFloat(document.getElementById('acC-' + uid).value) || 0;
+  const l = parseFloat(document.getElementById('acL-' + uid).value) || 0;
+  if (!c || !l) { alert('Informe as duas dimensões!'); return; }
+  const area = +(c * l).toFixed(2);
+
+  const svc = SVC[svcId];
+  const v = svc.variants.find(x => x.id === variantId);
+  if (!svc || !v) return;
+
+  const rate = Math.round(v.ppm2 * rMult * fMult() * scaleFactor(area));
+  const finalPrice = applyAllScaled(v.ppm2, area);
+  const unit = v.unit || 'm²';
+
+  const res = document.getElementById('acR-' + uid);
+  res.className = 'acc-res show';
+  res.innerHTML = `<strong>${area.toFixed(1)} ${unit}</strong> × R$${rate}/${unit} = <strong style="color:var(--acc)">R$${finalPrice.toLocaleString('pt-BR')}</strong>`;
+
+  setTimeout(() => {
+    const html = mkPriceCard(svc, v, finalPrice, { rate, area: area.toFixed(1) });
+    addMsg('minerva', `<p>Calculado! Preço fixo para <strong>${area.toFixed(1)} ${unit}</strong>:</p>${html}`, true);
+  }, 250);
+}
+
+// ──────────────────────────────────────────────
+// GRADE DE CATEGORIAS — multi-select
+// ──────────────────────────────────────────────
+const selectedCats = new Set();
+
+function toggleCat(btn) {
+  const q = btn.dataset.q;
+  if (selectedCats.has(q)) {
+    selectedCats.delete(q);
+    btn.classList.remove('sel');
+  } else {
+    selectedCats.add(q);
+    btn.classList.add('sel');
+  }
+  const confirm = document.getElementById('catConfirm');
+  if (confirm) {
+    confirm.classList.toggle('show', selectedCats.size > 0);
+    confirm.textContent = selectedCats.size === 1
+      ? 'Ver preço do serviço selecionado →'
+      : `Ver preços dos ${selectedCats.size} serviços selecionados →`;
+  }
+}
+
+function confirmCats() {
+  if (selectedCats.size === 0) return;
+  const queries = [...selectedCats];
+  selectedCats.clear();
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('sel'));
+  const confirm = document.getElementById('catConfirm');
+  if (confirm) confirm.classList.remove('show');
+  // Build combined message
+  const combined = queries.join(', ');
+  sq(combined);
+}
+
+// ──────────────────────────────────────────────
+// MULTI-INTENT: detecta TODOS os serviços mencionados
+// ──────────────────────────────────────────────
+function detectAllIntents(text) {
+  const t = N(text);
+  const found = [];
+  for (const intent of INTENTS) {
+    if (intent.keys.some(k => t.includes(N(k)))) {
+      if (!found.includes(intent.id)) found.push(intent.id);
+    }
+  }
+  return found;
+}
+
+// Nomes curtos para exibição no resumo
+const SVC_ICON = {
+  'troca-torneira':'💧 Torneira','vazamento-cano':'💧 Vazamento','valvula-descarga':'💧 Descarga',
+  'chuveiro':'💧 Chuveiro','desentup-pia':'🔧 Pia entupida','desentup-vaso':'🔧 Vaso entupido',
+  'desentup-coluna':'🔧 Coluna/esgoto','tomada-interruptor':'⚡ Tomada/interruptor',
+  'lustre-plafon':'⚡ Lustre/luminária','disjuntor':'⚡ Disjuntor',
+  'ar-condicionado':'⚡ Ar-condicionado','pintura-parede':'🖌️ Pintura parede',
+  'pintura-teto':'🖌️ Pintura teto','piso-ceramica':'🏠 Cerâmica/porcelanato',
+  'piso-laminado':'🏠 Piso laminado','divisoria-drywall':'🧱 Divisória drywall',
+  'forro-drywall':'🧱 Forro drywall','sanca-drywall':'🧱 Sanca drywall',
+  'reparo-drywall':'🧱 Reparo drywall','reforma-banheiro':'🛁 Reforma banheiro',
+  'impermeabilizacao':'🏗️ Impermeabilização',
+};
+
+function showMultiSummary(ids) {
+  const total = ids.length;
+  const listItems = ids.map((id, i) => {
+    const label = SVC_ICON[id] || (SVC[id] ? SVC[id].nome : id);
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--bdr);font-size:12.5px">
+      <span style="background:var(--acc);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">${i+1}</span>
+      <span>${label}</span>
+    </div>`;
+  }).join('');
+  return `<p>Identifiquei <strong>${total} serviços</strong> na sua solicitação! Vou apresentar o preço fixo de cada um em sequência:</p>
+<div style="background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:11px 13px;margin:8px 0">
+  ${listItems}
+</div>
+<p>Começando pelo primeiro. Você pode confirmar cada um ou pular para o próximo.</p>
+${processNextInQueue()}`;
+}
+
+function processNextInQueue() {
+  if (SQ.queue.length === 0) {
+    SQ.active = false;
+    const n = SQ.done.length;
+    return `<p>✅ <strong>Pronto!</strong> Processamos ${n} serviço${n>1?'s':''} no total. Deseja adicionar mais alguma coisa?</p>
+<div class="sugs"><span class="sug" onclick="sq('Adicionar mais servicos')">➕ Mais serviços</span></div>`;
+  }
+  const nextId = SQ.queue.shift();
+  SQ.done.push(nextId);
+  const remaining = SQ.queue.length;
+  const svc = SVC[nextId];
+  if (!svc) return processNextInQueue(); // pula IDs inválidos
+
+  ST.step = 'choose_variant';
+  ST.svcId = nextId;
+
+  const remainingBadge = remaining > 0
+    ? `<span style="font-size:11px;color:var(--tx3);margin-left:6px">(${remaining} restante${remaining>1?'s':''})</span>`
+    : '';
+
+  const btns = svc.variants.map(v =>
+    `<span class="sug" data-vid="${v.id}" data-sid="${nextId}" onclick="chooseVariant(this)">${v.label}</span>`
+  ).join('');
+
+  return `<p>${svc.icon} <strong>${svc.nome}</strong>${remainingBadge}</p>
+<p>${svc.qs[0]}</p>
+<div class="sugs">${btns}<span class="sug" style="background:var(--surf2);color:var(--tx3);border-color:var(--bdr)" onclick="skipService()">Pular →</span></div>`;
+}
+
+// ──────────────────────────────────────────────
+// FLUXO PRINCIPAL DE RESPOSTA
+// ──────────────────────────────────────────────
+function respond(text) {
+  const t = N(text);
+
+  // ── ALERTAS DE EMERGÊNCIA ──
+  for (const a of ALERTS) {
+    if (a.keys.some(k => t.includes(k))) {
+      ST.step = 'idle'; ST.svcId = null;
+      return fmtMd(a.msg);
+    }
+  }
+
+  // ── ESTADO: aguardando escolha de variante ──
+  if (ST.step === 'choose_variant' && ST.svcId) {
+    const svc = SVC[ST.svcId];
+    if (svc) {
+      // Verificar se cliente está expressando frustração ou listando outros serviços
+      const isFrustration = /conjunto|outros servi|mais servi|reduziu|ignorou|faltou|esqueceu|além|tambem|também|preciso de mais|varios|vários/.test(t);
+      const multiCheck = detectAllIntents(text);
+      if (isFrustration || multiCheck.length > 1) {
+        // Sair do estado de qualificação e processar como nova solicitação
+        ST.step = 'idle'; ST.svcId = null;
+        if (multiCheck.length > 1) {
+          SQ.queue = [...multiCheck]; SQ.done = []; SQ.active = true;
+          return showMultiSummary(multiCheck);
+        }
+        return `<p>Entendido! Me descreva novamente quais serviços você precisa e vou listar todos com os preços. 😊</p>`;
+      }
+      // Detectar correção: "na verdade é...", "quero falar de...", "agora quero..."
+      const isCorrection = /na verdade|na real|quero falar|agora quero|agora preciso|esqueci de|tambem preciso|também preciso|e tambem|e também/.test(t);
+      const redirectCheck = detectAllIntents(text);
+      const differentSvc = redirectCheck.find(id => id !== ST.svcId);
+      if ((isCorrection || redirectCheck.length > 0) && differentSvc) {
+        ST.step = 'idle'; ST.svcId = null;
+        if (SQ.active) {
+          SQ.queue.unshift(differentSvc); // priorizar o serviço mencionado
+          return processNextInQueue();
+        }
+        return startService(differentSvc);
+      }
+      // Tenta detectar variante por digitação
+      const match = svc.variants.find(v => N(v.label).split(' ').some(w => w.length > 3 && t.includes(w)));
+      if (match) return showVariant(ST.svcId, match.id, text);
+      // Detectou dimensão
+      const dim = detectDim(text);
+      if (dim) return showVariantsWithDim(ST.svcId, dim);
+      // Reapresenta opções de forma amigável
+      const btns = svc.variants.map(v => `<span class="sug" data-vid="${v.id}" data-sid="${ST.svcId}" onclick="chooseVariant(this)">${v.label}</span>`).join('');
+      return `<p>Para <strong>${svc.nome}</strong>, qual das opções abaixo se aplica à sua situação?</p><div class="sugs">${btns}</div>`;
+    }
+  }
+
+  // ── COMANDOS ESPECIAIS ──
+  if (/adicionar mais servicos|mais servicos/.test(t)) {
+    return fallback();
+  }
+  if (/calculadora|abrir calc|calcular area/.test(t)) {
+    if (!calcOpen) toggleCalc();
+    return '<p>Calculadora aberta! 📐 Informe as dimensões para calcular o preço fixo por m².</p>';
+  }
+  if (/obrigad|valeu|brigad/.test(t)) {
+    return `<p>Por nada! 😊 Estamos localizando o profissional. Se precisar de mais alguma coisa, é só perguntar!</p><div class="sugs"><span class="sug" onclick="sq('Preciso de outro servico')">➕ Outro serviço</span></div>`;
+  }
+  if (/garantia|prazo de garantia/.test(t)) {
+    return `<p><strong>🛡️ Garantias MetaObra</strong></p>
+<div class="svc-card"><div class="svc-title">Prazos por categoria</div>
+<div class="srow"><span>💧 Hidráulica / Desentupimento</span><strong>90 dias</strong></div>
+<div class="srow"><span>⚡ Elétrica</span><strong>90 dias</strong></div>
+<div class="srow"><span>🖌️ Pintura</span><strong>6 meses</strong></div>
+<div class="srow"><span>🏠 Piso</span><strong>90 dias</strong></div>
+<div class="srow"><span>🧱 Drywall</span><strong>6 meses</strong></div>
+</div>
+<p>Cobre falhas de execução. Materiais fornecidos pelo cliente e danos por uso inadequado não são cobertos.</p>`;
+  }
+  if (/como funciona.*adicional|o que e adicional|custo extra/.test(t)) {
+    return `<p><strong>Como funcionam os adicionais na MetaObra:</strong></p>
+<ul>
+<li>Você paga pelo escopo declarado — o que está no card</li>
+<li>Se o profissional encontrar algo fora disso, ele registra na ordem de serviço</li>
+<li><strong>Você recebe notificação e aprova ou recusa</strong> antes de qualquer execução</li>
+<li>Sem sua aprovação, nada é feito além do escopo contratado</li>
+</ul>
+<p><span class="tok">✅ Nenhum adicional sem sua autorização</span></p>`;
+  }
+
+  // ── CORREÇÃO / REDIRECIONAMENTO LIVRE ──
+  const correctionInIdle = /na verdade|na real|quero falar de|agora quero|agora preciso|esqueci de|tambem preciso|também preciso/.test(t);
+  if (correctionInIdle) {
+    const corrIds = detectAllIntents(text);
+    if (corrIds.length === 1) {
+      return startService(corrIds[0]);
+    } else if (corrIds.length > 1) {
+      SQ.queue = [...corrIds]; SQ.done = []; SQ.active = true;
+      return showMultiSummary(corrIds);
+    }
+  }
+
+  // ── SAUDAÇÃO ──
+  if (/^(oi|ola|bom dia|boa tarde|boa noite|tudo bem|hey)/.test(t)) {
+    return `<p>Olá! 😊 Me conta o que você precisa e te apresento o preço fixo na hora!</p>
+<div class="sugs">
+<span class="sug" onclick="sq('Torneira')">💧 Torneira</span>
+<span class="sug" onclick="sq('Vazamento')">🔧 Vazamento</span>
+<span class="sug" onclick="sq('Pintura')">🖌️ Pintura</span>
+<span class="sug" onclick="sq('Piso')">🏠 Piso</span>
+<span class="sug" onclick="sq('Entupimento')">🚿 Desentupimento</span>
+<span class="sug" onclick="sq('Eletrica')">⚡ Elétrica</span>
+<span class="sug" onclick="sq('Drywall')">🧱 Drywall</span>
+</div>`;
+  }
+
+  // ── DETECÇÃO DE INTENÇÃO — MULTI-SERVIÇO ──
+  const allIds = detectAllIntents(text);
+
+  if (allIds.length === 0) {
+    // Nenhum serviço detectado — fallback
+  } else if (allIds.length === 1) {
+    // Serviço único
+    const svc = SVC[allIds[0]];
+    if (svc) {
+      const dim = detectDim(text);
+      if (dim) return showVariantsWithDim(allIds[0], dim);
+      return startService(allIds[0]);
+    }
+  } else {
+    // MÚLTIPLOS SERVIÇOS — iniciar fila
+    SQ.queue = [...allIds];
+    SQ.done = [];
+    SQ.active = true;
+    ST.step = 'idle';
+    ST.svcId = null;
+    return showMultiSummary(allIds);
+  }
+
+  // ── DETECTOU DIMENSÃO SEM SERVIÇO ──
+  const dimOnly = detectDim(text);
+  if (dimOnly) {
+    return `<p>Vi que você mencionou <strong>${dimOnly.toFixed(1)} m²</strong>! Qual serviço você precisa para eu calcular o preço exato?</p>
+<div class="sugs">
+<span class="sug" onclick="sq('Pintura de ${dimOnly.toFixed(1)} m2')">🖌️ Pintura</span>
+<span class="sug" onclick="sq('Piso de ${dimOnly.toFixed(1)} m2')">🏠 Piso</span>
+<span class="sug" onclick="sq('Drywall de ${dimOnly.toFixed(1)} m2')">🧱 Drywall</span>
+</div>`;
+  }
+
+  return fallback();
+}
+
+function startService(svcId) {
+  const svc = SVC[svcId];
+  if (!svc) {
+    console.warn('startService: SVC not found for', svcId);
+    return fallback();
+  }
+  ST.step = 'choose_variant';
+  ST.svcId = svcId;
+
+  const q = svc.qs[0];
+  const btns = svc.variants.map(v =>
+    `<span class="sug" data-vid="${v.id}" data-sid="${svcId}" onclick="chooseVariant(this)">${v.label}</span>`
+  ).join('');
+
+  return `<p>${svc.icon} <strong>${svc.nome}</strong> — entendido!</p>
+<p>${q}</p>
+<div class="sugs">${btns}</div>`;
+}
+
+function showVariantsWithDim(svcId, dim) {
+  const svc = SVC[svcId];
+  ST.step = 'choose_variant';
+  ST.svcId = svcId;
+
+  // Se todas as variantes têm ppm2, mostra os cards direto
+  if (svc.variants.every(v => v.ppm2)) {
+    let html = `<p>${svc.icon} <strong>${svc.nome}</strong> — área: <strong>${dim.toFixed(1)} m²</strong>. Escolha o tipo:</p>`;
+    svc.variants.forEach(v => {
+      const unit = v.unit || 'm²';
+      const rate = Math.round(v.ppm2 * rMult * fMult() * scaleFactor(dim));
+      const finalPrice = applyAllScaled(v.ppm2, dim);
+      html += mkPriceCard(svc, v, finalPrice, { rate, area: dim.toFixed(1), scale: scaleLabel(dim) });
+    });
+    ST.step = 'idle';
+    return html;
+  }
+
+  // Mix de price e ppm2
+  const btns = svc.variants.map(v =>
+    `<span class="sug" data-vid="${v.id}" data-sid="${svcId}" onclick="chooseVariant(this)">${v.label}</span>`
+  ).join('');
+  return `<p>${svc.icon} <strong>${svc.nome}</strong> — área detectada: ${dim.toFixed(1)} m². Qual o tipo exato?</p>
+<div class="sugs">${btns}</div>`;
+}
+
+function showVariant(svcId, variantId, userText) {
+  const svc = SVC[svcId];
+  const v = svc.variants.find(x => x.id === variantId);
+  if (!svc || !v) return fallback();
+
+  // REDIRECT: variante aponta para outro serviço (ex: desentup-geral → desentup-vaso)
+  if (v._redirect) {
+    ST.step = 'idle'; ST.svcId = null;
+    return startService(v._redirect);
+  }
+
+  ST.step = 'idle';
+
+  if (v.ppm2) {
+    return `<p>Ótimo! Para calcular o preço fixo de <strong>${v.label}</strong>, informe as dimensões:</p>${mkAreaCard(svcId, variantId)}`;
+  }
+
+  const finalPrice = applyAll(v.price);
+  return `<p>Aqui está o preço fixo para <strong>${v.label}</strong>:</p>${mkPriceCard(svc, v, finalPrice, null)}`;
+}
+
+// onClick dos botões de variante (usando data attributes, sem passar strings unsafe)
+function chooseVariant(el) {
+  const sid = el.dataset.sid;
+  const vid = el.dataset.vid;
+  if (!sid || !vid) return;
+  const html = showVariant(sid, vid, '');
+  addMsg('minerva', html, true);
+}
+
+function wrongScope() {
+  ST.step = 'idle';
+  ST.svcId = null;
+  if (SQ.active && SQ.queue.length > 0) {
+    // Pular para próximo da fila
+    addMsg('minerva', '<p>Tudo bem! Vou pular este e continuar com o próximo serviço.</p>' + processNextInQueue(), true);
+  } else {
+    addMsg('minerva', '<p>Tudo bem! Me conta com mais detalhes o que está acontecendo para eu encontrar o escopo certo para você. 😊</p>', true);
+  }
+}
+
+function skipService() {
+  ST.step = 'idle';
+  ST.svcId = null;
+  if (SQ.queue.length > 0) {
+    addMsg('minerva', processNextInQueue(), true);
+  } else {
+    SQ.active = false;
+    addMsg('minerva', '<p>Todos os serviços foram processados! Posso ajudar com mais alguma coisa?</p>', true);
+  }
+}
+
+// ── BOOKING ──
+function bookService(variantId) {
+  const card = activeCards[variantId];
+  if (!card) return;
+
+  const btn = document.getElementById('bookbtn-' + variantId);
+  if (btn.disabled) return;
+  btn.disabled = true;
+  btn.innerHTML = '✅ Adicionado ao pedido!';
+  btn.style.background = 'var(--ok)';
+
+  // Uma OS por sessão — tudo na mesma ordem
+  const oid = CART.ensureOid();
+  const svc = { svcNome: card.svcNome, varLabel: card.varLabel, price: card.price, cat: card.svcCat || '' };
+  cartAdd(svc);
+  ST.step = 'booked';
+
+  // Verificar se há mais serviços na fila
+  const hasMore = SQ.active && SQ.queue.length > 0;
+  const nextHint = hasMore
+    ? `<p style="margin-top:8px;font-size:12px;color:var(--ok);font-weight:600">▶ Próximo...</p>`
+    : `<div class="sugs" style="margin-top:8px">
+        <span class="sug" onclick="showCheckout()">🧾 Ver total e fechar pedido</span>
+        <span class="sug" onclick="sq('Tenho mais um servico')">➕ Adicionar mais um</span>
+      </div>`;
+
+  const html = `
+<div style="background:var(--okB);border:1px solid var(--okBdr);border-radius:11px;padding:12px 14px;margin-top:6px;display:flex;align-items:center;gap:10px">
+  <div style="font-size:20px">✅</div>
+  <div style="flex:1;min-width:0">
+    <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:13px;color:var(--ok)">${card.svcNome} — confirmado</div>
+    <div style="font-size:11.5px;color:var(--tx2);margin-top:2px">${card.varLabel}</div>
+    <div style="margin-top:4px;display:flex;align-items:center;gap:6px">
+      <span style="background:var(--blueB);color:var(--blue);border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600">📋 ${oid}</span>
+      <span style="font-size:10px;color:var(--tx3)">${CART.count} serviço${CART.count>1?'s':''} no pedido</span>
+    </div>
+  </div>
+</div>
+${nextHint}`;
+
+  addMsg('minerva', html, true);
+
+  // Avançar fila automaticamente após 1.5s
+  if (hasMore) {
+    setTimeout(() => addMsg('minerva', processNextInQueue(), true), 1500);
+  }
+}
+
+// Adicionais contextuais por categoria de serviço
+const ADDL_EXAMPLES = {
+  'Hidráulica':     [{ desc: 'Cano oxidado — troca de trecho de 60cm', price: 110 }],
+  'Desentupimento': [{ desc: 'Segundo ponto entupido identificado durante o serviço', price: 130 }],
+  'Elétrica':       [{ desc: 'Fiação sem aterramento — adequação no trecho', price: 95 }],
+  'Pintura':        [{ desc: 'Mancha de mofo profunda — tratamento fungicida necessário', price: 80 }],
+  'Piso':           [{ desc: 'Contrapiso irregular — nivelamento necessário (2m²)', price: 90 }],
+  'Drywall':        [{ desc: 'Passagem de ponto elétrico dentro da divisória', price: 40 }],
+  'Reformas':       [{ desc: 'Impermeabilização adicional identificada no box', price: 150 }],
+};
+
+function getAddlExample(svcNome) {
+  for (const [cat, examples] of Object.entries(ADDL_EXAMPLES)) {
+    if (svcNome && svcNome.toLowerCase().includes(cat.toLowerCase().split('/')[0])) {
+      return examples[0];
+    }
+  }
+  // Fallback genérico
+  return { desc: 'Serviço complementar identificado pelo profissional', price: 100 };
+}
+
+function simulateAddl(oid) {
+  const order = orders.find(o => o.oid === oid);
+  const example = order ? getAddlExample(order.svcNome) : { desc: 'Serviço complementar identificado', price: 100 };
+
+  const uid = 'addl-' + Date.now();
+  const html = `
+<div class="addl-card" id="${uid}">
+  <div class="addl-hdr">🔧 Solicitação de adicional — ${oid}</div>
+  <div class="addl-body">O profissional identificou uma situação fora do escopo original e solicita aprovação para prosseguir:</div>
+  <div class="addl-itens">
+    <div class="addl-item"><span>${example.desc}</span><span class="addl-item-price">+ R$${example.price}</span></div>
+  </div>
+  <div style="margin-bottom:10px">
+    <div style="font-size:11px;color:#92400E;margin-bottom:5px;font-weight:600">Ou descreva o adicional manualmente:</div>
+    <div style="display:flex;gap:6px">
+      <input id="addl-input-${uid}" type="text" placeholder="Ex: troca de válvula adicional..." style="flex:1;padding:7px 9px;border:1.5px solid #FDE68A;border-radius:7px;font-size:12px;font-family:inherit;background:#fff">
+      <input id="addl-price-${uid}" type="number" placeholder="R$" style="width:70px;padding:7px 9px;border:1.5px solid #FDE68A;border-radius:7px;font-size:12px;font-family:inherit;background:#fff">
+    </div>
+  </div>
+  <p style="font-size:11px;color:#92400E;margin-bottom:10px">⚠️ Nenhum valor será cobrado sem sua aprovação.</p>
+  <div class="addl-btns">
+    <button class="btn-apr" onclick="aprAddl(this,'${uid}')">✅ Aprovar</button>
+    <button class="btn-ref" onclick="refAddl(this)">❌ Recusar</button>
+  </div>
+</div>`;
+  addMsg('minerva', html, true);
+}
+function aprAddl(btn, uid) {
+  const card = btn.closest('.addl-card');
+  // Ler campo manual se preenchido
+  const inputEl = uid ? document.getElementById('addl-input-' + uid) : null;
+  const priceEl = uid ? document.getElementById('addl-price-' + uid) : null;
+  let desc = '', price = '';
+  if (inputEl && inputEl.value.trim()) {
+    desc = inputEl.value.trim();
+    price = priceEl && priceEl.value ? 'R$' + parseInt(priceEl.value) : '';
+  }
+  const addlInfo = desc ? ` (${desc}${price ? ' — ' + price : ''})` : '';
+  card.innerHTML = '<div style="padding:8px;text-align:center;font-size:12.5px;color:var(--ok);font-weight:700">✅ Adicional aprovado! Profissional notificado.</div>';
+  addMsg('minerva', `<p>Perfeito! O adicional${addlInfo} foi aprovado. O profissional foi notificado e o valor será incluído na cobrança final.</p>`, true);
+}
+function refAddl(btn) {
+  btn.closest('.addl-card').innerHTML = '<div style="padding:8px;text-align:center;font-size:12.5px;color:var(--warn);font-weight:700">❌ Adicional recusado. Apenas o escopo original será executado.</div>';
+  addMsg('minerva', '<p>Entendido! O profissional executará apenas o que foi contratado. Se precisar desse serviço depois, abra uma nova ordem.</p>', true);
+}
+
+function fallback() {
+  return `<p>Não identifiquei o serviço com precisão. Você pode usar os atalhos abaixo ou descrever com mais detalhes (ex: <em>"desentupir o vaso sanitário"</em>, <em>"limpeza de caixa de gordura"</em>):</p>
+<div class="sugs">
+<span class="sug" onclick="sq('Torneira')">💧 Hidráulica</span>
+<span class="sug" onclick="sq('Entupimento')">🔧 Desentupimento</span>
+<span class="sug" onclick="sq('Caixa de gordura')">🔧 Caixa gordura</span>
+<span class="sug" onclick="sq('Desentupir vaso sanitario')">🚽 Vaso sanitário</span>
+<span class="sug" onclick="sq('Problema eletrico')">⚡ Elétrica</span>
+<span class="sug" onclick="sq('Pintura')">🖌️ Pintura</span>
+<span class="sug" onclick="sq('Piso')">🏠 Piso</span>
+<span class="sug" onclick="sq('Drywall')">🧱 Drywall</span>
+<span class="sug" onclick="sq('Reforma banheiro')">🛁 Reformas</span>
+</div>`;
+}
+
+function fmtMd(t) {
+  return '<p>' + t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
+}
+
+// ──────────────────────────────────────────────
+// UI
+// ──────────────────────────────────────────────
+function upRegion() {
+  const s = document.getElementById('regSel');
+  rMult = parseFloat(s.value);
+  rCity = s.options[s.selectedIndex].dataset.city;
+  document.getElementById('rtag').innerHTML = 'Base: <strong>' + rCity + '</strong> ×' + rMult.toFixed(2);
+}
+
+function hkey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); setTimeout(()=>{ const inp=document.getElementById('uinput'); if(inp) inp.focus(); }, 100); } }
+function ares(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+function sq(text) { document.getElementById('uinput').value = text; sendMsg(); }
+function scrollDown() { const m = document.getElementById('msgs'); m.scrollTop = m.scrollHeight; }
+
+function sendMsg() {
+  const inp = document.getElementById('uinput');
+  const text = inp.value.trim();
+  if (!text) return;
+  addMsg('user', text, false);
+  inp.value = ''; inp.style.height = 'auto';
+  // Re-foco no mobile para manter teclado e campo visíveis
+  inp.focus();
+  const ty = addTyping();
+  setTimeout(() => {
+    ty.remove();
+    try {
+      const resp = respond(text);
+      if (resp) addMsg('minerva', resp, true);
+    } catch(err) {
+      console.error('Prima da Maya error:', err);
+      addMsg('minerva', '<p>Desculpe, ocorreu um erro. Tente novamente.</p>', true);
+    }
+  }, 400 + Math.random() * 350);
+}
+
+function addMsg(role, html, raw) {
+  const c = document.getElementById('msgs');
+  const d = document.createElement('div');
+  d.className = 'msg ' + role;
+  const av = document.createElement('div');
+  av.className = 'mav';
+  av.textContent = role === 'minerva' ? 'P' : 'V';
+  const b = document.createElement('div');
+  b.className = 'mbub';
+  b.innerHTML = raw ? html : '<p>' + html + '</p>';
+  d.appendChild(av); d.appendChild(b);
+  c.appendChild(d);
+  // Rolar o CONTAINER, nunca o elemento (evita scroll da página no mobile)
+  requestAnimationFrame(() => { c.scrollTop = c.scrollHeight; });
+  return d;
+}
+
+function addTyping() {
+  const c = document.getElementById('msgs');
+  const d = document.createElement('div');
+  d.className = 'msg minerva';
+  d.innerHTML = '<div class="mav">M</div><div class="typing"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
+  c.appendChild(d);
+  // Rolar o CONTAINER, nunca o elemento (evita scroll da página no mobile)
+  requestAnimationFrame(() => { c.scrollTop = c.scrollHeight; });
+  return d;
+}
+
+function resetChat() {
+  if (!confirm('Iniciar nova conversa?')) return;
+  ST.step = 'idle'; ST.svcId = null; ST.pendingVariants = [];
+  SQ.queue = []; SQ.done = []; SQ.active = false;
+  CART.reset(); orders = []; orderNum = 1001;
+  updateCartBar();
+  for (const k in activeCards) delete activeCards[k];
+  document.getElementById('msgs').innerHTML = document.getElementById('welcome').outerHTML;
+  // Re-insert welcome
+  const welcome = `<div class="welcome" id="welcome">
+    <div class="w-ava">P</div>
+    <h2>Olá! Sou Prima da Maya 👋</h2>
+    <p>Me conta o que você precisa e te apresento o <strong>preço fixo</strong> — sem visita de orçamento.</p>
+    <div class="hiw">
+      <div class="hiw-s"><div class="hiw-n">1</div>Me conta o problema</div>
+      <div class="hiw-s"><div class="hiw-n">2</div>Veja o preço e confirme</div>
+      <div class="hiw-s"><div class="hiw-n">3</div>Profissional resolve</div>
+    </div>
+    <div class="cat-hint">Selecione um ou mais serviços que você precisa:</div>
+    <div class="cat-grid" id="catGrid">
+      <button class="cat-btn" data-q="Preciso trocar torneira" onclick="toggleCat(this)"><span class="cico">💧</span><span class="clbl">Hidráulica</span></button>
+      <button class="cat-btn" data-q="Entupimento" onclick="toggleCat(this)"><span class="cico">🔧</span><span class="clbl">Desentupimento</span></button>
+      <button class="cat-btn" data-q="Problema elétrico" onclick="toggleCat(this)"><span class="cico">⚡</span><span class="clbl">Elétrica</span></button>
+      <button class="cat-btn" data-q="Pintura de paredes" onclick="toggleCat(this)"><span class="cico">🖌️</span><span class="clbl">Pintura</span></button>
+      <button class="cat-btn" data-q="Instalar piso" onclick="toggleCat(this)"><span class="cico">🏠</span><span class="clbl">Pisos</span></button>
+      <button class="cat-btn" data-q="Divisória drywall" onclick="toggleCat(this)"><span class="cico">🧱</span><span class="clbl">Drywall / Gesso</span></button>
+      <button class="cat-btn" data-q="Reforma de banheiro" onclick="toggleCat(this)"><span class="cico">🛁</span><span class="clbl">Reformas</span></button>
+      <button class="cat-btn" data-q="Aplicar massa corrida" onclick="toggleCat(this)"><span class="cico">⬜</span><span class="clbl">Massa / Reboco</span></button>
+      <button class="cat-btn" data-q="Impermeabilizar" onclick="toggleCat(this)"><span class="cico">🏗️</span><span class="clbl">Impermeabiliz.</span></button>
+      <button class="cat-btn" data-q="Instalar ar condicionado" onclick="toggleCat(this)"><span class="cico">❄️</span><span class="clbl">Ar-condicionado</span></button>
+      <button class="cat-btn" data-q="Energia solar" onclick="toggleCat(this)"><span class="cico">☀️</span><span class="clbl">Energia Solar</span></button>
+      <button class="cat-btn" data-q="Instalar lustre" onclick="toggleCat(this)"><span class="cico">💡</span><span class="clbl">Iluminação</span></button>
+    </div>
+    <button class="cat-confirm" id="catConfirm" onclick="confirmCats()">Ver preços dos serviços selecionados →</button>
+  </div>`;
+  document.getElementById('msgs').innerHTML = welcome;
+}
+
+// ──────────────────────────────────────────────
+// CALCULADORA
+// ──────────────────────────────────────────────
+function toggleCalc() {
+  calcOpen = !calcOpen;
+  document.getElementById('cpanel').classList.toggle('open', calcOpen);
+  document.getElementById('calcToggle').classList.toggle('active', calcOpen);
+}
+function cTab(name, el) {
+  document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.csec').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('calc-' + name).classList.add('active');
+}
+
+let idc = 0, pintRows = [], pisoRows = [], gessoRows = [];
+
+function addRow(type) {
+  const id = ++idc;
+  if (type === 'pint') { pintRows.push({ id, a: '', b: '' }); renderRows('pintList', pintRows, 'pint'); }
+  else if (type === 'piso') { pisoRows.push({ id, a: '', b: '' }); renderRows('pisoList', pisoRows, 'piso'); }
+  else { gessoRows.push({ id, a: '', b: '' }); renderRows('gessoList', gessoRows, 'gesso'); }
+}
+function removeRow(type, id) {
+  if (type === 'pint') { pintRows = pintRows.filter(r => r.id !== id); renderRows('pintList', pintRows, 'pint'); }
+  else if (type === 'piso') { pisoRows = pisoRows.filter(r => r.id !== id); renderRows('pisoList', pisoRows, 'piso'); }
+  else { gessoRows = gessoRows.filter(r => r.id !== id); renderRows('gessoList', gessoRows, 'gesso'); }
+}
+function upRow(type, id, f, v) {
+  const arr = type === 'pint' ? pintRows : type === 'piso' ? pisoRows : gessoRows;
+  const r = arr.find(x => x.id === id); if (r) r[f] = v;
+}
+function renderRows(cid, arr, type) {
+  const lb = type === 'piso' ? ['compr.', 'larg.'] : ['compr.', 'altura'];
+  document.getElementById(cid).innerHTML = arr.map(r => `
+<div class="ritem">
+  <div style="display:flex;gap:5px;flex:1;align-items:center">
+    <input class="fi" type="number" step="0.1" min="0" value="${r.a}" placeholder="${lb[0]}"
+      style="width:70px" oninput="upRow('${type}',${r.id},'a',this.value)">
+    <span style="color:var(--tx3);font-size:12px">×</span>
+    <input class="fi" type="number" step="0.1" min="0" value="${r.b}" placeholder="${lb[1]}"
+      style="width:70px" oninput="upRow('${type}',${r.id},'b',this.value)">
+    <span style="color:var(--tx3);font-size:11px">m</span>
+  </div>
+  <button class="rrm" onclick="removeRow('${type}',${r.id})">×</button>
+</div>`).join('');
+}
+
+function dryF() {
+  const t = document.getElementById('dTipo').value;
+  const isSanca = t.endsWith('s');
+  document.getElementById('dPG').style.display = t.startsWith('87') || t.startsWith('125') || t.startsWith('152') ? '' : 'none';
+  if (isSanca) {
+    document.getElementById('dCL').textContent = 'Comprimento total (ml)';
+    document.getElementById('dAL').textContent = 'Profundidade (m)';
+    document.getElementById('dAlt').placeholder = 'ex: 0.40';
+    document.getElementById('dAG').style.display = 'none';
+  } else {
+    document.getElementById('dCL').textContent = 'Comprimento (m)';
+    document.getElementById('dAL').textContent = 'Altura (m)';
+    document.getElementById('dAlt').placeholder = 'ex: 2.8';
+    document.getElementById('dAG').style.display = '';
+  }
+}
+
+function fc(v) { return 'R$\u00a0' + Math.round(v).toLocaleString('pt-BR'); }
+function fn(v) { return v.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+function cr(a, b) { return `<div class="crow"><span>${a}</span><span>${b}</span></div>`; }
+function ch(price, lbl) { return `<div class="chigh"><div class="big">${fc(price)}</div><div class="lbl">${lbl}</div></div>`; }
+function fi() {
+  const f = (factors.urg ? 1.30 : 1) * (factors.wkd ? 1.25 : 1) * (factors.not ? 1.40 : 1) * (factors.acc ? 1.15 : 1);
+  if (f === 1) return '';
+  const a = [factors.urg && 'Urgência+30%', factors.wkd && 'Fds+25%', factors.not && 'Noturno+40%', factors.acc && 'Acesso+15%'].filter(Boolean);
+  return cr('⚡ Fatores ativos', a.join(', '));
+}
+
+function cPintura() {
+  if (!pintRows.length) { alert('Adicione pelo menos uma parede!'); return; }
+  const rate = parseInt(document.getElementById('pTipo').value);
+  const jan = +document.getElementById('pJan').value || 0, por = +document.getElementById('pPor').value || 0;
+  const dem = +document.getElementById('pDem').value || 2;
+  let bruta = 0; pintRows.forEach(r => { bruta += (+r.a || 0) * (+r.b || 0); });
+  const liq = Math.max(bruta - jan * 1.5 - por * 2.1, 0);
+  const sf = scaleFactor(liq); const rAdj = Math.round(rate * rMult * fMult() * sf); const total = applyAllScaled(rate, liq);
+  const lit = Math.ceil(liq * dem / 10), sel = Math.ceil(liq / 12);
+  document.getElementById('pintRes').innerHTML = `<div class="cres"><div class="cres-t">Resultado — Preço Fixo</div>
+${cr('Área líquida', fn(liq) + ' m²')}${cr('Taxa MDO', fc(rAdj) + '/m²')}
+${cr('🪣 Tinta (~' + dem + ' demãos)', '~' + lit + ' litros')}${cr('🧴 Selador', '~' + sel + ' litros')}
+${fi()}${sf<1?cr('📐 Desconto de escala',''+Math.round((1-sf)*100)+'% em '+fn(liq)+' m²'):''}${cr('📍 Região', rCity + ' ×' + rMult.toFixed(2))}
+${ch(total, 'Preço fixo de mão de obra · ' + fn(liq) + ' m²')}
+</div>
+<div class="ibox" style="margin-top:9px">Tinta fornecida pelo cliente. Adicionais apenas com sua aprovação.</div>
+<button class="cbtn sec" onclick="sq('Pintura de ${fn(liq)} m2')">💬 Confirmar no chat</button>`;
+}
+
+function cPiso() {
+  if (!pisoRows.length) { alert('Adicione pelo menos um ambiente!'); return; }
+  const rate = parseInt(document.getElementById('pisoTipo').value);
+  const desc = +document.getElementById('pisoDesc').value || 0, qbr = +document.getElementById('pisoQbr').value;
+  let bruta = 0; pisoRows.forEach(r => { bruta += (+r.a || 0) * (+r.b || 0); });
+  const liq = Math.max(bruta - desc, 0), comp = liq * (1 + qbr);
+  const sf = scaleFactor(liq); const rAdj = Math.round(rate * rMult * fMult() * sf); const total = applyAllScaled(rate, liq);
+  const isCer = rate >= 75;
+  const arg = isCer ? Math.ceil(comp * 6 / 20) : 0, rej = isCer ? Math.ceil(liq * 0.5) : 0;
+  document.getElementById('pisoRes').innerHTML = `<div class="cres"><div class="cres-t">Resultado — Preço Fixo</div>
+${cr('Área MDO', fn(liq) + ' m²')}${cr('Comprar (+' + Math.round(qbr * 100) + '%)', fn(comp) + ' m²')}${cr('Taxa MDO', fc(rAdj) + '/m²')}
+${arg > 0 ? cr('🪣 Argamassa', '~' + arg + ' sacos (20kg)') : ''}${rej > 0 ? cr('🧴 Rejunte', '~' + rej + ' kg') : ''}
+${fi()}${sf<1?cr('📐 Desconto de escala',''+Math.round((1-sf)*100)+'% em '+fn(liq)+' m²'):''}${cr('📍', rCity + ' ×' + rMult.toFixed(2))}
+${ch(total, 'Preço fixo de mão de obra · ' + fn(liq) + ' m²')}
+</div>
+<button class="cbtn sec" onclick="sq('Piso de ${fn(liq)} m2')">💬 Confirmar no chat</button>`;
+}
+
+function cDrywall() {
+  const tVal = document.getElementById('dTipo').value;
+  const isSanca = tVal.endsWith('s');
+  const rate = parseInt(tVal);
+  const comp = +document.getElementById('dComp').value || 0;
+  const alt = +document.getElementById('dAlt').value || 0;
+  const port = +document.getElementById('dPort').value || 0;
+  if (!comp) { alert('Informe o comprimento!'); return; }
+  const area = isSanca ? comp : (alt ? Math.max(comp * alt - port * 1.68, 0) : comp);
+  const unit = isSanca ? 'ml' : 'm²';
+  const sf = scaleFactor(area); const rAdj = Math.round(rate * rMult * fMult() * sf); const total = applyAllScaled(rate, area);
+  const placas = !isSanca && alt ? Math.ceil(area * 1.05 / 1.8) : 0;
+  const mont = (!isSanca && alt && rate <= 125) ? Math.ceil(comp / 0.6) + 1 : 0;
+  document.getElementById('dryRes').innerHTML = `<div class="cres"><div class="cres-t">Resultado — Preço Fixo</div>
+${cr('Área/extensão', fn(area) + ' ' + unit)}${cr('Taxa MDO', fc(rAdj) + '/' + unit)}
+${placas > 0 ? cr('🟦 Placas', '~' + placas + ' unid') : ''}${mont > 0 ? cr('🔩 Montantes', '~' + mont + ' peças') : ''}
+${fi()}${sf<1?cr('📐 Desconto de escala',''+Math.round((1-sf)*100)+'% em '+fn(area)+' '+unit):''}${cr('📍', rCity + ' ×' + rMult.toFixed(2))}
+${ch(total, 'Preço fixo de mão de obra · ' + fn(area) + ' ' + unit)}
+</div>
+<button class="cbtn sec" onclick="sq('Drywall de ${fn(area)} ${unit}')">💬 Confirmar no chat</button>`;
+}
+
+function cGesso() {
+  let bruta = 0; gessoRows.forEach(r => { bruta += (+r.a || 0) * (+r.b || 0); });
+  const teto = +document.getElementById('gTeto').value || 0;
+  const jan = +document.getElementById('gJan').value || 0, por = +document.getElementById('gPor').value || 0;
+  const liq = Math.max(bruta - jan * 1.5 - por * 2.1, 0), total = liq + teto;
+  if (!total) { alert('Informe dimensões de paredes ou teto!'); return; }
+  const rate = parseInt(document.getElementById('gTipo').value);
+  const sf = scaleFactor(total); const rAdj = Math.round(rate * rMult * fMult() * sf); const mdo = applyAllScaled(rate, total);
+  const isMassa = rate <= 27;
+  const kg = isMassa ? Math.ceil(total * 5) : Math.ceil(total * 8);
+  const mat = isMassa ? Math.ceil(kg / 18) + ' latas (18kg)' : Math.ceil(kg / 5) + ' sacos (5kg)';
+  document.getElementById('gessoRes').innerHTML = `<div class="cres"><div class="cres-t">Resultado — Preço Fixo</div>
+${cr('Paredes', fn(liq) + ' m²')}${cr('Teto', fn(teto) + ' m²')}${cr('Total', fn(total) + ' m²')}${cr('Taxa MDO', fc(rAdj) + '/m²')}
+${cr('🪣 Material', '~' + mat)}${cr('🪚 Lixas', '~' + Math.ceil(total / 4) + ' folhas')}
+${fi()}${sf<1?cr('📐 Desconto de escala',''+Math.round((1-sf)*100)+'% em '+fn(total)+' m²'):''}${cr('📍', rCity + ' ×' + rMult.toFixed(2))}
+${ch(mdo, 'Preço fixo de mão de obra · ' + fn(total) + ' m²')}
+</div>
+<div class="ibox" style="margin-top:8px">⚠️ Massa corrida não indicada para áreas úmidas.</div>
+<button class="cbtn sec" onclick="sq('Gesso de ${fn(total)} m2')">💬 Confirmar no chat</button>`;
+}
+
+// INIT
+document.addEventListener('DOMContentLoaded', () => {
+  dryF();
+  addRow('pint'); addRow('piso'); addRow('gesso');
+});
+</script>
+<!-- CART BAR -->
+<div class="cart-bar" id="cartBar">
+  <div class="cart-info">
+    <div class="cart-count" id="cartCount">0 serviços</div>
+    <div class="cart-items-preview" id="cartPreview">–</div>
+  </div>
+  <button class="cart-checkout-btn" onclick="showCheckout()">🧾 Ver total e fechar</button>
+</div>
+
+</body>
+</html>
