@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#FF5C00">
 <title>MetaObra — Painel ADM</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{--o:#FF5C00;--y:#FFD000;--bk:#080808;--dk:#0F0F0F;--card:#141414;--b1:#1E1E1E;--b2:#2A2A2A;--w:#F2EDE6;--tx:#8A8070;--mu:#444;--gr:#00C46A;--re:#FF3B3B;--bl:#4DB8FF;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;caret-color:auto;}
@@ -660,86 +661,107 @@ function switchToSolarTab() {
 }
 
 function renderSolarTab() {
-   // Load solar data if exists
-   const solarData = ls('co_solar') || {
-       pdfData: null,
-       items: [],
-       transformed: false
-   };
-   
-   // Update PDF info
-   const pdfInfoEl = document.getElementById('solarPdfInfo');
-   if (solarData.pdfData) {
-       pdfInfoEl.textContent = `Arquivo: ${solarData.pdfData.name} (${(solarData.pdfData.size / 1024 / 1024).toFixed(2)} MB)`;
-   } else {
-       pdfInfoEl.textContent = 'Nenhum arquivo selecionado';
-   }
-   
-   // Update items list
-   const itemsListEl = document.getElementById('solarItemsList');
-   if (solarData.items.length === 0) {
-       itemsListEl.innerHTML = 'Nenhum item adicionado';
-   } else {
-       itemsListEl.innerHTML = solarData.items.map(item => `
-           <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--b1);">
-               <span>${item.description}</span>
-               <span>R$ ${(item.quantity * item.unitPrice).toFixed(2)} (${item.quantity} x R$ ${item.unitPrice.toFixed(2)})</span>
-           </div>
-       `).join('');
-   }
-   
-   // Update budget display if transformed
-   const budgetDisplayEl = document.getElementById('solarBudgetDisplay');
-   if (solarData.transformed) {
-       const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-       budgetDisplayEl.innerHTML = `
-           <div style="margin-bottom: 1rem;">
-               <strong>Orçamento Solar Transformado - Identidade Meta Obra</strong>
-           </div>
-           ${solarData.items.map(item => `
-               <div style="margin: 0.5rem 0; padding: 0.5rem; background: var(--card); border-left: 3px solid var(--o); border-radius: 0 4px 4px 0;">
-                   <div>${item.description}</div>
-                   <div style="font-size: 0.9rem; color: var(--tx);">${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}</div>
-               </div>
-           `).join('')}
-           <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--b1); font-weight: bold; text-align: right;">
-               Total: R$ ${total.toFixed(2)}
-           </div>
-       `;
-   } else {
-       budgetDisplayEl.innerHTML = 'Nenhum orçamento gerado ainda';
-   }
+    // Load solar data if exists
+    const solarData = ls('co_solar') || {
+        pdfData: null,
+        items: [],
+        transformed: false
+    };
+    
+    // Update PDF info
+    const pdfInfoEl = document.getElementById('solarPdfInfo');
+    if (solarData.pdfData) {
+        pdfInfoEl.textContent = `Arquivo: ${solarData.pdfData.name} (${(solarData.pdfData.size / 1024 / 1024).toFixed(2)} MB)`;
+    } else {
+        pdfInfoEl.textContent = 'Nenhum arquivo selecionado';
+    }
+    
+    // Update items list
+    const itemsListEl = document.getElementById('solarItemsList');
+    if (solarData.items.length === 0) {
+        itemsListEl.innerHTML = 'Nenhum item adicionado';
+    } else {
+        itemsListEl.innerHTML = solarData.items.map((item, index) => `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--b1);">
+                <div style="flex: 1;">
+                    <span>${item.description}</span>
+                </div>
+                <div style="flex: 1; text-align: right;">
+                    <span>R$ ${(item.quantity * item.unitPrice).toFixed(2)} (${item.quantity} x R$ ${item.unitPrice.toFixed(2)})</span>
+                </div>
+                <div style="width: 30px; text-align: center;">
+                    <button onclick="removeSolarItem(${index})" style="background: var(--re); color: var(--bk); border: none; border-radius: 3px; padding: 0.2rem 0.5rem; font-size: 0.8rem; cursor: pointer;">×</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Update budget display if transformed
+    const budgetDisplayEl = document.getElementById('solarBudgetDisplay');
+    if (solarData.transformed) {
+        const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+        budgetDisplayEl.innerHTML = `
+            <div style="margin-bottom: 1rem;">
+                <strong>Orçamento Solar Transformado - Identidade Meta Obra</strong>
+            </div>
+            ${solarData.items.map(item => `
+                <div style="margin: 0.5rem 0; padding: 0.5rem; background: var(--card); border-left: 3px solid var(--o); border-radius: 0 4px 4px 0;">
+                    <div>${item.description}</div>
+                    <div style="font-size: 0.9rem; color: var(--tx);">${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}</div>
+                </div>
+            `).join('')}
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--b1); font-weight: bold; text-align: right;">
+                Total: R$ ${total.toFixed(2)}
+            </div>
+        `;
+    } else {
+        budgetDisplayEl.innerHTML = 'Nenhum orçamento gerado ainda';
+    }
 }
 
 function addSolarItem() {
-   const description = document.getElementById('solarItemDesc').value.trim();
-   const quantity = parseInt(document.getElementById('solarItemQty').value);
-   const unitPrice = parseFloat(document.getElementById('solarItemPrice').value);
-   
-   if (!description || isNaN(quantity) || quantity <= 0 || isNaN(unitPrice) || unitPrice < 0) {
-       alert('Por favor, preencha todos os campos corretamente');
-       return;
-   }
-   
-   const solarData = ls('co_solar') || {
-       pdfData: null,
-       items: [],
-       transformed: false
-   };
-   
-   solarData.items.push({
-       description,
-       quantity,
-       unitPrice
-   });
-   
-   ss('co_solar', solarData);
-   renderSolarTab();
-   
-   // Clear form
-   document.getElementById('solarItemDesc').value = '';
-   document.getElementById('solarItemQty').value = '';
-   document.getElementById('solarItemPrice').value = '';
+    const description = document.getElementById('solarItemDesc').value.trim();
+    const quantity = parseInt(document.getElementById('solarItemQty').value);
+    const unitPrice = parseFloat(document.getElementById('solarItemPrice').value);
+    
+    if (!description || isNaN(quantity) || quantity <= 0 || isNaN(unitPrice) || unitPrice < 0) {
+        alert('Por favor, preencha todos os campos corretamente');
+        return;
+    }
+    
+    const solarData = ls('co_solar') || {
+        pdfData: null,
+        items: [],
+        transformed: false
+    };
+    
+    solarData.items.push({
+        description,
+        quantity,
+        unitPrice
+    });
+    
+    ss('co_solar', solarData);
+    renderSolarTab();
+    
+    // Clear form
+    document.getElementById('solarItemDesc').value = '';
+    document.getElementById('solarItemQty').value = '';
+    document.getElementById('solarItemPrice').value = '';
+}
+
+function removeSolarItem(index) {
+    const solarData = ls('co_solar') || {
+        pdfData: null,
+        items: [],
+        transformed: false
+    };
+    
+    if (solarData.items.length === 0 || index < 0 || index >= solarData.items.length) return;
+    
+    solarData.items.splice(index, 1);
+    ss('co_solar', solarData);
+    renderSolarTab();
 }
 
 function finalizeSolarBudget() {
@@ -761,20 +783,62 @@ function finalizeSolarBudget() {
 }
 
 function printSolarBudget() {
-   const solarData = ls('co_solar') || {
-       pdfData: null,
-       items: [],
-       transformed: false
-   };
-   
-   if (!solarData.transformed) {
-       alert('Finalize o orçamento antes de imprimir');
-       return;
-   }
-   
-   // In a real app, this would generate a PDF for printing
-   // For now, we'll just show a message
-   alert('Funcionalidade de impressão seria implementada em um ambiente real, gerando um PDF com a identidade visual da Meta Obra');
+    const solarData = ls('co_solar') || {
+        pdfData: null,
+        items: [],
+        transformed: false
+    };
+    
+    if (!solarData.transformed) {
+        alert('Finalize o orçamento antes de imprimir');
+        return;
+    }
+    
+    // Generate PDF with jspdf
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set up document
+    doc.setFontSize(16);
+    doc.setTextColor(255, 92, 0); // Meta Obra orange
+    doc.text('Orçamento Solar - Meta Obra', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.setTextColor(138, 128, 112); --tx color
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 105, 30, { align: 'center' });
+    
+    // Add items
+    let yPosition = 50;
+    doc.setFontSize(10);
+    solarData.items.forEach((item, index) => {
+        doc.text(`${index + 1}. ${item.description}`, 15, yPosition);
+        doc.text(`${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}`, 15, yPosition + 7);
+        yPosition += 15;
+    });
+    
+    // Add total
+    const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    yPosition += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(255, 92, 0); --o color
+    doc.text(`Total: R$ ${total.toFixed(2)}`, 15, yPosition);
+    
+    // Save PDF
+    doc.save(`orcamento_solar_metaobra_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+
+function removeSolarItem(index) {
+    const solarData = ls('co_solar') || {
+        pdfData: null,
+        items: [],
+        transformed: false
+    };
+    
+    if (solarData.items.length === 0) return;
+    
+    solarData.items.splice(index, 1);
+    ss('co_solar', solarData);
+    renderSolarTab();
 }
 </script>
 </body>
