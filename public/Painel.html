@@ -795,36 +795,241 @@ function printSolarBudget() {
     }
     
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    let y = 30;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     
-    function addLine(text, size, color, x, align) {
-        doc.setFontSize(size || 12);
-        if (color) doc.setTextColor(color[0], color[1], color[2]);
-        doc.text(text, x || pageWidth / 2, y, { align: align || 'center' });
-        y += size > 13 ? 10 : 7;
+    const ORANGE = [255, 106, 0];
+    const DARK = [11, 11, 11];
+    const WHITE = [255, 255, 255];
+    const GRAY = [138, 138, 138];
+    const LIGHT_GRAY = [245, 245, 245];
+    const MID_GRAY = [200, 200, 200];
+    
+    const pw = doc.internal.pageSize.getWidth();
+    const ph = doc.internal.pageSize.getHeight();
+    const ml = 18;
+    const mr = 18;
+    const contentW = pw - ml - mr;
+    let y = 0;
+    
+    function setFontFace(style) {
+        doc.setFont('helvetica', style || 'normal');
     }
     
-    addLine('META OBRA', 22, [255, 92, 0]);
-    addLine('Orcamento Solar', 14, [255, 255, 255]);
-    addLine('━'.repeat(48), 8, [138, 128, 112]);
-    y += 5;
+    function text(t, x, yPos, align, color, size) {
+        if (color) doc.setTextColor(color[0], color[1], color[2]);
+        if (size) doc.setFontSize(size);
+        doc.text(t, x || ml, yPos || y, { align: align || 'left' });
+    }
     
+    function center(t, yPos, color, size) {
+        text(t, pw / 2, yPos, 'center', color, size);
+    }
+    
+    function lineY(yPos, color, w) {
+        doc.setDrawColor(color[0], color[1], color[2]);
+        doc.setLineWidth(0.5);
+        doc.line(ml, yPos, ml + (w || contentW), yPos);
+    }
+    
+    // ===== HEADER BAR =====
+    doc.setFillColor(DARK[0], DARK[1], DARK[2]);
+    doc.rect(0, 0, pw, 44, 'F');
+    
+    setFontFace('bold');
+    doc.setFontSize(22);
+    doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
+    const mLabel = 'META';
+    const oLabel = 'OBRA';
+    const mW = doc.getTextWidth(mLabel);
+    doc.text(mLabel, ml, 26);
+    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.text(oLabel, ml + mW + 1, 26);
+    
+    setFontFace('normal');
+    doc.setFontSize(7);
+    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+    doc.text('ENERGIA SOLAR · BRASÍLIA-DF', ml, 36);
+    
+    // Quote header right side
+    setFontFace('bold');
+    doc.setFontSize(9);
+    doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
+    const qId = '#SOL-' + Math.floor(100000 + Math.random() * 900000);
+    doc.text('ORÇAMENTO', pw - mr, 20, { align: 'right' });
+    setFontFace('normal');
+    doc.setFontSize(8);
+    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+    doc.text(qId, pw - mr, 30, { align: 'right' });
+    const dt = new Date().toLocaleDateString('pt-BR');
+    doc.text(dt, pw - mr, 38, { align: 'right' });
+    
+    // ===== BODY =====
+    y = 60;
+    
+    // Title
+    setFontFace('bold');
+    text('ORÇAMENTO SOLAR FOTOVOLTAICO', ml, y, 'left', DARK, 16);
+    y += 10;
+    
+    // Orange accent bar
+    doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.rect(ml, y - 1, 50, 3, 'F');
+    y += 12;
+    
+    // Info box
+    doc.setFillColor(LIGHT_GRAY[0], LIGHT_GRAY[1], LIGHT_GRAY[2]);
+    doc.rect(ml, y, contentW, 22, 'F');
+    
+    setFontFace('normal');
+    doc.setFontSize(8);
+    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+    doc.text('Cliente: _____________________________________________', ml + 3, y + 6);
+    doc.text('Endereço da instalação: _______________________________', ml + 3, y + 12);
+    doc.text('Tipo: Sistema Fotovoltaico Conectado à Rede (On-Grid) | Potência: ___ kWp', ml + 3, y + 18);
+    y += 30;
+    
+    // ===== ITEMS TABLE =====
+    // Column positions
+    const cDesc = ml;
+    const cQtd = ml + 95;
+    const cVUn = ml + 120;
+    const cTotal = ml + 150;
+    const tableW = pw - ml - mr;
+    
+    // Table header
+    doc.setFillColor(DARK[0], DARK[1], DARK[2]);
+    doc.rect(ml, y - 4, tableW, 8, 'F');
+    
+    setFontFace('bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
+    doc.text('ITEM', cDesc + 3, y + 1);
+    doc.text('QTD', cQtd + 3, y + 1);
+    doc.text('VALOR UNIT.', cVUn + 3, y + 1);
+    doc.text('TOTAL', cTotal + 48, y + 1, { align: 'right' });
+    
+    y += 8;
+    
+    // Table rows
+    let subtotal = 0;
     solarData.items.forEach((item, i) => {
-        const totalItem = item.quantity * item.unitPrice;
-        addLine(`${i + 1}. ${item.description}`, 10, [255, 255, 255], 15, 'left');
-        addLine(`   ${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${totalItem.toFixed(2)}`, 9, [138, 128, 112], 15, 'left');
+        const q = item.quantity;
+        const up = item.unitPrice;
+        const it = q * up;
+        subtotal += it;
+        
+        if (i % 2 === 0) {
+            doc.setFillColor(LIGHT_GRAY[0], LIGHT_GRAY[1], LIGHT_GRAY[2]);
+            doc.rect(ml, y - 3, tableW, 8, 'F');
+        }
+        
+        setFontFace('normal');
+        doc.setFontSize(8);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        
+        const descText = (i + 1) + '. ' + item.description;
+        doc.text(descText, cDesc + 3, y + 2);
+        doc.text(q.toString(), cQtd + 3, y + 2);
+        doc.text('R$ ' + up.toFixed(2), cVUn + 3, y + 2);
+        doc.text('R$ ' + it.toFixed(2), cTotal + 48, y + 2, { align: 'right' });
+        
+        y += 9;
     });
     
-    y += 5;
-    addLine('━'.repeat(48), 8, [138, 128, 112]);
-    const total = solarData.items.reduce((s, i) => s + i.quantity * i.unitPrice, 0);
-    addLine(`TOTAL: R$ ${total.toFixed(2)}`, 16, [255, 92, 0], pageWidth - 15, 'right');
-    y += 10;
-    addLine(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 8, [100, 100, 100]);
+    y += 4;
     
-    doc.save(`orcamento_solar_metaobra_${new Date().toISOString().slice(0, 10)}.pdf`);
+    // ===== TOTALS =====
+    // Line separator
+    doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.setLineWidth(1);
+    doc.line(ml, y, ml + tableW, y);
+    y += 7;
+    
+    const total = subtotal;
+    const econ = total * 0.85;
+    
+    setFontFace('normal');
+    doc.setFontSize(9);
+    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+    doc.text('VALOR TOTAL', ml, y + 1);
+    setFontFace('bold');
+    doc.setFontSize(18);
+    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.text('R$ ' + total.toFixed(2), ml + tableW, y + 1, { align: 'right' });
+    y += 12;
+    
+    setFontFace('normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+    doc.text('*Economia estimada em 25 anos: R$ ' + econ.toFixed(2), ml, y);
+    doc.text('*Valores sujeitos a vistoria técnica.', ml, y + 5);
+    y += 14;
+    
+    // ===== TRUST BADGES =====
+    doc.setFillColor(LIGHT_GRAY[0], LIGHT_GRAY[1], LIGHT_GRAY[2]);
+    doc.rect(ml, y, tableW, 24, 'F');
+    
+    setFontFace('bold');
+    doc.setFontSize(7);
+    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.text('INCLUSO NO ORÇAMENTO:', ml + 3, y + 5);
+    
+    const badges = [
+        'Painéis fotovoltaicos',
+        'Inversor solar',
+        'Estrutura de fixação',
+        'Cabeamento e conexões',
+        'Instalação profissional',
+        'Homologação na distribuidora',
+        'ART do engenheiro',
+        'Garantia de 90 dias'
+    ];
+    
+    setFontFace('normal');
+    doc.setFontSize(6.5);
+    doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+    badges.forEach((b, i) => {
+        const col = i % 4;
+        const row = Math.floor(i / 4);
+        const bx = ml + 3 + (col * (tableW / 4));
+        const by = y + 10 + (row * 6);
+        doc.text('✓ ' + b, bx, by);
+    });
+    
+    y += 28;
+    
+    // ===== PAYMENT =====
+    setFontFace('bold');
+    doc.setFontSize(9);
+    doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+    doc.text('CONDIÇÕES DE PAGAMENTO', ml, y);
+    y += 7;
+    
+    setFontFace('normal');
+    doc.setFontSize(8);
+    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+    const payments = [
+        '50% de entrada no aceite do orçamento',
+        '50% na conclusão da instalação e ativação'
+    ];
+    payments.forEach(p => {
+        doc.text('• ' + p, ml + 3, y);
+        y += 5;
+    });
+    y += 5;
+    
+    // ===== FOOTER =====
+    doc.setDrawColor(MID_GRAY[0], MID_GRAY[1], MID_GRAY[2]);
+    doc.setLineWidth(0.3);
+    doc.line(ml, ph - 18, ml + tableW, ph - 18);
+    
+    setFontFace('normal');
+    doc.setFontSize(7);
+    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
+    doc.text('MetaObra · Energia Solar · Brasília-DF', ml, ph - 10, { align: 'left' });
+    doc.text('contato@metaobra.com.br · (61) 98598-6566', pw - mr, ph - 10, { align: 'right' });
+    
+    doc.save('orcamento_solar_metaobra_' + new Date().toISOString().slice(0, 10) + '.pdf');
 }
 </script>
 </body>
