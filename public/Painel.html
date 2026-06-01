@@ -804,7 +804,7 @@ function printSolarBudget() {
     doc.text('Orçamento Solar - Meta Obra', 105, 20, { align: 'center' });
     
     doc.setFontSize(12);
-    doc.setTextColor(138, 128, 112); --tx color
+    doc.setTextColor(138, 128, 112); // --tx color
     doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 105, 30, { align: 'center' });
     
     // Add items
@@ -820,7 +820,139 @@ function printSolarBudget() {
     const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
     yPosition += 10;
     doc.setFontSize(12);
-    doc.setTextColor(255, 92, 0); --o color
+    doc.setTextColor(255, 92, 0); // --o color
+    doc.text(`Total: R$ ${total.toFixed(2)}`, 15, yPosition);
+    
+    // Save PDF
+    doc.save(`orcamento_solar_metaobra_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+    
+    // Generate PDF with jspdf
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set up document
+    doc.setFontSize(16);
+    doc.setTextColor(255, 92, 0); // Meta Obra orange
+    doc.text('Orçamento Solar - Meta Obra', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.setTextColor(138, 128, 112); // --tx color
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 105, 30, { align: 'center' });
+    
+    // Add items
+    let yPosition = 50;
+    doc.setFontSize(10);
+    solarData.items.forEach((item, index) => {
+        doc.text(`${index + 1}. ${item.description}`, 15, yPosition);
+        doc.text(`${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}`, 15, yPosition + 7);
+        yPosition += 15;
+    });
+    
+    // Add total
+    const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    yPosition += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(255, 92, 0); // --o color
+    doc.text(`Total: R$ ${total.toFixed(2)}`, 15, yPosition);
+    
+    // Save PDF
+    doc.save(`orcamento_solar_metaobra_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+    
+    // Generate PDF with jspdf
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set up document
+    doc.setFontSize(16);
+    doc.setTextColor(255, 92, 0); // Meta Obra orange
+    doc.text('Orçamento Solar - Meta Obra', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.setTextColor(138, 128, 112); // --tx color
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 105, 30, { align: 'center' });
+    
+    // Add items
+    let yPosition = 50;
+    doc.setFontSize(10);
+    solarData.items.forEach((item, index) => {
+        doc.text(`${index + 1}. ${item.description}`, 15, yPosition);
+        doc.text(`${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}`, 15, yPosition + 7);
+        yPosition += 15;
+    });
+    
+    // Add total
+    const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    yPosition += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(255, 92, 0); // --o color
+    doc.text(`Total: R$ ${total.toFixed(2)}`, 15, yPosition);
+    
+    // Save PDF
+    doc.save(`orcamento_solar_metaobra_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+    
+    // Generate PDF with jspdf
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set up document
+    doc.setFontSize(16);
+    doc.setTextColor(255, 92, 0); // Meta Obra orange
+    doc.text('Orçamento Solar - Meta Obra', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.setTextColor(138, 128, 112); // --tx color
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 105, 30, { align: 'center' });
+    
+    // Add items
+    let yPosition = 50;
+    doc.setFontSize(10);
+    solarData.items.forEach((item, index) => {
+        doc.text(`${index + 1}. ${item.description}`, 15, yPosition);
+        doc.text(`${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}`, 15, yPosition + 7);
+        yPosition += 15;
+    });
+    
+    // Add total
+    const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    yPosition += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(255, 92, 0); // --o color
+    doc.text(`Total: R$ ${total.toFixed(2)}`, 15, yPosition);
+    
+    // Save PDF
+    doc.save(`orcamento_solar_metaobra_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+    
+    // Generate PDF with jspdf
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set up document
+    doc.setFontSize(16);
+    doc.setTextColor(255, 92, 0); // Meta Obra orange
+    doc.text('Orçamento Solar - Meta Obra', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.setTextColor(138, 128, 112); // --tx color
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 105, 30, { align: 'center' });
+    
+    // Add items
+    let yPosition = 50;
+    doc.setFontSize(10);
+    solarData.items.forEach((item, index) => {
+        doc.text(`${index + 1}. ${item.description}`, 15, yPosition);
+        doc.text(`${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}`, 15, yPosition + 7);
+        yPosition += 15;
+    });
+    
+    // Add total
+    const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    yPosition += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(255, 92, 0); // --o color
     doc.text(`Total: R$ ${total.toFixed(2)}`, 15, yPosition);
     
     // Save PDF
