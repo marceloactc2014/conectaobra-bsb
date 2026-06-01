@@ -678,10 +678,16 @@ function renderSolarTab() {
     
     // Update PDF info
     const pdfInfoEl = document.getElementById('solarPdfInfo');
-    if (solarData.pdfData) {
-        pdfInfoEl.textContent = `Arquivo: ${solarData.pdfData.name} (${(solarData.pdfData.size / 1024 / 1024).toFixed(2)} MB)`;
+    if (solarData.pdfPages && solarData.pdfPages.length > 0) {
+        const charCount = solarData.pdfPages.reduce((s, p) => s + p.length, 0);
+        pdfInfoEl.textContent = '✓ ' + (solarData.pdfData ? solarData.pdfData.name : 'PDF') + ' — ' + solarData.pdfPages.length + 'p, ' + charCount + ' caracteres';
+        pdfInfoEl.style.color = 'var(--gr)';
+    } else if (solarData.pdfData) {
+        pdfInfoEl.textContent = 'Arquivo: ' + solarData.pdfData.name + ' (' + (solarData.pdfData.size / 1024 / 1024).toFixed(2) + ' MB)';
+        pdfInfoEl.style.color = 'var(--tx)';
     } else {
         pdfInfoEl.textContent = 'Nenhum arquivo selecionado';
+        pdfInfoEl.style.color = 'var(--tx)';
     }
     
     // Update supplier items display
@@ -735,7 +741,8 @@ function renderSolarTab() {
     // Update budget display if transformed
     const budgetDisplayEl = document.getElementById('solarBudgetDisplay');
     if (solarData.transformed) {
-        const hasSupplier = solarData.supplierItems && solarData.supplierItems.length > 0;
+        const hasSupplier = (solarData.supplierItems && solarData.supplierItems.length > 0)
+            || (solarData.pdfPages && solarData.pdfPages.length > 0);
         const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
         let html = `
             <div style="margin-bottom: 1rem;">
@@ -783,69 +790,57 @@ function renderSolarTab() {
 }
 
 // PDF upload handler with text extraction
-document.addEventListener('DOMContentLoaded', function() {
+(function() {
     const uploadEl = document.getElementById('solarPdfUpload');
-    if (uploadEl) {
-        uploadEl.addEventListener('change', async function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+    if (!uploadEl) return;
+    uploadEl.addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const pdfInfoEl = document.getElementById('solarPdfInfo');
+        pdfInfoEl.textContent = 'Extraindo dados do PDF...';
+        pdfInfoEl.style.color = 'var(--y)';
+        
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            // Use blob URL to avoid worker CORS issues
+            const workerBlob = new Blob([
+                'importScripts("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js");'
+            ], { type: 'application/javascript' });
+            pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(workerBlob);
             
-            const pdfInfoEl = document.getElementById('solarPdfInfo');
-            pdfInfoEl.textContent = 'Extraindo dados do PDF...';
-            
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
-                const pdfPages = [];
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const content = await page.getTextContent();
-                    const lines = [];
-                    let lastY = null;
-                    let lastItemX = 0;
-                    let lineText = '';
-                    for (const item of content.items) {
-                        const itemY = Math.round(item.transform[5] * 100) / 100;
-                        if (lastY !== null && Math.abs(itemY - lastY) > 5) {
-                            if (lineText.trim()) lines.push(lineText.trim());
-                            lineText = item.str;
-                        } else {
-                            if (lineText && item.transform[0] > 0 && Math.abs(item.transform[4] - lastItemX) > 1) {
-                                lineText += ' ' + item.str;
-                            } else {
-                                lineText += item.str;
-                            }
-                        }
-                        lastY = itemY;
-                        lastItemX = item.transform[4];
-                    }
-                    if (lineText.trim()) lines.push(lineText.trim());
-                    pdfPages.push(lines.join('\n'));
-                }
-                
-                const solarData = ls('co_solar') || {
-                    pdfData: null,
-                    items: [],
-                    supplierItems: [],
-                    transformed: false
-                };
-                
-                solarData.pdfData = { name: file.name, size: file.size, numPages: pdf.numPages };
-                solarData.pdfPages = pdfPages;
-                solarData.supplierItems = pdfPages.join('\n---\n').split('\n').filter(l => l.trim().length > 3);
-                
-                ls('co_solar', solarData);
-                const wordCount = solarData.supplierItems.reduce((s, l) => s + l.length, 0);
-                pdfInfoEl.textContent = `✓ ${file.name} — ${pdf.numPages} página(s) extraída(s) (${wordCount} caracteres)`;
-                renderSolarTab();
-            } catch (err) {
-                console.error('PDF extraction error:', err);
-                pdfInfoEl.textContent = '❌ Erro ao extrair dados do PDF. Tente novamente.';
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
+            const pdfPages = [];
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                const text = content.items.map(item => item.str).join(' ');
+                pdfPages.push(text);
             }
-        });
-    }
-});
+            
+            const solarData = ls('co_solar') || {
+                pdfData: null,
+                items: [],
+                supplierItems: [],
+                transformed: false
+            };
+            
+            solarData.pdfData = { name: file.name, size: file.size, numPages: pdf.numPages };
+            solarData.pdfPages = pdfPages;
+            solarData.supplierItems = pdfPages.join('\n').split('\n').filter(l => l.trim().length > 2);
+            
+            ls('co_solar', solarData);
+            const charCount = pdfPages.reduce((s, p) => s + p.length, 0);
+            pdfInfoEl.textContent = '✓ ' + file.name + ' — ' + pdf.numPages + 'p, ' + charCount + ' caracteres extraídos';
+            pdfInfoEl.style.color = 'var(--gr)';
+            renderSolarTab();
+        } catch (err) {
+            console.error('PDF extraction error:', err);
+            pdfInfoEl.textContent = '❌ Erro: ' + (err.message || 'ao extrair PDF');
+            pdfInfoEl.style.color = 'var(--re)';
+        }
+    });
+})();
 
 function addSolarItem() {
     const description = document.getElementById('solarItemDesc').value.trim();
@@ -1036,7 +1031,8 @@ function printSolarBudget() {
     y += 30;
     
     // ===== SECTION 1: FORNECEDOR =====
-    const hasSupplier = solarData.supplierItems && solarData.supplierItems.length > 0;
+    const hasSupplier = (solarData.supplierItems && solarData.supplierItems.length > 0)
+        || (solarData.pdfPages && solarData.pdfPages.length > 0);
     const hasPdfPages = solarData.pdfPages && solarData.pdfPages.length > 0;
     
     if (hasSupplier) {
