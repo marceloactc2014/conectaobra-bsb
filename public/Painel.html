@@ -163,6 +163,19 @@ input,select,button{font-family:'Syne',sans-serif!important;font-size:16px!impor
 .export-btn{background:var(--gr);color:var(--bk);border:none;border-radius:7px;padding:.45rem .9rem;font-weight:700;font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:.3rem;}
 .export-btn:hover{background:#00e07a;}
 
+/* SOLAR TAB STYLES */
+.solar-card{background:var(--card);border:1px solid var(--b2);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem;}
+.solar-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:1rem;text-align:center;}
+.solar-title span{color:var(--o);}
+.solar-section{margin-bottom:1.5rem;}
+.solar-section-title{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--o);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;}
+.solar-input{width:100%;background:var(--bk);border:1.5px solid var(--b2);border-radius:7px;padding:.7rem 1rem;color:var(--w);outline:none;font-size:.88rem!important;transition:border-color .2s;}
+.solar-input:focus{border-color:var(--o);}
+.solar-input::placeholder{color:var(--mu);}
+.solar-btn{width:100%;padding:.8rem;background:var(--o);color:var(--bk);border:none;border-radius:7px;font-weight:800;cursor:pointer;font-size:.88rem;margin-top:0.5rem;transition:all .2s;}
+.solar-btn:hover{background:var(--y);}
+.solar-btn:active{transform:scale(0.98);}
+
 /* EMPTY */
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--tx);}
 .empty-ico{font-size:2.5rem;margin-bottom:.5rem;}
@@ -202,13 +215,14 @@ input,select,button{font-family:'Syne',sans-serif!important;font-size:16px!impor
     </div>
   </div>
 
-  <div class="tabs-wrap">
-    <button class="tab active" onclick="switchTab('visao')">📊 Visão Geral</button>
-    <button class="tab" onclick="switchTab('clientes')">👥 Clientes</button>
-    <button class="tab" onclick="switchTab('profissionais')">🔨 Profissionais</button>
-    <button class="tab" onclick="switchTab('pedidos')">📋 Pedidos</button>
-    <button class="tab" onclick="switchTab('simulador')">🧮 Simulador</button>
-  </div>
+    <div class="tabs-wrap">
+        <button class="tab active" onclick="switchTab('visao')">📊 Visão Geral</button>
+        <button class="tab" onclick="switchTab('clientes')">👥 Clientes</button>
+        <button class="tab" onclick="switchTab('profissionais')">🔨 Profissionais</button>
+        <button class="tab" onclick="switchTab('pedidos')">📋 Pedidos</button>
+        <button class="tab" onclick="switchTab('simulador')">🧮 Simulador</button>
+        <button class="tab" onclick="switchTab('solar')">☀️ Solar</button>
+    </div>
 
   <!-- VISÃO GERAL -->
   <div class="tab-content active" id="tab-visao">
@@ -293,40 +307,85 @@ input,select,button{font-family:'Syne',sans-serif!important;font-size:16px!impor
     <div id="pedidosList"><div class="empty"><div class="empty-ico">📋</div><div class="empty-h">Carregando...</div></div></div>
   </div>
 
-  <!-- SIMULADOR -->
-  <div class="tab-content" id="tab-simulador">
-    <div class="sec-tag">Simulador de comissão</div>
-    <div class="sim-card">
-      <div class="sim-title">Calcula seu <span>ganho</span></div>
-      <div class="sim-row"><span class="sim-lbl">Valor do serviço</span><input type="number" class="sim-inp" id="simValor" placeholder="R$ Ex: 800"></div>
-      <div class="sim-row"><span class="sim-lbl">Chamados/mês</span><input type="number" class="sim-inp" id="simQtd" placeholder="Ex: 30"></div>
-      <button class="sim-btn" onclick="calcSim()">Calcular →</button>
-      <div class="sim-result" id="simResult">
-        <div class="sim-res-row"><span class="sim-res-lbl">Faixa</span><span class="sim-res-val" id="sFaixa">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Comissão/serviço</span><span class="sim-res-val" id="sComUn">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Pro recebe</span><span class="sim-res-val" id="sProUn">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Faturamento/mês</span><span class="sim-res-val" id="sFatMes">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Comissão/mês</span><span class="sim-res-val" id="sComMes">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Comissão/ano</span><span class="sim-res-val" style="font-size:.92rem;color:var(--o)" id="sComAno">—</span></div>
+    <!-- SIMULADOR -->
+    <div class="tab-content" id="tab-simulador">
+      <div class="sec-tag">Simulador de comissão</div>
+      <div class="sim-card">
+        <div class="sim-title">Calcula seu <span>ganho</span></div>
+        <div class="sim-row"><span class="sim-lbl">Valor do serviço</span><input type="number" class="sim-inp" id="simValor" placeholder="R$ Ex: 800"></div>
+        <div class="sim-row"><span class="sim-lbl">Chamados/mês</span><input type="number" class="sim-inp" id="simQtd" placeholder="Ex: 30"></div>
+        <button class="sim-btn" onclick="calcSim()">Calcular →</button>
+        <div class="sim-result" id="simResult">
+          <div class="sim-res-row"><span class="sim-res-lbl">Faixa</span><span class="sim-res-val" id="sFaixa">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Comissão/serviço</span><span class="sim-res-val" id="sComUn">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Pro recebe</span><span class="sim-res-val" id="sProUn">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Faturamento/mês</span><span class="sim-res-val" id="sFatMes">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Comissão/mês</span><span class="sim-res-val" id="sComMes">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Comissão/ano</span><span class="sim-res-val" style="font-size:.92rem;color:var(--o)" id="sComAno">—</span></div>
+        </div>
+      </div>
+
+      <div class="sec-tag">Simulador de volume</div>
+      <div class="sim-card">
+        <div class="sim-title">Com <span>X clientes</span> quanto ganho?</div>
+        <div class="sim-row"><span class="sim-lbl">Clientes cadastrados</span><input type="number" class="sim-inp" id="vClientes" placeholder="Ex: 5000"></div>
+        <div class="sim-row"><span class="sim-lbl">% gera chamado/mês</span><input type="number" class="sim-inp" id="vTaxa" placeholder="Ex: 10"></div>
+        <div class="sim-row"><span class="sim-lbl">Ticket médio (R$)</span><input type="number" class="sim-inp" id="vTicket" placeholder="Ex: 350"></div>
+        <button class="sim-btn" onclick="calcVolume()">Simular →</button>
+        <div class="sim-result" id="simVolResult">
+          <div class="sim-res-row"><span class="sim-res-lbl">Chamados/mês</span><span class="sim-res-val" id="vChamMes">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Chamados/dia</span><span class="sim-res-val" id="vChamDia">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Faturamento/mês</span><span class="sim-res-val" id="vFat">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Comissão/mês</span><span class="sim-res-val" id="vCom">—</span></div>
+          <div class="sim-res-row"><span class="sim-res-lbl">Comissão/ano</span><span class="sim-res-val" style="font-size:.92rem;color:var(--o)" id="vAno">—</span></div>
+        </div>
       </div>
     </div>
 
-    <div class="sec-tag">Simulador de volume</div>
-    <div class="sim-card">
-      <div class="sim-title">Com <span>X clientes</span> quanto ganho?</div>
-      <div class="sim-row"><span class="sim-lbl">Clientes cadastrados</span><input type="number" class="sim-inp" id="vClientes" placeholder="Ex: 5000"></div>
-      <div class="sim-row"><span class="sim-lbl">% gera chamado/mês</span><input type="number" class="sim-inp" id="vTaxa" placeholder="Ex: 10"></div>
-      <div class="sim-row"><span class="sim-lbl">Ticket médio (R$)</span><input type="number" class="sim-inp" id="vTicket" placeholder="Ex: 350"></div>
-      <button class="sim-btn" onclick="calcVolume()">Simular →</button>
-      <div class="sim-result" id="simVolResult">
-        <div class="sim-res-row"><span class="sim-res-lbl">Chamados/mês</span><span class="sim-res-val" id="vChamMes">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Chamados/dia</span><span class="sim-res-val" id="vChamDia">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Faturamento/mês</span><span class="sim-res-val" id="vFat">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Comissão/mês</span><span class="sim-res-val" id="vCom">—</span></div>
-        <div class="sim-res-row"><span class="sim-res-lbl">Comissão/ano</span><span class="sim-res-val" style="font-size:.92rem;color:var(--o)" id="vAno">—</span></div>
+    <!-- SOLAR -->
+    <div class="tab-content" id="tab-solar">
+      <div class="sec-tag">Gestão de Orçamentos Solares</div>
+      <div class="solar-card">
+        <div class="solar-title">Orçamento Solar <span>Meta Obra</span></div>
+        
+        <!-- Upload PDF -->
+        <div class="solar-section">
+          <div class="solar-section-title">📄 Upload do Orçamento do Fornecedor</div>
+          <input type="file" id="solarPdfUpload" accept=".pdf" class="solar-input">
+          <div id="solarPdfInfo" style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--tx);">
+            Nenhum arquivo selecionado
+          </div>
+        </div>
+        
+        <!-- Adicionar Itens -->
+        <div class="solar-section">
+          <div class="solar-section-title">➕ Adicionar Itens ao Orçamento</div>
+          <div class="solar-row">
+            <input type="text" id="solarItemDesc" placeholder="Descrição do item" class="solar-input" style="flex: 1; margin-right: 0.5rem;">
+            <input type="number" id="solarItemQty" placeholder="Qtd" class="solar-input" style="width: 80px; margin-right: 0.5rem;">
+            <input type="number" id="solarItemPrice" placeholder="Preço unitário" class="solar-input" style="width: 100px; margin-right: 0.5rem;">
+            <button class="solar-btn" onclick="addSolarItem()">Adicionar Item</button>
+          </div>
+          <div id="solarItemsList" style="margin-top: 1rem; max-height: 200px; overflow-y: auto; border-top: 1px solid var(--b1); padding-top: 0.5rem;">
+            Nenhum item adicionado
+          </div>
+        </div>
+        
+        <!-- Orçamento Transformado -->
+        <div class="solar-section">
+          <div class="solar-section-title">📋 Orçamento Transformado (Identidade Meta Obra)</div>
+          <div id="solarBudgetDisplay" style="min-height: 150px; background: var(--card); border: 1px solid var(--b2); border-radius: 8px; padding: 1rem; margin-top: 0.5rem;">
+            Nenhum orçamento gerado ainda
+          </div>
+        </div>
+        
+        <!-- Ações -->
+        <div class="solar-section" style="text-align: center; margin-top: 1.5rem;">
+          <button class="solar-btn" onclick="finalizeSolarBudget()" style="margin-right: 1rem;">💾 Finalizar Orçamento</button>
+          <button class="solar-btn" onclick="printSolarBudget()">🖨️ Imprimir Orçamento</button>
+        </div>
       </div>
     </div>
-  </div>
 
 </div>
 
@@ -381,17 +440,18 @@ function doLogout(){
 }
 
 function switchTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>{
-    const ids=['visao','clientes','profissionais','pedidos','simulador'];
-    t.classList.toggle('active',ids[i]===id);
-  });
-  document.querySelectorAll('.tab-content').forEach(c=>{
-    c.classList.toggle('active',c.id==='tab-'+id);
-  });
-  if(id==='clientes')renderLeads();
-  if(id==='profissionais')renderPros();
-  if(id==='pedidos')renderPedidos();
-}
+   document.querySelectorAll('.tab').forEach((t,i)=>{
+     const ids=['visao','clientes','profissionais','pedidos','simulador','solar'];
+     t.classList.toggle('active',ids[i]===id);
+   });
+   document.querySelectorAll('.tab-content').forEach(c=>{
+     c.classList.toggle('active',c.id==='tab-'+id);
+   });
+   if(id==='clientes')renderLeads();
+   if(id==='profissionais')renderPros();
+   if(id==='pedidos')renderPedidos();
+   if(id==='solar')renderSolarTab();
+ }
 
 function getData(){
   const leads=ls('co_leads')||[];
@@ -513,85 +573,208 @@ function renderPros(){
 }
 
 function renderPedidos(){
-  const pedidos=ls('co_pedidos')||[];
-  const el=document.getElementById('pedidosList');
-  if(!pedidos.length){el.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-h">Nenhum pedido ainda</div></div>`;return;}
-  const sm={aguardando:'s-pend',aceito:'s-pend',concluido:'s-ok'};
-  const sl={aguardando:'⏳ Aguardando',aceito:'🔨 A caminho',concluido:'✅ Concluído'};
-  const total=pedidos.reduce((s,p)=>s+(p.total||0),0);
-  const concluidos=pedidos.filter(p=>p.status==='concluido');
-  const receitaTotal=concluidos.reduce((s,p)=>s+(p.total||0),0);
-  el.innerHTML=`
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem">
-      <div class="rel-card"><div class="rel-n">${pedidos.length}</div><div class="rel-l">Total</div></div>
-      <div class="rel-card gr"><div class="rel-n">${concluidos.length}</div><div class="rel-l">Concluídos</div></div>
-      <div class="rel-card ye"><div class="rel-n">R$${fmt(receitaTotal)}</div><div class="rel-l">Receita</div></div>
-    </div>`+
-  pedidos.map(p=>`<div class="ped-item">
-    <div class="ped-top">
-      <div><div class="ped-svc">${p.svcNome}</div><div class="ped-cli">👤 ${p.clienteNome} · 📍 ${p.region}</div></div>
-      <div><div class="ped-val">R$${fmt2(p.total||0)}</div><div class="ped-date">${new Date(p.createdAt).toLocaleDateString('pt-BR')}</div></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.3rem">
-      <span class="status-badge ${sm[p.status]||'s-pend'}">${sl[p.status]||'⏳'}</span>
-      ${p.avaliado?`<div class="ped-aval">${'★'.repeat(p.avaliacao||5)}${'☆'.repeat(5-(p.avaliacao||5))}</div>`:''}
-      <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--mu)">${p.id}</span>
-    </div>
-  </div>`).join('');
+   const pedidos=ls('co_pedidos')||[];
+   const el=document.getElementById('pedidosList');
+   if(!pedidos.length){el.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-h">Nenhum pedido ainda</div></div>`;return;}
+   const sm={aguardando:'s-pend',aceito:'s-pend',concluido:'s-ok'};
+   const sl={aguardando:'⏳ Aguardando',aceito:'🔨 A caminho',concluido:'✅ Concluído'};
+   const total=pedidos.reduce((s,p)=>s+(p.total||0),0);
+   const concluidos=pedidos.filter(p=>p.status==='concluido');
+   const receitaTotal=concluidos.reduce((s,p)=>s+(p.total||0),0);
+   el.innerHTML=`
+     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem">
+       <div class="rel-card"><div class="rel-n">${pedidos.length}</div><div class="rel-l">Total</div></div>
+       <div class="rel-card gr"><div class="rel-n">${concluidos.length}</div><div class="rel-l">Concluídos</div></div>
+       <div class="rel-card ye"><div class="rel-n">R$${fmt(receitaTotal)}</div><div class="rel-l">Receita</div></div>
+     </div>`+
+   pedidos.map(p=>`<div class="ped-item">
+     <div class="ped-top">
+       <div><div class="ped-svc">${p.svcNome}</div><div class="ped-cli">👤 ${p.clienteNome} · 📍 ${p.region}</div></div>
+       <div><div class="ped-val">R$${fmt2(p.total||0)}</div><div class="ped-date">${new Date(p.createdAt).toLocaleDateString('pt-BR')}</div></div>
+     </div>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.3rem">
+       <span class="status-badge ${sm[p.status]||'s-pend'}">${sl[p.status]||'⏳'}</span>
+       ${p.avaliado?`<div class="ped-aval">${'★'.repeat(p.avaliacao||5)}${'☆'.repeat(5-(p.avaliacao||5))}</div>`:''}
+       <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--mu)">${p.id}</span>
+     </div>
+   </div>`).join('');
+ }
+
+ function calcSim(){
+   const v=parseFloat(document.getElementById('simValor').value)||0;
+   const q=parseInt(document.getElementById('simQtd').value)||0;
+   if(!v||!q){alert('Preencha os dois campos');return;}
+   const pct=v<=500?.20:v<=3000?.15:.10;
+   const comUn=v*pct,proUn=v-comUn,fatMes=v*q,comMes=comUn*q,comAno=comMes*12;
+   document.getElementById('sFaixa').textContent=(pct*100).toFixed(0)+'% ('+(v<=500?'R$200–500':v<=3000?'R$500–3k':'R$3k–30k')+')';
+   document.getElementById('sComUn').textContent='R$ '+fmt2(comUn);
+   document.getElementById('sProUn').textContent='R$ '+fmt2(proUn);
+   document.getElementById('sFatMes').textContent='R$ '+fmt2(fatMes);
+   document.getElementById('sComMes').textContent='R$ '+fmt2(comMes);
+   document.getElementById('sComAno').textContent='R$ '+fmt2(comAno);
+   document.getElementById('simResult').style.display='block';
+ }
+
+ function calcVolume(){
+   const c=parseInt(document.getElementById('vClientes').value)||0;
+   const t=parseFloat(document.getElementById('vTaxa').value)||10;
+   const tk=parseFloat(document.getElementById('vTicket').value)||350;
+   if(!c){alert('Informe os clientes');return;}
+   const chamMes=Math.round(c*(t/100)),chamDia=(chamMes/30).toFixed(1);
+   const fatMes=chamMes*tk,comMes=fatMes*.15,comAno=comMes*12;
+   document.getElementById('vChamMes').textContent=chamMes+' chamados';
+   document.getElementById('vChamDia').textContent=chamDia+'/dia';
+   document.getElementById('vFat').textContent='R$ '+fmt2(fatMes);
+   document.getElementById('vCom').textContent='R$ '+fmt2(comMes);
+   document.getElementById('vAno').textContent='R$ '+fmt2(comAno);
+   document.getElementById('simVolResult').style.display='block';
+ }
+
+ function exportCSV(tipo){
+   if(tipo==='clientes'){
+     const {clientes}=getData();
+     const h='Nome,WhatsApp,Região,Serviços,Urgência,Dificuldade,Data\n';
+     const r=clientes.map(l=>`"${l.name}","${l.phone}","${l.region||''}","${(l.services||[]).join('|')}","${l.urgency||''}","${l.dificuldade||''}","${new Date(l.createdAt).toLocaleString('pt-BR')}"`).join('\n');
+     dl('clientes_metaobra.csv',h+r);
+   } else if(tipo==='pros'){
+     const {pros}=getData();
+     const h='Nome,WhatsApp,CEP,Especialidades,Experiência,Status,Data\n';
+     const r=pros.map(p=>`"${p.name}","${p.phone}","${p.cep||p.region||''}","${(p.services||p.specs||[]).join('|')}","${p.exp||''}","${p.status||'pendente'}","${new Date(p.createdAt).toLocaleString('pt-BR')}"`).join('\n');
+     dl('profissionais_metaobra.csv',h+r);
+   } else if(tipo==='pedidos'){
+     const pedidos=ls('co_pedidos')||[];
+     const h='ID,Cliente,Serviço,Região,Valor,Pagamento,Status,Avaliação,Data\n';
+     const r=pedidos.map(p=>`"${p.id}","${p.clienteNome}","${p.svcNome}","${p.region}","${p.total}","${p.pagamento||''}","${p.status}","${p.avaliacao||''}","${new Date(p.createdAt).toLocaleString('pt-BR')}"`).join('\n');
+     dl('pedidos_metaobra.csv',h+r);
+   }
+ }
+
+ function dl(name,content){
+   const blob=new Blob([content],{type:'text/csv;charset=utf-8;'});
+   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
+ }
+
+// SOLAR TAB FUNCTIONS
+function switchToSolarTab() {
+   switchTab('solar');
 }
 
-function calcSim(){
-  const v=parseFloat(document.getElementById('simValor').value)||0;
-  const q=parseInt(document.getElementById('simQtd').value)||0;
-  if(!v||!q){alert('Preencha os dois campos');return;}
-  const pct=v<=500?.20:v<=3000?.15:.10;
-  const comUn=v*pct,proUn=v-comUn,fatMes=v*q,comMes=comUn*q,comAno=comMes*12;
-  document.getElementById('sFaixa').textContent=(pct*100).toFixed(0)+'% ('+(v<=500?'R$200–500':v<=3000?'R$500–3k':'R$3k–30k')+')';
-  document.getElementById('sComUn').textContent='R$ '+fmt2(comUn);
-  document.getElementById('sProUn').textContent='R$ '+fmt2(proUn);
-  document.getElementById('sFatMes').textContent='R$ '+fmt2(fatMes);
-  document.getElementById('sComMes').textContent='R$ '+fmt2(comMes);
-  document.getElementById('sComAno').textContent='R$ '+fmt2(comAno);
-  document.getElementById('simResult').style.display='block';
+function renderSolarTab() {
+   // Load solar data if exists
+   const solarData = ls('co_solar') || {
+       pdfData: null,
+       items: [],
+       transformed: false
+   };
+   
+   // Update PDF info
+   const pdfInfoEl = document.getElementById('solarPdfInfo');
+   if (solarData.pdfData) {
+       pdfInfoEl.textContent = `Arquivo: ${solarData.pdfData.name} (${(solarData.pdfData.size / 1024 / 1024).toFixed(2)} MB)`;
+   } else {
+       pdfInfoEl.textContent = 'Nenhum arquivo selecionado';
+   }
+   
+   // Update items list
+   const itemsListEl = document.getElementById('solarItemsList');
+   if (solarData.items.length === 0) {
+       itemsListEl.innerHTML = 'Nenhum item adicionado';
+   } else {
+       itemsListEl.innerHTML = solarData.items.map(item => `
+           <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--b1);">
+               <span>${item.description}</span>
+               <span>R$ ${(item.quantity * item.unitPrice).toFixed(2)} (${item.quantity} x R$ ${item.unitPrice.toFixed(2)})</span>
+           </div>
+       `).join('');
+   }
+   
+   // Update budget display if transformed
+   const budgetDisplayEl = document.getElementById('solarBudgetDisplay');
+   if (solarData.transformed) {
+       const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+       budgetDisplayEl.innerHTML = `
+           <div style="margin-bottom: 1rem;">
+               <strong>Orçamento Solar Transformado - Identidade Meta Obra</strong>
+           </div>
+           ${solarData.items.map(item => `
+               <div style="margin: 0.5rem 0; padding: 0.5rem; background: var(--card); border-left: 3px solid var(--o); border-radius: 0 4px 4px 0;">
+                   <div>${item.description}</div>
+                   <div style="font-size: 0.9rem; color: var(--tx);">${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}</div>
+               </div>
+           `).join('')}
+           <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--b1); font-weight: bold; text-align: right;">
+               Total: R$ ${total.toFixed(2)}
+           </div>
+       `;
+   } else {
+       budgetDisplayEl.innerHTML = 'Nenhum orçamento gerado ainda';
+   }
 }
 
-function calcVolume(){
-  const c=parseInt(document.getElementById('vClientes').value)||0;
-  const t=parseFloat(document.getElementById('vTaxa').value)||10;
-  const tk=parseFloat(document.getElementById('vTicket').value)||350;
-  if(!c){alert('Informe os clientes');return;}
-  const chamMes=Math.round(c*(t/100)),chamDia=(chamMes/30).toFixed(1);
-  const fatMes=chamMes*tk,comMes=fatMes*.15,comAno=comMes*12;
-  document.getElementById('vChamMes').textContent=chamMes+' chamados';
-  document.getElementById('vChamDia').textContent=chamDia+'/dia';
-  document.getElementById('vFat').textContent='R$ '+fmt2(fatMes);
-  document.getElementById('vCom').textContent='R$ '+fmt2(comMes);
-  document.getElementById('vAno').textContent='R$ '+fmt2(comAno);
-  document.getElementById('simVolResult').style.display='block';
+function addSolarItem() {
+   const description = document.getElementById('solarItemDesc').value.trim();
+   const quantity = parseInt(document.getElementById('solarItemQty').value);
+   const unitPrice = parseFloat(document.getElementById('solarItemPrice').value);
+   
+   if (!description || isNaN(quantity) || quantity <= 0 || isNaN(unitPrice) || unitPrice < 0) {
+       alert('Por favor, preencha todos os campos corretamente');
+       return;
+   }
+   
+   const solarData = ls('co_solar') || {
+       pdfData: null,
+       items: [],
+       transformed: false
+   };
+   
+   solarData.items.push({
+       description,
+       quantity,
+       unitPrice
+   });
+   
+   ss('co_solar', solarData);
+   renderSolarTab();
+   
+   // Clear form
+   document.getElementById('solarItemDesc').value = '';
+   document.getElementById('solarItemQty').value = '';
+   document.getElementById('solarItemPrice').value = '';
 }
 
-function exportCSV(tipo){
-  if(tipo==='clientes'){
-    const {clientes}=getData();
-    const h='Nome,WhatsApp,Região,Serviços,Urgência,Dificuldade,Data\n';
-    const r=clientes.map(l=>`"${l.name}","${l.phone}","${l.region||''}","${(l.services||[]).join('|')}","${l.urgency||''}","${l.dificuldade||''}","${new Date(l.createdAt).toLocaleString('pt-BR')}"`).join('\n');
-    dl('clientes_metaobra.csv',h+r);
-  } else if(tipo==='pros'){
-    const {pros}=getData();
-    const h='Nome,WhatsApp,CEP,Especialidades,Experiência,Status,Data\n';
-    const r=pros.map(p=>`"${p.name}","${p.phone}","${p.cep||p.region||''}","${(p.services||p.specs||[]).join('|')}","${p.exp||''}","${p.status||'pendente'}","${new Date(p.createdAt).toLocaleString('pt-BR')}"`).join('\n');
-    dl('profissionais_metaobra.csv',h+r);
-  } else if(tipo==='pedidos'){
-    const pedidos=ls('co_pedidos')||[];
-    const h='ID,Cliente,Serviço,Região,Valor,Pagamento,Status,Avaliação,Data\n';
-    const r=pedidos.map(p=>`"${p.id}","${p.clienteNome}","${p.svcNome}","${p.region}","${p.total}","${p.pagamento||''}","${p.status}","${p.avaliacao||''}","${new Date(p.createdAt).toLocaleString('pt-BR')}"`).join('\n');
-    dl('pedidos_metaobra.csv',h+r);
-  }
+function finalizeSolarBudget() {
+   const solarData = ls('co_solar') || {
+       pdfData: null,
+       items: [],
+       transformed: false
+   };
+   
+   if (solarData.items.length === 0) {
+       alert('Adicione pelo menos um item ao orçamento antes de finalizar');
+       return;
+   }
+   
+   solarData.transformed = true;
+   ss('co_solar', solarData);
+   renderSolarTab();
+   alert('Orçamento finalizado com identidade Meta Obra aplicada!');
 }
 
-function dl(name,content){
-  const blob=new Blob([content],{type:'text/csv;charset=utf-8;'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
+function printSolarBudget() {
+   const solarData = ls('co_solar') || {
+       pdfData: null,
+       items: [],
+       transformed: false
+   };
+   
+   if (!solarData.transformed) {
+       alert('Finalize o orçamento antes de imprimir');
+       return;
+   }
+   
+   // In a real app, this would generate a PDF for printing
+   // For now, we'll just show a message
+   alert('Funcionalidade de impressão seria implementada em um ambiente real, gerando um PDF com a identidade visual da Meta Obra');
 }
 </script>
 </body>
