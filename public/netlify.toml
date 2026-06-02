@@ -1,0 +1,32 @@
+# ============================================================
+# netlify.toml — Configuração do projeto MetaObra no Netlify
+# Coloque este arquivo na RAIZ do repositório GitHub
+# ============================================================
+
+[build]
+  # Pasta onde está o Painel.html (ajuste se necessário)
+  publish = "."
+
+  # Netlify instala as dependências das functions automaticamente
+  command = ""
+
+[functions]
+  # Pasta das serverless functions
+  directory = "netlify/functions"
+
+  # Runtime Node.js
+  node_bundler = "esbuild"
+
+# Cabeçalhos de segurança para o painel
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options         = "DENY"
+    X-Content-Type-Options  = "nosniff"
+    Referrer-Policy         = "strict-origin-when-cross-origin"
+
+# Rota da function (opcional — já funciona pelo caminho padrão)
+[[redirects]]
+  from   = "/api/solar/extrair-pdf"
+  to     = "/.netlify/functions/extrair-pdf"
+  status = 200
