@@ -1,1 +1,8 @@
-
+{
+  "name": "metaobra-painel",
+  "version": "1.0.0",
+  "description": "MetaObra — Painel ADM + Netlify Functions",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.3"
+  }
+}
