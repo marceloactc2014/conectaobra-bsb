@@ -177,6 +177,78 @@ input,select,button{font-family:'Syne',sans-serif!important;font-size:16px!impor
 .solar-btn{width:100%;padding:.8rem;background:var(--o);color:var(--bk);border:none;border-radius:7px;font-weight:800;cursor:pointer;font-size:.88rem;margin-top:0.5rem;transition:all .2s;}
 .solar-btn:hover{background:var(--y);}
 .solar-btn:active{transform:scale(0.98);}
+/* Upload zone */
+.upload-zone{border:2px dashed var(--b2);border-radius:10px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--o);background:rgba(255,92,0,.05);}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-zone-ico{font-size:2rem;margin-bottom:.5rem;}
+.upload-zone-lbl{font-size:.8rem;color:var(--tx);}
+.upload-zone-sub{font-size:.65rem;color:var(--mu);margin-top:.25rem;}
+/* Status pill */
+.status-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:20px;font-size:.65rem;font-weight:700;letter-spacing:.05em;}
+.pill-ok{background:rgba(0,196,106,.12);color:var(--gr);border:1px solid rgba(0,196,106,.25);}
+.pill-warn{background:rgba(255,208,0,.12);color:var(--y);border:1px solid rgba(255,208,0,.25);}
+.pill-err{background:rgba(255,59,59,.12);color:var(--re);border:1px solid rgba(255,59,59,.25);}
+.pill-info{background:rgba(77,184,255,.12);color:var(--bl);border:1px solid rgba(77,184,255,.25);}
+/* Extracted cards */
+.ext-card{background:var(--b1);border-radius:8px;padding:.7rem .9rem;margin-bottom:.4rem;}
+.ext-card-name{font-size:.82rem;font-weight:600;color:var(--w);}
+.ext-card-meta{font-size:.68rem;color:var(--tx);margin-top:.2rem;}
+.ext-card-val{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--o);float:right;}
+/* Items adicionados */
+.item-row{display:flex;align-items:center;gap:.5rem;padding:.55rem .7rem;background:var(--b1);border-radius:7px;margin-bottom:.35rem;border-left:3px solid var(--o);}
+.item-row-desc{flex:1;font-size:.8rem;}
+.item-row-val{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--o);white-space:nowrap;}
+.item-row-rm{background:rgba(255,59,59,.15);color:var(--re);border:none;border-radius:4px;width:24px;height:24px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
+/* Preview orçamento */
+.orcamento-preview{background:linear-gradient(145deg,#0d0d0d,#121212);border:1px solid rgba(255,92,0,.2);border-radius:12px;overflow:hidden;}
+.orc-header{background:var(--bk);padding:1.5rem;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--o);}
+.orc-brand{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;}
+.orc-brand em{color:var(--o);font-style:normal;}
+.orc-brand-sub{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--tx);letter-spacing:.15em;margin-top:.15rem;}
+.orc-num{text-align:right;}
+.orc-num-id{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--o);}
+.orc-num-dt{font-size:.65rem;color:var(--tx);}
+.orc-body{padding:1.2rem;}
+.orc-section-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--o);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;}
+.orc-section-label::after{content:'';flex:1;height:1px;background:rgba(255,92,0,.2);}
+.orc-table{width:100%;border-collapse:collapse;margin-bottom:1rem;}
+.orc-table th{background:var(--bk);color:var(--tx);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:.45rem .6rem;text-align:left;}
+.orc-table th:last-child{text-align:right;}
+.orc-table td{padding:.45rem .6rem;font-size:.75rem;border-bottom:1px solid var(--b1);color:var(--w);}
+.orc-table td:last-child{text-align:right;font-family:'JetBrains Mono',monospace;color:var(--o);}
+.orc-table tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+.orc-total-box{background:var(--bk);border:1px solid rgba(255,92,0,.3);border-radius:8px;padding:.9rem 1rem;display:flex;justify-content:space-between;align-items:center;margin-top:.8rem;}
+.orc-total-lbl{font-size:.7rem;color:var(--tx);text-transform:uppercase;letter-spacing:.1em;}
+.orc-total-val{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--o);}
+.orc-badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.8rem;}
+.orc-badge{background:rgba(0,196,106,.08);border:1px solid rgba(0,196,106,.18);color:var(--gr);font-size:.6rem;padding:.18rem .5rem;border-radius:3px;}
+.orc-footer{background:var(--bk);border-top:1px solid var(--b1);padding:.8rem 1.2rem;display:flex;justify-content:space-between;align-items:center;}
+.orc-footer-brand{font-size:.65rem;color:var(--tx);}
+.orc-footer-contact{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--o);}
+/* Loading spinner */
+.solar-loading{display:none;text-align:center;padding:1.5rem;}
+.solar-loading.active{display:block;}
+.solar-spin{display:inline-block;width:28px;height:28px;border:3px solid var(--b2);border-top-color:var(--o);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:.5rem;}
+.solar-load-txt{font-size:.75rem;color:var(--tx);}
+/* Fornecedor summary card */
+.forn-summary{background:var(--b1);border:1px solid var(--b2);border-radius:10px;padding:1rem;margin-bottom:.5rem;}
+.forn-summary-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
+.forn-title{font-size:.82rem;font-weight:700;color:var(--w);}
+.forn-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-top:.6rem;}
+.forn-kpi{background:var(--bk);border-radius:6px;padding:.4rem .5rem;text-align:center;}
+.forn-kpi-n{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--o);}
+.forn-kpi-l{font-size:.55rem;color:var(--tx);text-transform:uppercase;}
+/* Btn row */
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap;}
+.btn-row .solar-btn{flex:1;min-width:120px;margin-top:0;}
+.btn-sec{background:var(--b2);color:var(--w);}
+.btn-sec:hover{background:var(--b1);}
+.btn-gr{background:var(--gr);color:var(--bk);}
+.btn-gr:hover{background:#00e07a;}
+/* campos inline */
+.add-item-grid{display:grid;grid-template-columns:1fr 70px 100px auto;gap:.4rem;align-items:end;}
+@media(max-width:480px){.add-item-grid{grid-template-columns:1fr 1fr;}.add-item-grid .solar-btn{grid-column:1/-1;}}
 
 /* EMPTY */
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--tx);}
@@ -347,50 +419,70 @@ input,select,button{font-family:'Syne',sans-serif!important;font-size:16px!impor
     <!-- SOLAR -->
     <div class="tab-content" id="tab-solar">
       <div class="sec-tag">Gestão de Orçamentos Solares</div>
-      <div class="solar-card">
-        <div class="solar-title">Orçamento Solar <span>Meta Obra</span></div>
-        
-        <!-- Upload PDF -->
+
+      <!-- STEP 1: UPLOAD -->
+      <div class="solar-card" id="solarStep1">
+        <div class="solar-title">☀️ Integração de <span>Orçamento Solar</span></div>
+
         <div class="solar-section">
-          <div class="solar-section-title">📄 Upload do Orçamento do Fornecedor</div>
-          <input type="file" id="solarPdfUpload" accept=".pdf" class="solar-input">
-          <div id="solarPdfInfo" style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--tx);">
-            Nenhum arquivo selecionado
+          <div class="solar-section-title">📄 PASSO 1 — Upload do PDF do Fornecedor</div>
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="solarPdfUpload" accept=".pdf">
+            <div class="upload-zone-ico">📋</div>
+            <div class="upload-zone-lbl">Arraste o PDF do fornecedor aqui</div>
+            <div class="upload-zone-sub">ou clique para selecionar · Suporta qualquer orçamento solar</div>
           </div>
+          <div id="solarPdfInfo" style="margin-top:.6rem;font-size:.78rem;color:var(--tx);"></div>
         </div>
-        
-        <!-- Fornecedor Itens Extraídos -->
-        <div class="solar-section" id="solarSupplierItemsSection" style="display:none;">
-          <div class="solar-section-title">🏭 Itens do Fornecedor (Extraídos)</div>
-          <div id="solarSupplierItemsList" style="margin-top: 0.5rem; max-height: 250px; overflow-y: auto; border-top: 1px solid var(--b1); padding-top: 0.5rem;"></div>
+
+        <!-- Loading IA -->
+        <div class="solar-loading" id="solarLoading">
+          <div class="solar-spin"></div>
+          <div class="solar-load-txt" id="solarLoadTxt">Lendo PDF com IA...</div>
         </div>
-        
-        <!-- Adicionar Itens -->
+
+        <!-- Fornecedor extraído -->
+        <div class="solar-section" id="solarFornSection" style="display:none;">
+          <div class="solar-section-title">🏭 DADOS DO FORNECEDOR — Extraídos pela IA</div>
+          <div id="solarFornSummary"></div>
+          <div id="solarFornEquipList" style="max-height:260px;overflow-y:auto;margin-top:.5rem;"></div>
+        </div>
+
+        <!-- Botão processar -->
+        <div id="solarProcessBtn" style="display:none;">
+          <button class="solar-btn btn-gr" onclick="processSolarPdf()">⚡ Processar PDF com IA →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: ADICIONAR ITENS -->
+      <div class="solar-card" id="solarStep2" style="display:none;">
         <div class="solar-section">
-          <div class="solar-section-title">➕ Adicionar Itens ao Orçamento</div>
-          <div class="solar-row">
-            <input type="text" id="solarItemDesc" placeholder="Descrição do item" class="solar-input" style="flex: 1; margin-right: 0.5rem;">
-            <input type="number" id="solarItemQty" placeholder="Qtd" class="solar-input" style="width: 80px; margin-right: 0.5rem;">
-            <input type="number" id="solarItemPrice" placeholder="Preço unitário" class="solar-input" style="width: 100px; margin-right: 0.5rem;">
-            <button class="solar-btn" onclick="addSolarItem()">Adicionar Item</button>
+          <div class="solar-section-title">➕ PASSO 2 — Adicionar Itens Meta Obra (opcional)</div>
+          <div class="add-item-grid">
+            <input type="text" id="solarItemDesc" placeholder="Ex: Engenharia e Homologação" class="solar-input">
+            <input type="number" id="solarItemQty" placeholder="Qtd" class="solar-input" min="1" value="1">
+            <input type="number" id="solarItemPrice" placeholder="R$ unit." class="solar-input" min="0" step="0.01">
+            <button class="solar-btn" onclick="addSolarItem()" style="padding:.7rem;margin-top:0;">+ Add</button>
           </div>
-          <div id="solarItemsList" style="margin-top: 1rem; max-height: 200px; overflow-y: auto; border-top: 1px solid var(--b1); padding-top: 0.5rem;">
-            Nenhum item adicionado
-          </div>
+          <div id="solarItemsList" style="margin-top:.7rem;"></div>
         </div>
-        
-        <!-- Orçamento Transformado -->
+
+        <div class="btn-row">
+          <button class="solar-btn btn-sec" onclick="resetSolar()">↩ Recomeçar</button>
+          <button class="solar-btn" onclick="gerarOrcamentoFinal()">📄 Gerar Orçamento Premium →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: PREVIEW ORÇAMENTO -->
+      <div class="solar-card" id="solarStep3" style="display:none;">
         <div class="solar-section">
-          <div class="solar-section-title">📋 Orçamento Transformado (Identidade Meta Obra)</div>
-          <div id="solarBudgetDisplay" style="min-height: 150px; background: var(--card); border: 1px solid var(--b2); border-radius: 8px; padding: 1rem; margin-top: 0.5rem;">
-            Nenhum orçamento gerado ainda
-          </div>
+          <div class="solar-section-title">🏆 PASSO 3 — Orçamento Premium Meta Obra</div>
+          <div id="solarOrcamentoPreview"></div>
         </div>
-        
-        <!-- Ações -->
-        <div class="solar-section" style="text-align: center; margin-top: 1.5rem;">
-          <button class="solar-btn" onclick="finalizeSolarBudget()" style="margin-right: 1rem;">💾 Finalizar Orçamento</button>
-          <button class="solar-btn" onclick="printSolarBudget()">🖨️ Imprimir Orçamento</button>
+        <div class="btn-row" style="margin-top:.7rem;">
+          <button class="solar-btn btn-sec" onclick="backToStep2()">← Editar Itens</button>
+          <button class="solar-btn btn-gr" onclick="exportarPdfPremium()">⬇ Exportar PDF Premium</button>
+          <button class="solar-btn" onclick="resetSolar()">🆕 Novo Orçamento</button>
         </div>
       </div>
     </div>
@@ -662,604 +754,566 @@ function renderPedidos(){
    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
  }
 
-// SOLAR TAB FUNCTIONS
-function switchToSolarTab() {
-   switchTab('solar');
+// ============================================================
+// SOLAR TAB — v2: Integração com IA (Claude API) 
+// ============================================================
+
+// Estado global solar
+let _solarState = null;
+
+function getSolar() {
+  if (!_solarState) _solarState = ls('co_solar_v2') || { step: 0, pdfName: '', pdfBase64: '', fornData: null, items: [], orcId: '' };
+  return _solarState;
+}
+function setSolar(d) { _solarState = d; ss('co_solar_v2', d); }
+function resetSolar() {
+  _solarState = { step: 0, pdfName: '', pdfBase64: '', fornData: null, items: [], orcId: '' };
+  ss('co_solar_v2', _solarState);
+  renderSolarTab();
+}
+function backToStep2() {
+  const s = getSolar(); s.step = 2; setSolar(s);
+  renderSolarTab();
 }
 
 function renderSolarTab() {
-    // Load solar data if exists
-    const solarData = ls('co_solar') || {
-        pdfData: null,
-        items: [],
-        supplierItems: [],
-        transformed: false
-    };
-    
-    // Update PDF info
-    const pdfInfoEl = document.getElementById('solarPdfInfo');
-    if (solarData.pdfPages && solarData.pdfPages.length > 0) {
-        const charCount = solarData.pdfPages.reduce((s, p) => s + p.length, 0);
-        pdfInfoEl.textContent = '✓ ' + (solarData.pdfData ? solarData.pdfData.name : 'PDF') + ' — ' + solarData.pdfPages.length + 'p, ' + charCount + ' caracteres';
-        pdfInfoEl.style.color = 'var(--gr)';
-    } else if (solarData.pdfData) {
-        pdfInfoEl.textContent = 'Arquivo: ' + solarData.pdfData.name + ' (' + (solarData.pdfData.size / 1024 / 1024).toFixed(2) + ' MB)';
-        pdfInfoEl.style.color = 'var(--tx)';
-    } else {
-        pdfInfoEl.textContent = 'Nenhum arquivo selecionado';
-        pdfInfoEl.style.color = 'var(--tx)';
-    }
-    
-    // Update supplier items display
-    const supplierSection = document.getElementById('solarSupplierItemsSection');
-    const supplierListEl = document.getElementById('solarSupplierItemsList');
-    if (solarData.pdfPages && solarData.pdfPages.length > 0) {
-        supplierSection.style.display = '';
-        let html = `<div style="margin-bottom: 0.5rem; padding: 0.3rem; background: var(--b1); border-radius: 4px; font-size: 0.8rem; color: var(--o);">
-            ${solarData.pdfData.name} — ${solarData.pdfPages.length} página(s) extraída(s)
-        </div>`;
-        solarData.pdfPages.forEach((pageText, pi) => {
-            const preview = pageText.slice(0, 300) + (pageText.length > 300 ? '...' : '');
-            html += `<div style="margin-bottom: 0.5rem;">
-                <div style="font-size: 0.75rem; color: var(--tx); margin-bottom: 0.25rem;">Página ${pi+1}:</div>
-                <pre style="font-size: 0.7rem; color: var(--w); white-space: pre-wrap; max-height: 150px; overflow-y: auto; background: var(--b2); padding: 0.4rem; border-radius: 4px; line-height: 1.3;">${preview.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
-            </div>`;
-        });
-        supplierListEl.innerHTML = html;
-    } else if (solarData.supplierItems && solarData.supplierItems.length > 0) {
-        supplierSection.style.display = '';
-        const previewHtml = solarData.supplierItems.slice(0, 50).map((item, i) => `
-            <div style="display: flex; padding: 0.3rem 0; border-bottom: 1px solid var(--b1); font-size: 0.8rem;">
-                <span>${i+1}. ${item.slice(0, 120)}</span>
-            </div>
-        `).join('');
-        supplierListEl.innerHTML = previewHtml + (solarData.supplierItems.length > 50 ? `<div style="font-size: 0.75rem; color: var(--tx); padding: 0.3rem;">...e mais ${solarData.supplierItems.length - 50} linhas</div>` : '');
-    } else {
-        supplierSection.style.display = 'none';
-    }
-    
-    // Update items list
-    const itemsListEl = document.getElementById('solarItemsList');
-    if (solarData.items.length === 0) {
-        itemsListEl.innerHTML = 'Nenhum item adicionado';
-    } else {
-        itemsListEl.innerHTML = solarData.items.map((item, index) => `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--b1);">
-                <div style="flex: 1;">
-                    <span>${item.description}</span>
-                </div>
-                <div style="flex: 1; text-align: right;">
-                    <span>R$ ${(item.quantity * item.unitPrice).toFixed(2)} (${item.quantity} x R$ ${item.unitPrice.toFixed(2)})</span>
-                </div>
-                <div style="width: 30px; text-align: center;">
-                    <button onclick="removeSolarItem(${index})" style="background: var(--re); color: var(--bk); border: none; border-radius: 3px; padding: 0.2rem 0.5rem; font-size: 0.8rem; cursor: pointer;">×</button>
-                </div>
-            </div>
-        `).join('');
-    }
-    
-    // Update budget display if transformed
-    const budgetDisplayEl = document.getElementById('solarBudgetDisplay');
-    if (solarData.transformed) {
-        const hasSupplier = (solarData.supplierItems && solarData.supplierItems.length > 0)
-            || (solarData.pdfPages && solarData.pdfPages.length > 0);
-        const total = solarData.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-        let html = `
-            <div style="margin-bottom: 1rem;">
-                <strong>Orçamento Solar Transformado - Identidade Meta Obra</strong>
-            </div>`;
-        
-        if (hasSupplier) {
-            let suppHtml = `<div style="margin-bottom: 0.75rem; padding: 0.5rem; background: var(--b1); border-radius: 6px;">
-                <div style="font-size: 0.8rem; color: var(--o); font-weight: bold;">ORÇAMENTO DO FORNECEDOR</div>`;
-            if (solarData.pdfPages) {
-                solarData.pdfPages.forEach((pageText, pi) => {
-                    const lines = pageText.split('\n').filter(l => l.trim());
-                    suppHtml += `<div style="font-size: 0.7rem; color: var(--tx); margin-top: 0.5rem;">— Página ${pi+1} —</div>`;
-                    lines.slice(0, 30).forEach(l => {
-                        suppHtml += `<div style="font-size: 0.7rem; color: var(--w); padding: 0.1rem 0;">${l.replace(/</g, '&lt;')}</div>`;
-                    });
-                    if (lines.length > 30) {
-                        suppHtml += `<div style="font-size: 0.65rem; color: var(--tx);">...mais ${lines.length - 30} linha(s)</div>`;
-                    }
-                });
-            } else {
-                solarData.supplierItems.slice(0, 50).forEach(s => {
-                    suppHtml += `<div style="font-size: 0.75rem; color: var(--tx); padding: 0.12rem 0;">${s.replace(/</g, '&lt;')}</div>`;
-                });
-            }
-            suppHtml += '</div>';
-            html += suppHtml;
-        }
-        
-        html += `<div style="font-size: 0.8rem; color: var(--o); font-weight: bold; margin-bottom: 0.5rem;">ITENS ACRESCENTADOS (META OBRA)</div>`;
-        html += solarData.items.map(item => `
-            <div style="margin: 0.5rem 0; padding: 0.5rem; background: var(--card); border-left: 3px solid var(--o); border-radius: 0 4px 4px 0;">
-                <div>${item.description}</div>
-                <div style="font-size: 0.9rem; color: var(--tx);">${item.quantity} x R$ ${item.unitPrice.toFixed(2)} = R$ ${(item.quantity * item.unitPrice).toFixed(2)}</div>
-            </div>
-        `).join('');
-        html += `<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--b1); font-weight: bold; text-align: right;">
-            Total Meta Obra: R$ ${total.toFixed(2)}
-        </div>`;
-        
-        budgetDisplayEl.innerHTML = html;
-    } else {
-        budgetDisplayEl.innerHTML = 'Nenhum orçamento gerado ainda';
-    }
+  const s = getSolar();
+  document.getElementById('solarStep1').style.display = s.step <= 1 ? '' : 'none';
+  document.getElementById('solarStep2').style.display = s.step >= 2 ? '' : 'none';
+  document.getElementById('solarStep3').style.display = s.step >= 3 ? '' : 'none';
+
+  // Step 1 state
+  const infoEl = document.getElementById('solarPdfInfo');
+  const procBtn = document.getElementById('solarProcessBtn');
+  const fornSec = document.getElementById('solarFornSection');
+
+  if (s.step === 0) {
+    infoEl.innerHTML = '';
+    procBtn.style.display = 'none';
+    fornSec.style.display = 'none';
+  } else if (s.step === 1) {
+    infoEl.innerHTML = `<span class="status-pill pill-ok">✓ ${s.pdfName}</span>`;
+    procBtn.style.display = '';
+    fornSec.style.display = 'none';
+  } else if (s.step >= 2) {
+    infoEl.innerHTML = `<span class="status-pill pill-ok">✓ ${s.pdfName} — dados extraídos pela IA</span>`;
+    procBtn.style.display = 'none';
+    renderFornData();
+    fornSec.style.display = '';
+  }
+
+  // Step 2: items
+  renderItemsList();
+
+  // Step 3: preview
+  if (s.step === 3) renderPreviewOrcamento();
 }
 
-// PDF upload handler with text extraction
+function renderFornData() {
+  const s = getSolar();
+  const fd = s.fornData;
+  if (!fd) return;
+
+  const summEl = document.getElementById('solarFornSummary');
+  summEl.innerHTML = `<div class="forn-summary">
+    <div class="forn-summary-header">
+      <span class="forn-title">${fd.fornecedor || 'Fornecedor'}</span>
+      <span class="status-pill pill-info">IA</span>
+    </div>
+    <div style="font-size:.72rem;color:var(--tx);margin-bottom:.5rem;">${fd.cliente ? '👤 ' + fd.cliente : ''} ${fd.potencia ? '⚡ ' + fd.potencia : ''} ${fd.consumo ? '📊 ' + fd.consumo + '/mês' : ''}</div>
+    <div class="forn-kpis">
+      <div class="forn-kpi"><div class="forn-kpi-n">${fd.equipamentos ? fd.equipamentos.length : 0}</div><div class="forn-kpi-l">Equipamentos</div></div>
+      <div class="forn-kpi"><div class="forn-kpi-n">${fd.valor_total ? 'R$' + fd.valor_total.replace('R$','').replace('R$ ','').trim() : '—'}</div><div class="forn-kpi-l">Valor total</div></div>
+      <div class="forn-kpi"><div class="forn-kpi-n">${fd.garantias ? fd.garantias.length : 0}</div><div class="forn-kpi-l">Garantias</div></div>
+    </div>
+  </div>`;
+
+  const equipEl = document.getElementById('solarFornEquipList');
+  if (fd.equipamentos && fd.equipamentos.length) {
+    equipEl.innerHTML = fd.equipamentos.map(eq => `
+      <div class="ext-card">
+        <span class="ext-card-val">${eq.quantidade ? eq.quantidade + ' un' : ''}</span>
+        <div class="ext-card-name">${eq.nome || eq}</div>
+        ${eq.especificacao ? `<div class="ext-card-meta">${eq.especificacao}</div>` : ''}
+      </div>`).join('');
+  } else if (fd.itens_brutos && fd.itens_brutos.length) {
+    equipEl.innerHTML = fd.itens_brutos.slice(0, 20).map(it => `<div class="ext-card"><div class="ext-card-name">${it}</div></div>`).join('');
+  } else {
+    equipEl.innerHTML = `<div class="ext-card"><div class="ext-card-meta" style="color:var(--tx)">Nenhum equipamento identificado</div></div>`;
+  }
+}
+
+function renderItemsList() {
+  const s = getSolar();
+  const el = document.getElementById('solarItemsList');
+  if (!el) return;
+  if (!s.items || s.items.length === 0) {
+    el.innerHTML = `<div style="font-size:.72rem;color:var(--mu);padding:.4rem 0;">Nenhum item adicionado. Os serviços da Meta Obra serão incluídos no orçamento gerado.</div>`;
+    return;
+  }
+  const total = s.items.reduce((a, i) => a + i.qty * i.price, 0);
+  el.innerHTML = s.items.map((item, idx) => `
+    <div class="item-row">
+      <div class="item-row-desc">${item.desc}</div>
+      <div class="item-row-val">${item.qty}x R$${item.price.toFixed(2)} = <strong>R$${(item.qty * item.price).toFixed(2)}</strong></div>
+      <button class="item-row-rm" onclick="removeSolarItem(${idx})">×</button>
+    </div>`).join('') +
+    `<div style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--o);margin-top:.4rem;">
+      Total Meta Obra: R$ ${total.toFixed(2)}
+    </div>`;
+}
+
+function renderPreviewOrcamento() {
+  const s = getSolar();
+  const fd = s.fornData || {};
+  const items = s.items || [];
+  const total = items.reduce((a, i) => a + i.qty * i.price, 0);
+  const el = document.getElementById('solarOrcamentoPreview');
+
+  const badges = ['Painéis fotovoltaicos','Inversor solar','Estrutura de fixação','Cabeamento e conexões',
+    'Instalação profissional','Homologação na distribuidora','ART do engenheiro','Garantia de 90 dias'];
+
+  const equips = (fd.equipamentos || []).slice(0, 15);
+  const equipRows = equips.map((eq, i) => `
+    <tr>
+      <td>${i+1}. ${eq.nome || eq}</td>
+      <td style="text-align:center">${eq.quantidade || '—'}</td>
+      <td>${eq.especificacao || ''}</td>
+    </tr>`).join('');
+
+  const metaRows = items.map((it, i) => `
+    <tr>
+      <td>${i+1}. ${it.desc}</td>
+      <td style="text-align:center">${it.qty}</td>
+      <td style="text-align:right;font-family:'JetBrains Mono',monospace;">R$&nbsp;${it.price.toFixed(2)}</td>
+      <td>R$&nbsp;${(it.qty * it.price).toFixed(2)}</td>
+    </tr>`).join('');
+
+  el.innerHTML = `
+  <div class="orcamento-preview">
+    <div class="orc-header">
+      <div>
+        <div class="orc-brand">Meta<em>Obra</em></div>
+        <div class="orc-brand-sub">ENERGIA SOLAR · BRASÍLIA-DF</div>
+        <div style="font-size:.62rem;color:var(--tx);margin-top:.4rem;">ORÇAMENTO SOLAR FOTOVOLTAICO</div>
+      </div>
+      <div class="orc-num">
+        <div class="orc-num-id">${s.orcId}</div>
+        <div class="orc-num-dt">${new Date().toLocaleDateString('pt-BR')}</div>
+        ${fd.potencia ? `<div style="margin-top:.35rem;font-size:.65rem;color:var(--gr);">⚡ ${fd.potencia}</div>` : ''}
+      </div>
+    </div>
+    <div class="orc-body">
+      ${fd.fornecedor ? `
+      <div style="background:var(--b1);border-radius:8px;padding:.7rem;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:.62rem;color:var(--tx);text-transform:uppercase;letter-spacing:.1em;">Orçamento do Fornecedor</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--w);margin-top:.15rem;">${fd.fornecedor}</div>
+          ${fd.cliente ? `<div style="font-size:.68rem;color:var(--tx);">Cliente: ${fd.cliente}</div>` : ''}
+        </div>
+        ${fd.valor_total ? `<div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--tx);">${fd.valor_total}</div>` : ''}
+      </div>` : ''}
+
+      ${equips.length ? `
+      <div class="orc-section-label">Equipamentos do Fornecedor</div>
+      <table class="orc-table">
+        <thead><tr><th>Equipamento</th><th style="text-align:center">Qtd</th><th>Especificação</th></tr></thead>
+        <tbody>${equipRows}</tbody>
+      </table>` : ''}
+
+      ${fd.includedServices && fd.includedServices.length ? `
+      <div class="orc-section-label" style="margin-top:.6rem;">Incluso no fornecedor</div>
+      <div class="orc-badges">${fd.includedServices.map(s => `<span class="orc-badge">✓ ${s}</span>`).join('')}</div>` : ''}
+
+      <div class="orc-section-label" style="margin-top:1rem;">Itens Acrescentados — Meta Obra</div>
+      ${items.length ? `
+      <table class="orc-table">
+        <thead><tr><th>Item</th><th style="text-align:center">Qtd</th><th>Valor Unit.</th><th>Total</th></tr></thead>
+        <tbody>${metaRows}</tbody>
+      </table>` : `<div style="font-size:.75rem;color:var(--tx);padding:.5rem;">Nenhum item adicionado pela Meta Obra</div>`}
+
+      ${items.length ? `
+      <div class="orc-total-box">
+        <div>
+          <div class="orc-total-lbl">Valor Total Meta Obra</div>
+          <div style="font-size:.62rem;color:var(--tx);margin-top:.15rem;">*Economia estimada em 25 anos: R$&nbsp;${(total * 0.85 * 25).toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>
+        </div>
+        <div class="orc-total-val">R$&nbsp;${total.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>
+      </div>` : ''}
+
+      <div class="orc-section-label" style="margin-top:1rem;">Incluso no Orçamento</div>
+      <div class="orc-badges">${badges.map(b => `<span class="orc-badge">✓ ${b}</span>`).join('')}</div>
+
+      <div style="background:var(--b1);border-radius:8px;padding:.8rem;margin-top:1rem;">
+        <div style="font-size:.68rem;font-weight:700;color:var(--w);margin-bottom:.4rem;">Condições de Pagamento</div>
+        <div style="font-size:.7rem;color:var(--tx);">• 50% de entrada no aceite do orçamento</div>
+        <div style="font-size:.7rem;color:var(--tx);margin-top:.2rem;">• 50% na conclusão da instalação e ativação</div>
+      </div>
+    </div>
+    <div class="orc-footer">
+      <span class="orc-footer-brand">MetaObra · Energia Solar · Brasília-DF</span>
+      <span class="orc-footer-contact">contato@metaobra.com.br</span>
+    </div>
+  </div>`;
+}
+
+// ──────────────────────────────────────────
+// Upload e processamento via API Claude
+// ──────────────────────────────────────────
 (function() {
-    const uploadEl = document.getElementById('solarPdfUpload');
-    if (!uploadEl) return;
-    uploadEl.addEventListener('change', async function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        
-        const pdfInfoEl = document.getElementById('solarPdfInfo');
-        pdfInfoEl.textContent = 'Extraindo dados do PDF...';
-        pdfInfoEl.style.color = 'var(--y)';
-        
-        try {
-            const arrayBuffer = await file.arrayBuffer();
-            // Use blob URL to avoid worker CORS issues
-            const workerBlob = new Blob([
-                'importScripts("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js");'
-            ], { type: 'application/javascript' });
-            pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(workerBlob);
-            
-            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
-            const pdfPages = [];
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const content = await page.getTextContent();
-                const text = content.items.map(item => item.str).join(' ');
-                pdfPages.push(text);
-            }
-            
-            const solarData = ls('co_solar') || {
-                pdfData: null,
-                items: [],
-                supplierItems: [],
-                transformed: false
-            };
-            
-            solarData.pdfData = { name: file.name, size: file.size, numPages: pdf.numPages };
-            solarData.pdfPages = pdfPages;
-            solarData.supplierItems = pdfPages.join('\n').split('\n').filter(l => l.trim().length > 2);
-            
-            ls('co_solar', solarData);
-            const charCount = pdfPages.reduce((s, p) => s + p.length, 0);
-            pdfInfoEl.textContent = '✓ ' + file.name + ' — ' + pdf.numPages + 'p, ' + charCount + ' caracteres extraídos';
-            pdfInfoEl.style.color = 'var(--gr)';
-            renderSolarTab();
-        } catch (err) {
-            console.error('PDF extraction error:', err);
-            pdfInfoEl.textContent = '❌ Erro: ' + (err.message || 'ao extrair PDF');
-            pdfInfoEl.style.color = 'var(--re)';
-        }
-    });
+  const uploadEl = document.getElementById('solarPdfUpload');
+  const zone = document.getElementById('uploadZone');
+  if (!uploadEl) return;
+
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); if (e.dataTransfer.files[0]) handlePdfFile(e.dataTransfer.files[0]); });
+  uploadEl.addEventListener('change', e => { if (e.target.files[0]) handlePdfFile(e.target.files[0]); });
 })();
 
+async function handlePdfFile(file) {
+  if (!file.type.includes('pdf')) { alert('Por favor, selecione um arquivo PDF'); return; }
+  const s = getSolar();
+
+  // Lê arquivo como base64
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    const base64 = ev.target.result.split(',')[1]; // remove "data:...;base64,"
+    s.pdfName = file.name;
+    s.pdfBase64 = base64;
+    s.step = 1;
+    setSolar(s);
+    renderSolarTab();
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── Configuração do backend (Netlify Functions) ───────────────────────────────
+// A function roda no mesmo domínio do painel — sem CORS, sem servidor separado.
+// Em dev local com live-server: use o Netlify CLI (netlify dev) para emular.
+const BACKEND_URL = '';   // vazio = mesmo domínio (Netlify produção)
+const SOLAR_ENDPOINT = `${BACKEND_URL}/api/solar/extrair-pdf`;
+
+// Token interno — deve ser igual ao PANEL_SECRET nas env vars do Netlify
+const PANEL_TOKEN = (typeof SENHA !== 'undefined') ? SENHA : 'metaobra2025';
+// ──────────────────────────────────────────────────────────────────────────────
+
+async function processSolarPdf() {
+  const s = getSolar();
+  if (!s.pdfBase64) { alert('Nenhum PDF carregado'); return; }
+
+  const loadEl  = document.getElementById('solarLoading');
+  const loadTxt = document.getElementById('solarLoadTxt');
+  const procBtn = document.getElementById('solarProcessBtn');
+  loadEl.classList.add('active');
+  procBtn.style.display = 'none';
+
+  const steps = [
+    '🔍 Enviando PDF para o servidor...',
+    '🧠 IA analisando equipamentos...',
+    '📊 Extraindo dados financeiros...',
+    '✨ Formatando orçamento...',
+  ];
+  let si = 0;
+  const stInt = setInterval(() => { if (si < steps.length) { loadTxt.textContent = steps[si++]; } }, 1800);
+
+  try {
+    // ── Chama a Netlify Function — nunca a API Anthropic diretamente ──
+    const response = await fetch(SOLAR_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Panel-Token': PANEL_TOKEN,
+      },
+      body: JSON.stringify({
+        pdfBase64: s.pdfBase64,
+        fileName: s.pdfName,
+      }),
+    });
+
+    clearInterval(stInt);
+    loadTxt.textContent = '✅ Processando resultado...';
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error || `Erro HTTP ${response.status}`);
+    }
+
+    const result = await response.json();
+    if (!result.ok || !result.data) throw new Error(result.error || 'Resposta inesperada do servidor.');
+
+    s.fornData = result.data;
+    s.step     = 2;
+    s.orcId    = '#SOL-' + Math.floor(100000 + Math.random() * 900000);
+    setSolar(s);
+
+  } catch (err) {
+    clearInterval(stInt);
+    console.error('[processSolarPdf]', err.message);
+    const isOffline = err.message.includes('Failed to fetch') || err.message.includes('NetworkError') || err.message.includes('Load failed');
+    alert(isOffline
+      ? '⚠️ Function offline.\n\nPara testar localmente, use o Netlify CLI:\n  netlify dev'
+      : `⚠️ Erro ao processar PDF:\n${err.message}`);
+    procBtn.style.display = '';
+  }
+
+  loadEl.classList.remove('active');
+  renderSolarTab();
+}
+
 function addSolarItem() {
-    const description = document.getElementById('solarItemDesc').value.trim();
-    const quantity = parseInt(document.getElementById('solarItemQty').value);
-    const unitPrice = parseFloat(document.getElementById('solarItemPrice').value);
-    
-    if (!description || isNaN(quantity) || quantity <= 0 || isNaN(unitPrice) || unitPrice < 0) {
-        alert('Por favor, preencha todos os campos corretamente');
-        return;
-    }
-    
-    const solarData = ls('co_solar') || {
-        pdfData: null,
-        items: [],
-        supplierItems: [],
-        transformed: false
-    };
-    
-    solarData.items.push({
-        description,
-        quantity,
-        unitPrice
-    });
-    
-    ss('co_solar', solarData);
-    renderSolarTab();
-    
-    // Clear form
-    document.getElementById('solarItemDesc').value = '';
-    document.getElementById('solarItemQty').value = '';
-    document.getElementById('solarItemPrice').value = '';
+  const desc = document.getElementById('solarItemDesc').value.trim();
+  const qty = parseInt(document.getElementById('solarItemQty').value) || 1;
+  const price = parseFloat(document.getElementById('solarItemPrice').value);
+
+  if (!desc || isNaN(price) || price < 0) { alert('Preencha a descrição e o preço'); return; }
+
+  const s = getSolar();
+  s.items.push({ desc, qty, price });
+  setSolar(s);
+  renderItemsList();
+
+  document.getElementById('solarItemDesc').value = '';
+  document.getElementById('solarItemQty').value = '1';
+  document.getElementById('solarItemPrice').value = '';
 }
 
-function removeSolarItem(index) {
-    const solarData = ls('co_solar') || {
-        pdfData: null,
-        items: [],
-        supplierItems: [],
-        transformed: false
-    };
-    
-    if (solarData.items.length === 0 || index < 0 || index >= solarData.items.length) return;
-    
-    solarData.items.splice(index, 1);
-    ss('co_solar', solarData);
-    renderSolarTab();
+function removeSolarItem(idx) {
+  const s = getSolar();
+  s.items.splice(idx, 1);
+  setSolar(s);
+  renderItemsList();
 }
 
-function finalizeSolarBudget() {
-   const solarData = ls('co_solar') || {
-       pdfData: null,
-       items: [],
-       supplierItems: [],
-       transformed: false
-   };
-   
-   if (solarData.items.length === 0) {
-       alert('Adicione pelo menos um item ao orçamento antes de finalizar');
-       return;
-   }
-   
-   solarData.transformed = true;
-   ss('co_solar', solarData);
-   renderSolarTab();
-   alert('Orçamento finalizado com identidade Meta Obra aplicada!');
+function gerarOrcamentoFinal() {
+  const s = getSolar();
+  if (!s.fornData) { alert('Processe o PDF do fornecedor primeiro'); return; }
+  s.step = 3;
+  setSolar(s);
+  renderSolarTab();
+  setTimeout(() => document.getElementById('solarStep3').scrollIntoView({ behavior: 'smooth' }), 100);
 }
 
-function printSolarBudget() {
-    const solarData = ls('co_solar') || {
-        pdfData: null,
-        items: [],
-        supplierItems: [],
-        transformed: false
-    };
-    
-    if (!solarData.transformed) {
-        alert('Finalize o orçamento antes de imprimir');
-        return;
+// ──────────────────────────────────────────
+// Exportar PDF Premium (jsPDF)
+// ──────────────────────────────────────────
+function exportarPdfPremium() {
+  const s = getSolar();
+  const fd = s.fornData || {};
+  const items = s.items || [];
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  const ORANGE=[255,92,0], BK=[8,8,8], WHITE=[242,237,230], GRAY=[138,128,112], LGRAY=[245,245,245], MGRAY=[60,60,60];
+  const pw=doc.internal.pageSize.getWidth(), ph=doc.internal.pageSize.getHeight();
+  const ml=18, mr=18, cW=pw-ml-mr;
+  let y=0, pageNum=1;
+
+  function sf(style='normal') { doc.setFont('helvetica', style); }
+  function addPage(needed=20) {
+    if (y+needed > ph-22) {
+      doc.addPage(); y=20; pageNum++;
+      sf(); doc.setFontSize(6.5); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+      doc.text('MetaObra · Energia Solar · Brasília-DF · pág.'+pageNum, pw/2, ph-10, {align:'center'});
+      return true;
     }
-    
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    
-    const ORANGE = [255, 106, 0];
-    const DARK = [11, 11, 11];
-    const WHITE = [255, 255, 255];
-    const GRAY = [138, 138, 138];
-    const LIGHT_GRAY = [245, 245, 245];
-    const MID_GRAY = [200, 200, 200];
-    
-    const pw = doc.internal.pageSize.getWidth();
-    const ph = doc.internal.pageSize.getHeight();
-    const ml = 18;
-    const mr = 18;
-    const contentW = pw - ml - mr;
-    let y = 0;
-    let pageNum = 1;
-    
-    function setFontFace(style) {
-        doc.setFont('helvetica', style || 'normal');
+    return false;
+  }
+
+  // ── HEADER ──
+  doc.setFillColor(BK[0],BK[1],BK[2]);
+  doc.rect(0,0,pw,42,'F');
+  doc.setFillColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+  doc.rect(0,40,pw,3,'F');
+
+  sf('bold'); doc.setFontSize(20); doc.setTextColor(WHITE[0],WHITE[1],WHITE[2]);
+  const mW=doc.getTextWidth('META');
+  doc.text('META', ml, 24);
+  doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+  doc.text('OBRA', ml+mW+1, 24);
+
+  sf(); doc.setFontSize(6.5); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+  doc.text('ENERGIA SOLAR · BRASÍLIA-DF', ml, 33);
+
+  sf('bold'); doc.setFontSize(8.5); doc.setTextColor(WHITE[0],WHITE[1],WHITE[2]);
+  doc.text('ORÇAMENTO', pw-mr, 20, {align:'right'});
+  sf(); doc.setFontSize(7.5); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+  doc.text(s.orcId, pw-mr, 28, {align:'right'});
+  doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]); doc.setFontSize(6.5);
+  doc.text(new Date().toLocaleDateString('pt-BR'), pw-mr, 36, {align:'right'});
+
+  y = 58;
+
+  // ── TÍTULO ──
+  sf('bold'); doc.setFontSize(14); doc.setTextColor(BK[0],BK[1],BK[2]);
+  doc.text('ORÇAMENTO SOLAR FOTOVOLTAICO', ml, y); y+=5;
+  doc.setFillColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+  doc.rect(ml, y, 45, 2, 'F'); y+=10;
+
+  // ── INFO BOX ──
+  doc.setFillColor(LGRAY[0],LGRAY[1],LGRAY[2]);
+  doc.rect(ml, y, cW, 28, 'F');
+  sf(); doc.setFontSize(7.5); doc.setTextColor(MGRAY[0],MGRAY[1],MGRAY[2]);
+  doc.text('Cliente: ' + (fd.cliente || '___________________________________'), ml+3, y+6);
+  doc.text('Tipo: Sistema Fotovoltaico Conectado à Rede (On-Grid)', ml+3, y+13);
+  if (fd.potencia) doc.text('Potência: '+fd.potencia, ml+3, y+19);
+  if (fd.consumo) doc.text('Consumo estimado: '+fd.consumo+'/mês', ml+cW/2, y+19);
+  y+=33;
+
+  // ── FORNECEDOR ──
+  if (fd.fornecedor) {
+    addPage(30);
+    sf('bold'); doc.setFontSize(9.5); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+    doc.text('ORÇAMENTO DO FORNECEDOR', ml, y); y+=4;
+    doc.setFillColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+    doc.rect(ml, y-1, 30, 2,'F'); y+=8;
+
+    sf(); doc.setFontSize(7.5); doc.setTextColor(MGRAY[0],MGRAY[1],MGRAY[2]);
+    doc.text('Fornecedor: ' + fd.fornecedor, ml, y); y+=5;
+    if (fd.valor_total) { doc.text('Valor total do fornecedor: ' + fd.valor_total, ml, y); y+=5; }
+    y+=2;
+
+    // Equipamentos do fornecedor
+    if (fd.equipamentos && fd.equipamentos.length) {
+      addPage(20);
+      // Table header
+      doc.setFillColor(BK[0],BK[1],BK[2]);
+      doc.rect(ml, y-3, cW, 8, 'F');
+      sf('bold'); doc.setFontSize(6.5); doc.setTextColor(WHITE[0],WHITE[1],WHITE[2]);
+      doc.text('EQUIPAMENTO', ml+3, y+1);
+      doc.text('QTD', ml+cW*0.72, y+1);
+      doc.text('ESPECIFICAÇÃO', ml+cW*0.78, y+1);
+      y+=9;
+
+      fd.equipamentos.forEach((eq, i) => {
+        addPage(9);
+        if (i%2===0) { doc.setFillColor(LGRAY[0],LGRAY[1],LGRAY[2]); doc.rect(ml,y-3,cW,8,'F'); }
+        sf(); doc.setFontSize(7); doc.setTextColor(BK[0],BK[1],BK[2]);
+        const nm = (eq.nome||eq).slice(0,60);
+        doc.text((i+1)+'. '+nm, ml+2, y+1);
+        doc.text(String(eq.quantidade||''), ml+cW*0.72, y+1);
+        const spec = (eq.especificacao||'').slice(0,35);
+        doc.text(spec, ml+cW*0.78, y+1);
+        y+=8;
+      });
+      y+=4;
     }
-    
-    function text(t, x, yPos, align, color, size) {
-        if (color) doc.setTextColor(color[0], color[1], color[2]);
-        if (size) doc.setFontSize(size);
-        doc.text(t, x || ml, yPos || y, { align: align || 'left' });
+
+    // Incluso no fornecedor
+    if (fd.includedServices && fd.includedServices.length) {
+      addPage(18);
+      doc.setFillColor(LGRAY[0],LGRAY[1],LGRAY[2]);
+      doc.rect(ml,y,cW,16,'F');
+      sf('bold'); doc.setFontSize(6.5); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+      doc.text('INCLUSO NO PACOTE DO FORNECEDOR:', ml+3, y+5);
+      sf(); doc.setTextColor(BK[0],BK[1],BK[2]);
+      fd.includedServices.slice(0,6).forEach((sv,i)=>{
+        const col=i%3, row=Math.floor(i/3);
+        doc.text('✓ '+sv, ml+3+(col*(cW/3)), y+10+(row*5));
+      });
+      y+=20;
     }
-    
-    function addPageIfNeeded(needed) {
-        if (y + (needed || 20) > ph - 25) {
-            doc.addPage();
-            y = 20;
-            pageNum++;
-            setFontFace('normal');
-            doc.setFontSize(7);
-            doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-            doc.text('MetaObra · Energia Solar · Brasília-DF · pág ' + pageNum, ml, ph - 10);
-            return true;
-        }
-        return false;
-    }
-    
-    function drawTableHeader(yPos) {
-        doc.setFillColor(DARK[0], DARK[1], DARK[2]);
-        doc.rect(ml, yPos - 4, contentW, 8, 'F');
-        setFontFace('bold');
-        doc.setFontSize(7.5);
-        doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
-        doc.text('ITEM', ml + 3, yPos + 1);
-        doc.text('QTD', ml + 95 + 3, yPos + 1);
-        doc.text('VALOR UNIT.', ml + 120 + 3, yPos + 1);
-        doc.text('TOTAL', ml + contentW - 3, yPos + 1, { align: 'right' });
-    }
-    
-    // ===== HEADER BAR =====
-    doc.setFillColor(DARK[0], DARK[1], DARK[2]);
-    doc.rect(0, 0, pw, 44, 'F');
-    
-    setFontFace('bold');
-    doc.setFontSize(22);
-    doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
-    const mLabel = 'META';
-    const oLabel = 'OBRA';
-    const mW = doc.getTextWidth(mLabel);
-    doc.text(mLabel, ml, 26);
-    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.text(oLabel, ml + mW + 1, 26);
-    
-    setFontFace('normal');
-    doc.setFontSize(7);
-    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-    doc.text('ENERGIA SOLAR · BRASÍLIA-DF', ml, 36);
-    
-    setFontFace('bold');
-    doc.setFontSize(9);
-    doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
-    const qId = '#SOL-' + Math.floor(100000 + Math.random() * 900000);
-    doc.text('ORÇAMENTO', pw - mr, 20, { align: 'right' });
-    setFontFace('normal');
-    doc.setFontSize(8);
-    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-    doc.text(qId, pw - mr, 30, { align: 'right' });
-    const dt = new Date().toLocaleDateString('pt-BR');
-    doc.text(dt, pw - mr, 38, { align: 'right' });
-    
-    // ===== BODY =====
-    y = 60;
-    
-    // Title
-    setFontFace('bold');
-    text('ORÇAMENTO SOLAR FOTOVOLTAICO', ml, y, 'left', DARK, 16);
-    y += 10;
-    
-    doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.rect(ml, y - 1, 50, 3, 'F');
-    y += 12;
-    
-    // Info box
-    doc.setFillColor(LIGHT_GRAY[0], LIGHT_GRAY[1], LIGHT_GRAY[2]);
-    doc.rect(ml, y, contentW, 22, 'F');
-    
-    setFontFace('normal');
-    doc.setFontSize(8);
-    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-    doc.text('Cliente: ________________________________________', ml + 3, y + 6);
-    doc.text('Endereço da instalação: _______________________________', ml + 3, y + 12);
-    doc.text('Tipo: Sistema Fotovoltaico Conectado à Rede (On-Grid) | Potência: ___ kWp', ml + 3, y + 18);
-    y += 30;
-    
-    // ===== SECTION 1: FORNECEDOR =====
-    const hasSupplier = (solarData.supplierItems && solarData.supplierItems.length > 0)
-        || (solarData.pdfPages && solarData.pdfPages.length > 0);
-    const hasPdfPages = solarData.pdfPages && solarData.pdfPages.length > 0;
-    
-    if (hasSupplier) {
-        addPageIfNeeded(60);
-        
-        setFontFace('bold');
-        doc.setFontSize(11);
-        doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-        doc.text('ORÇAMENTO DO FORNECEDOR', ml, y);
-        y += 4;
-        
-        doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-        doc.rect(ml, y - 1, 35, 2.5, 'F');
-        y += 9;
-        
-        if (solarData.pdfData) {
-            setFontFace('normal');
-            doc.setFontSize(7);
-            doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-            doc.text('Arquivo: ' + solarData.pdfData.name + (solarData.pdfData.numPages ? ' (' + solarData.pdfData.numPages + ' páginas)' : ''), ml, y);
-            y += 6;
-        }
-        
-        if (hasPdfPages) {
-            // Show full PDF content page by page
-            solarData.pdfPages.forEach((pageText, pi) => {
-                addPageIfNeeded(15);
-                
-                // Page header
-                setFontFace('bold');
-                doc.setFontSize(8);
-                doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-                doc.text('─ Página ' + (pi + 1) + ' ─', pw / 2, y, { align: 'center' });
-                y += 5;
-                
-                // Split page text into lines and render with wrapping
-                const lines = pageText.split('\n');
-                setFontFace('normal');
-                doc.setFontSize(7);
-                doc.setTextColor(DARK[0], DARK[1], DARK[2]);
-                
-                for (const line of lines) {
-                    const trimmed = line.trim();
-                    if (!trimmed) continue;
-                    
-                    addPageIfNeeded(5);
-                    
-                    // Wrap long lines
-                    const maxChars = 120;
-                    const textLines = [];
-                    for (let i = 0; i < trimmed.length; i += maxChars) {
-                        textLines.push(trimmed.slice(i, i + maxChars));
-                    }
-                    
-                    for (const tl of textLines) {
-                        addPageIfNeeded(5);
-                        doc.text(tl, ml, y);
-                        y += 3.5;
-                    }
-                }
-                
-                y += 3;
-            });
-        } else {
-            // Fallback: Show supplier items as text lines
-            solarData.supplierItems.forEach((line, i) => {
-                addPageIfNeeded(10);
-                
-                setFontFace('normal');
-                doc.setFontSize(7);
-                doc.setTextColor(DARK[0], DARK[1], DARK[2]);
-                const maxChars = 110;
-                const displayText = line.length > maxChars ? line.slice(0, maxChars) + '...' : line;
-                doc.text(displayText, ml, y);
-                y += 3.5;
-            });
-        }
-        
-        y += 5;
-        addPageIfNeeded(10);
-    }
-    
-    // ===== SECTION 2: META OBRA ITEMS =====
-    addPageIfNeeded(50);
-    
-    setFontFace('bold');
-    doc.setFontSize(11);
-    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.text('ITENS ACRESCENTADOS (META OBRA)', ml, y);
-    y += 4;
-    
-    doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.rect(ml, y - 1, 35, 2.5, 'F');
-    y += 9;
-    
-    // MetaObra items table header
-    drawTableHeader(y);
-    y += 8;
-    
-    let metaTotal = 0;
-    solarData.items.forEach((item, i) => {
-        addPageIfNeeded(10);
-        
-        const q = item.quantity;
-        const up = item.unitPrice;
-        const it = q * up;
-        metaTotal += it;
-        
-        if (i % 2 === 0) {
-            doc.setFillColor(LIGHT_GRAY[0], LIGHT_GRAY[1], LIGHT_GRAY[2]);
-            doc.rect(ml, y - 3, contentW, 8, 'F');
-        }
-        
-        setFontFace('normal');
-        doc.setFontSize(8);
-        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
-        doc.text((i + 1) + '. ' + item.description, ml + 3, y + 2);
-        doc.text(q.toString(), ml + 98, y + 2);
-        doc.text('R$ ' + up.toFixed(2), ml + 123, y + 2);
-        doc.text('R$ ' + it.toFixed(2), ml + contentW - 3, y + 2, { align: 'right' });
-        y += 9;
+  }
+
+  // ── ITENS META OBRA ──
+  addPage(30);
+  sf('bold'); doc.setFontSize(9.5); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+  doc.text('ITENS ACRESCENTADOS (META OBRA)', ml, y); y+=4;
+  doc.setFillColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+  doc.rect(ml,y-1,30,2,'F'); y+=9;
+
+  if (items.length) {
+    // Table header
+    doc.setFillColor(BK[0],BK[1],BK[2]);
+    doc.rect(ml,y-3,cW,8,'F');
+    sf('bold'); doc.setFontSize(6.5); doc.setTextColor(WHITE[0],WHITE[1],WHITE[2]);
+    doc.text('ITEM', ml+3, y+1);
+    doc.text('QTD', ml+cW*0.64, y+1);
+    doc.text('UNIT.', ml+cW*0.73, y+1);
+    doc.text('TOTAL', pw-mr-2, y+1, {align:'right'});
+    y+=9;
+
+    let metaTotal=0;
+    items.forEach((item,i)=>{
+      addPage(9);
+      const tot=item.qty*item.price; metaTotal+=tot;
+      if (i%2===0){doc.setFillColor(LGRAY[0],LGRAY[1],LGRAY[2]);doc.rect(ml,y-3,cW,8,'F');}
+      sf(); doc.setFontSize(7.5); doc.setTextColor(BK[0],BK[1],BK[2]);
+      doc.text((i+1)+'. '+item.desc.slice(0,70), ml+2, y+1);
+      doc.text(String(item.qty), ml+cW*0.64+3, y+1);
+      doc.text('R$'+item.price.toFixed(2), ml+cW*0.73+1, y+1);
+      sf('bold'); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+      doc.text('R$'+tot.toFixed(2), pw-mr-2, y+1, {align:'right'});
+      y+=8;
     });
-    
-    y += 4;
-    
-    // ===== GRAND TOTAL =====
-    addPageIfNeeded(25);
-    
-    const totalGeral = metaTotal; // supplier items already in their own budget
-    const econ = metaTotal * 0.85;
-    
-    doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.setLineWidth(1);
-    doc.line(ml, y, ml + contentW, y);
-    y += 7;
-    
-    setFontFace('normal');
-    doc.setFontSize(9);
-    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-    doc.text('VALOR TOTAL META OBRA', ml, y + 1);
-    setFontFace('bold');
-    doc.setFontSize(18);
-    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.text('R$ ' + totalGeral.toFixed(2), ml + contentW, y + 1, { align: 'right' });
-    y += 12;
-    
-    addPageIfNeeded(10);
-    
-    setFontFace('normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-    doc.text('*Economia estimada em 25 anos: R$ ' + econ.toFixed(2), ml, y);
-    doc.text('*Valores sujeitos a vistoria técnica.', ml, y + 5);
-    y += 14;
-    
-    // ===== TRUST BADGES =====
-    addPageIfNeeded(30);
-    
-    doc.setFillColor(LIGHT_GRAY[0], LIGHT_GRAY[1], LIGHT_GRAY[2]);
-    doc.rect(ml, y, contentW, 24, 'F');
-    
-    setFontFace('bold');
-    doc.setFontSize(7);
-    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.text('INCLUSO NO ORÇAMENTO:', ml + 3, y + 5);
-    
-    const badges = [
-        'Painéis fotovoltaicos',
-        'Inversor solar',
-        'Estrutura de fixação',
-        'Cabeamento e conexões',
-        'Instalação profissional',
-        'Homologação na distribuidora',
-        'ART do engenheiro',
-        'Garantia de 90 dias'
-    ];
-    
-    setFontFace('normal');
-    doc.setFontSize(6.5);
-    doc.setTextColor(DARK[0], DARK[1], DARK[2]);
-    badges.forEach((b, i) => {
-        const col = i % 4;
-        const row = Math.floor(i / 4);
-        const bx = ml + 3 + (col * (contentW / 4));
-        const by = y + 10 + (row * 6);
-        doc.text('✓ ' + b, bx, by);
-    });
-    
-    y += 28;
-    
-    // ===== PAYMENT =====
-    addPageIfNeeded(20);
-    
-    setFontFace('bold');
-    doc.setFontSize(9);
-    doc.setTextColor(DARK[0], DARK[1], DARK[2]);
-    doc.text('CONDIÇÕES DE PAGAMENTO', ml, y);
-    y += 7;
-    
-    setFontFace('normal');
-    doc.setFontSize(8);
-    doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-    const payments = [
-        '50% de entrada no aceite do orçamento',
-        '50% na conclusão da instalação e ativação'
-    ];
-    payments.forEach(p => {
-        doc.text('• ' + p, ml + 3, y);
-        y += 5;
-    });
-    y += 5;
-    
-    // ===== FOOTER =====
-    if (pageNum === 1) {
-        doc.setDrawColor(MID_GRAY[0], MID_GRAY[1], MID_GRAY[2]);
-        doc.setLineWidth(0.3);
-        doc.line(ml, ph - 18, ml + contentW, ph - 18);
-        
-        setFontFace('normal');
-        doc.setFontSize(7);
-        doc.setTextColor(GRAY[0], GRAY[1], GRAY[2]);
-        doc.text('MetaObra · Energia Solar · Brasília-DF', ml, ph - 10, { align: 'left' });
-        doc.text('contato@metaobra.com.br', pw - mr, ph - 10, { align: 'right' });
-    }
-    
-    doc.save('orcamento_solar_metaobra_' + new Date().toISOString().slice(0, 10) + '.pdf');
+
+    y+=4; addPage(20);
+    // Total
+    doc.setDrawColor(ORANGE[0],ORANGE[1],ORANGE[2]); doc.setLineWidth(0.8);
+    doc.line(ml,y,pw-mr,y); y+=7;
+    sf(); doc.setFontSize(8); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+    doc.text('VALOR TOTAL META OBRA', ml, y+1);
+    sf('bold'); doc.setFontSize(16); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+    doc.text('R$ '+metaTotal.toFixed(2), pw-mr, y+1, {align:'right'});
+    y+=14;
+
+    sf(); doc.setFontSize(6.5); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+    doc.text('*Economia estimada em 25 anos: R$ '+(metaTotal*0.85*25).toLocaleString('pt-BR',{minimumFractionDigits:2}), ml, y);
+    doc.text('*Valores sujeitos a vistoria técnica.', ml, y+4.5); y+=12;
+  } else {
+    sf(); doc.setFontSize(8); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+    doc.text('Nenhum item adicional da Meta Obra.', ml, y); y+=10;
+  }
+
+  // ── BADGES ──
+  addPage(28);
+  doc.setFillColor(LGRAY[0],LGRAY[1],LGRAY[2]);
+  doc.rect(ml,y,cW,22,'F');
+  sf('bold'); doc.setFontSize(6.5); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+  doc.text('INCLUSO NO ORÇAMENTO META OBRA:', ml+3, y+5);
+  const badges=['Painéis fotovoltaicos','Inversor solar','Estrutura de fixação','Cabeamento e conexões',
+    'Instalação profissional','Homologação na distribuidora','ART do engenheiro','Garantia de 90 dias'];
+  sf(); doc.setFontSize(6.5); doc.setTextColor(BK[0],BK[1],BK[2]);
+  badges.forEach((b,i)=>{ const col=i%4,row=Math.floor(i/4); doc.text('✓ '+b, ml+3+(col*(cW/4)), y+11+(row*5.5)); });
+  y+=26;
+
+  // ── PAGAMENTO ──
+  addPage(20);
+  sf('bold'); doc.setFontSize(8); doc.setTextColor(BK[0],BK[1],BK[2]);
+  doc.text('CONDIÇÕES DE PAGAMENTO', ml, y); y+=6;
+  sf(); doc.setFontSize(7.5); doc.setTextColor(MGRAY[0],MGRAY[1],MGRAY[2]);
+  ['50% de entrada no aceite do orçamento','50% na conclusão da instalação e ativação'].forEach(p=>{doc.text('• '+p,ml+3,y);y+=5;});
+  y+=4;
+
+  // ── RETORNO ──
+  if (fd.retorno_investimento || fd.economia_30_anos) {
+    addPage(22);
+    doc.setFillColor(BK[0],BK[1],BK[2]);
+    doc.rect(ml,y,cW,18,'F');
+    sf('bold'); doc.setFontSize(7); doc.setTextColor(ORANGE[0],ORANGE[1],ORANGE[2]);
+    doc.text('RETORNO DO INVESTIMENTO', ml+3, y+5);
+    sf(); doc.setTextColor(WHITE[0],WHITE[1],WHITE[2]); doc.setFontSize(7);
+    if (fd.retorno_investimento) doc.text('Retorno em: '+fd.retorno_investimento, ml+3, y+11);
+    if (fd.economia_30_anos) doc.text('Economia em 30 anos: '+fd.economia_30_anos, pw/2, y+11);
+    if (fd.garantias && fd.garantias.length) doc.text('Garantias: '+fd.garantias.join(' · '), ml+3, y+16);
+    y+=22;
+  }
+
+  // ── FOOTER ──
+  doc.setDrawColor(MGRAY[0],MGRAY[1],MGRAY[2]); doc.setLineWidth(0.3);
+  doc.line(ml,ph-17,pw-mr,ph-17);
+  sf(); doc.setFontSize(6.5); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+  doc.text('MetaObra · Energia Solar · Brasília-DF', ml, ph-10);
+  doc.text('contato@metaobra.com.br', pw-mr, ph-10, {align:'right'});
+
+  doc.save('orcamento_solar_metaobra_'+new Date().toISOString().slice(0,10)+'.pdf');
 }
+
+// ──────────────────────────────────────────
+// Funções legadas mantidas para compatibilidade
+// ──────────────────────────────────────────
+function finalizeSolarBudget() { gerarOrcamentoFinal(); }
+function printSolarBudget() { exportarPdfPremium(); }
 </script>
 </body>
 </html>
